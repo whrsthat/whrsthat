@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Attending:</strong>
+  <%= @invitee.attending %>
+</p>
+
+<%= link_to 'Edit', edit_invitee_path(@invitee) %> |
+<%= link_to 'Back', invitees_path %>
