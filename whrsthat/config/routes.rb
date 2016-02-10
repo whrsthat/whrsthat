@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  resources :invitees
-  resources :invitees
-  resources :invitees
-  resources :invitees
+  resources :invitees 
   resources :events
   resources :users
   # The priority is based upon order of creation: first created -> highest priority.
