@@ -1,15 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Whrsthat</title>
+<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>** Whrsthat? The Event Shouting App **</title>
+	<meta name="description" content="WhrsThat? is a new web app that makes sharing an active or future event easy and simple!" />
+	<link rel="canonical" href="http://whrsthat.github.io" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="WhrsThat? The Event Shouting App" />
+	<meta property="og:description" content="WhrsThat? is a new web application that makes sharing an active or future event easy and simple!" />
+	<meta property="og:url" content="http://whrsthat.github.io" />
+	<meta property="og:site_name" content="Super Missile Command Bros." />
+	<meta property="og:image" content="mugato_temp_logo.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:description" content="WhrsThat? is a new web application that makes sharing an active or future event easy and simple!" />
+	<meta name="twitter:title" content="WhrsThat? The Event Shouting App." />
+  <title>Whrsthat? The Event Shouting App</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 
+  <link rel="shortcut icon" type="image/x-icon" href="/mugatu_favicon.png">
+<style>
+nav a:hover {
+    color: #732c7b !important;
+    background-color: #000;
+}
+
+.mdl-button--raised.mdl-button--colored {
+    background: #000000;
+}
+
+.mdl-button--raised.mdl-button--colored:hover {
+    background-color: #732c7b;
+}
+
+.page-content {
+    max-width: 1020px;
+    margin: 0 auto;
+    text-align: center;
+}
+</style>
+
 </head>
 <body>
 
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title"><img src="whrsthat.png"></span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a class="mdl-navigation__link" href="/">Home</a>
+        <a class="mdl-navigation__link" href="/about">About</a>
+        <a class="mdl-navigation__link" href="/contact">Contact</a>
+        <a class="mdl-navigation__link" href="/login">Login</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Title</span>
+    <nav class="mdl-navigation">
+      	<a class="mdl-navigation__link" href="/">Home</a>
+	    <a class="mdl-navigation__link" href="/about">About</a>
+	    <a class="mdl-navigation__link" href="/contact">Contact</a>
+	    <a class="mdl-navigation__link" href="">Sign Up Now!</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+    	
 <%= yield %>
+
+    </div>
+  </main>
+</div>
 
 </body>
 </html>

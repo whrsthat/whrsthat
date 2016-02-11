@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   resources :users
 
   get '/' => 'users#home'
+  get '/about' => 'users#about'
+  get '/contact' => 'users#contact'
+  post '/login' => 'users#login'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

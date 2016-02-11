@@ -47,8 +47,9 @@ ActiveRecord::Schema.define(version: 20160211164859) do
     t.string   "lname_initial"
     t.string   "email"
     t.string   "prof_img_url"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "password_digest"
   end
 
   add_foreign_key "events", "users"

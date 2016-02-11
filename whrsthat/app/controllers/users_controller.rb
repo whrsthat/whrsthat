@@ -40,6 +40,29 @@ class UsersController < ApplicationController
     end
   end
 
+# NoMethodError Users#login for user.each
+
+  def login
+    user = User.find_by(email: params['email'])
+      # checks the db for a user that matches the name submitted.
+
+    if user && user.authenticate(params['password'])
+      #if user exists and password is legit then.....
+      
+      session[:user_name] = user.email
+      @name = session[:user_name]
+
+      cookies[:email]=user.email
+      cookies[:sess_age]= {:value => 'Expires in one hour.', :expires => Time.now + 60}
+
+      render 'events/index'
+
+    else
+      @error = true
+      render :index
+    end
+  end
+
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
