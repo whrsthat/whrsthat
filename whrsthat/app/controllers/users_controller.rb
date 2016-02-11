@@ -45,17 +45,18 @@ class UsersController < ApplicationController
   def login
     user = User.find_by(email: params['email'])
       # checks the db for a user that matches the name submitted.
+      binding.pry
 
-    if user && @user.authenticate(params['password'])
+    if user && user.authenticate(params['password'])
       #if user exists and password is legit then.....
       
-      session[:user_name] = user.name
+      session[:user_name] = user.email
       @name = session[:user_name]
 
       cookies[:email]=user.email
       cookies[:sess_age]= {:value => 'Expires in one hour.', :expires => Time.now + 60}
 
-      render :events
+      render 'events/index'
 
     else
       @error = true
