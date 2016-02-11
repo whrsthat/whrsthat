@@ -31,6 +31,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     respond_to do |format|
+      debugger
       if @event.save
         file = File.open('./public/IMG_3503.JPG')
         photo = EXIFR::JPEG.new(file)
@@ -46,7 +47,9 @@ class EventsController < ApplicationController
         google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{lat_to_string},#{long_to_string}&key=#{google_server_key}")
         result = Net::HTTP.get(google_uri)
         photo_data = JSON.parse(result)
-        @@address = photo_data.flatten[1][0]["formatted_address"]
+        @@address = photo_data.flatten[1][0]["formatted_address"] # save to db
+
+        
 
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
@@ -85,6 +88,7 @@ class EventsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
+      debugger
       @event = Event.find(params[:id])
     end
 
