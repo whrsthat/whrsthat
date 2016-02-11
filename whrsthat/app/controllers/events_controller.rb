@@ -1,8 +1,11 @@
 require 'pry'
 require 'exifr' 
 
+
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+
+
 
   # GET /events
   # GET /events.json
@@ -31,10 +34,12 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     respond_to do |format|
-      debugger
+      tempfile = params[:event][:attachment].tempfile.open
       if @event.save
-        file = File.open('./public/IMG_3503.JPG')
-        photo = EXIFR::JPEG.new(file)
+
+        # file = File.open('./public/IMG_3503.JPG')
+        photo = EXIFR::JPEG.new(tempfile.path)
+              debugger
         google_server_key = ENV["GOOGLE_SERVER_KEY"];
         lat = photo.exif[0].gps_latitude[0].to_f + (photo.exif[0].gps_latitude[1].to_f / 60) + (photo.exif[0].gps_latitude[2].to_f / 3600)
         long = photo.exif[0].gps_longitude[0].to_f + (photo.exif[0].gps_longitude[1].to_f / 60) + (photo.exif[0].gps_longitude[2].to_f / 3600)
@@ -49,7 +54,7 @@ class EventsController < ApplicationController
         photo_data = JSON.parse(result)
         @@address = photo_data.flatten[1][0]["formatted_address"] # save to db
 
-        
+
 
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }

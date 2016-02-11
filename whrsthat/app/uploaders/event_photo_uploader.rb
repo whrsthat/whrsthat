@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class EventPhotoUploader < CarrierWave::Uploader::Base
+  
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -15,6 +16,10 @@ class EventPhotoUploader < CarrierWave::Uploader::Base
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
+
+  # uploader = EventPhotoUploader.new
+
+  # uploader.store!(tempfile)
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
