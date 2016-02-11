@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/picuous/exifr.git
+  revision: 1911eff333f7498b8a8de22c3d27e413889d8572
+  specs:
+    exifr (1.0.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -178,6 +184,7 @@ DEPENDENCIES
   bcrypt
   byebug
   coffee-rails (~> 4.1.0)
+  exifr!
   factory_girl
   faker
   jbuilder (~> 2.0)
