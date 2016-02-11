@@ -13,6 +13,7 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    @address = @@address
   end
 
   # GET /events/new
@@ -45,7 +46,7 @@ class EventsController < ApplicationController
         google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{lat_to_string},#{long_to_string}&key=#{google_server_key}")
         result = Net::HTTP.get(google_uri)
         photo_data = JSON.parse(result)
-        @address = photo_data.flatten[1][0]["formatted_address"]
+        @@address = photo_data.flatten[1][0]["formatted_address"]
 
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
