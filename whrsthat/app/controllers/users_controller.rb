@@ -40,6 +40,27 @@ class UsersController < ApplicationController
     end
   end
 
+  def login
+    user = User.find_by(name: params['name'])
+      # checks the db for a user that matches the name submitted.
+
+    if user && @user.authenticate(params['password'])
+      #if user exists and password is legit then.....
+      
+      session[:user_name] = user.name
+      @name = session[:user_name]
+
+      cookies[:name]=user.name
+      cookies[:age_example]= {:value => 'Expires in one hour.', :expires => Time.now + 60}
+
+      render :welcome
+
+    else
+      @error = true
+      render :index
+    end
+  end
+
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
