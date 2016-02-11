@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   get '/' => 'users#home'
   get '/about' => 'users#about'
   get '/contact' => 'users#contact'
-  get '/login' => 'users#login'
   post '/login' => 'users#login'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

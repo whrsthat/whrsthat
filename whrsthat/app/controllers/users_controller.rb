@@ -40,8 +40,10 @@ class UsersController < ApplicationController
     end
   end
 
+# NoMethodError Users#login for user.each
+
   def login
-    user = User.find_by(name: params['name'])
+    user = User.find_by(email: params['email'])
       # checks the db for a user that matches the name submitted.
 
     if user && @user.authenticate(params['password'])
@@ -50,10 +52,10 @@ class UsersController < ApplicationController
       session[:user_name] = user.name
       @name = session[:user_name]
 
-      cookies[:name]=user.name
-      cookies[:age_example]= {:value => 'Expires in one hour.', :expires => Time.now + 60}
+      cookies[:email]=user.email
+      cookies[:sess_age]= {:value => 'Expires in one hour.', :expires => Time.now + 60}
 
-      render :welcome
+      render :events
 
     else
       @error = true
