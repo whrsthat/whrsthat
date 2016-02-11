@@ -16,20 +16,24 @@
     <%= f.text_field :phone %>
   </div>
   <div class="field">
-    <%= f.label :fname %><br>
+    <%= f.label :First_name %><br>
     <%= f.text_field :fname %>
   </div>
   <div class="field">
-    <%= f.label :lname_initial %><br>
+    <%= f.label :Last_name %><br>
     <%= f.text_field :lname_initial %>
   </div>
   <div class="field">
     <%= f.label :email %><br>
     <%= f.text_field :email %>
   </div>
+    <div class="field">
+    <%= f.label :password %><br>
+    <%= f.text_field :password_digest %>
+  </div>
   <div class="field">
-    <%= f.label :prof_img_url %><br>
-    <%= f.text_field :prof_img_url %>
+    <%= f.label :Custom_photo %><br>
+    <%= f.file_field :prof_img_url %>
   </div>
   <div class="actions">
     <%= f.submit %>

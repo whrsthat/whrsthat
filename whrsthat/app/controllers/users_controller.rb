@@ -59,7 +59,7 @@ class UsersController < ApplicationController
 
     else
       @error = true
-      render :index
+      render :home
     end
   end
 
@@ -95,6 +95,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :prof_img_url)
+      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :password_digest, :prof_img_url)
     end
 end
