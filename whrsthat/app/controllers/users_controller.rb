@@ -45,7 +45,6 @@ class UsersController < ApplicationController
   def login
     user = User.find_by(email: params['email'])
       # checks the db for a user that matches the name submitted.
-      binding.pry
 
     if user && user.authenticate(params['password'])
       #if user exists and password is legit then.....
