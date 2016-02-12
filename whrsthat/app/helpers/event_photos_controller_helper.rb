@@ -1,0 +1,2 @@
+module EventPhotosControllerHelper
+end
