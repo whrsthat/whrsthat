@@ -1,12 +1,26 @@
 # require 'open-uri'
 require 'pry'
+require 'mimemagic'
+
 class Event < ActiveRecord::Base
 	belongs_to :user
 	has_many :invitees
 	has_many :event_photos
+	has_one  :main_photo
 	#validates :url, presence: true 
 	attr_accessor :photo
 	#what is attr_accessor doing here and how does it work with the strong params?
+
+	validates :format, inclusion: ['jpeg', 'jpg']
+
+	before_validation do
+		if @photo.present?
+			format = MimeMagic.by_magic(File.open(@photo.tempfile))
+			image_type = format.subtype
+			#pass type to after save to add to file before local storage
+
+		end
+	end
 
 	after_save do
 		if !self.lat && !self.lng
@@ -16,6 +30,7 @@ class Event < ActiveRecord::Base
 	        self.lng = ((photo_data.gps_longitude_ref == "W") ? (long * -1) : long)    # (W is -, E is +)
 	        self.lat = ((photo_data.gps_latitude_ref == "S") ? (lat * -1) : lat)      # (N is +, S is -)
 
+	        #read about fileutils functionality
 	        FileUtils.cp(@photo.path, "public/photos/#{id}.jpg")
 
 	        event_id = self.id.to_s

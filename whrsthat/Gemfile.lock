@@ -90,6 +90,7 @@ GEM
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (2.99)
+    mimemagic (0.3.1)
     mini_magick (4.3.6)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
@@ -200,6 +201,7 @@ DEPENDENCIES
   faker
   jbuilder (~> 2.0)
   jquery-rails
+  mimemagic
   mini_magick
   pg (~> 0.15)
   pry-rails
