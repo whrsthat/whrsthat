@@ -18,6 +18,10 @@ class Event < ActiveRecord::Base
 
 	        FileUtils.cp(@photo.path, "public/photos/#{id}.jpg")
 
+	        event_id = self.id.to_s
+	        image_path = event_id + ".jpg"
+	        self.update_attributes(:event_img_url => image_path )
+
 	        google_server_key = ENV['GOOGLE_SERVER_KEY']
 	 		google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{self.lat},#{self.lng}&key=#{google_server_key}")
 	        result = Net::HTTP.get(google_uri)
