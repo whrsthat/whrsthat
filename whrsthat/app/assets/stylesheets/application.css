@@ -12,6 +12,5 @@
  *
  *= require_tree .
  *= require_self
- *= require material
- *= require material.min
+ *= require material-design-lite/material.min.css
  */
