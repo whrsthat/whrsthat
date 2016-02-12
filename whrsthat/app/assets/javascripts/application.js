@@ -13,4 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require material-design-lite/material.min.js
 //= require_tree .
+
+$(function () {
+	$('input[type="password"]').addClass('mdl-textfield__input')
+	'mdl-button mdl-js-button mdl-button--raised'.split(' ').forEach(($class) => {
+		$('button,input[type="submit"]').addClass($class);
+	});
+});

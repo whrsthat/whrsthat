@@ -1,0 +1,18 @@
+<% if !@event_photo.errors.empty? %>
+  <div class="alert alert-error">
+    <ul>
+      <% @event_photo.errors.full_messages.each do |pic| %>
+        <li><%= pic %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="well">
+  <%= form_for @event_photo, html: { multipart: true } do |f| %>
+
+    <%= f.label :attachment %>
+    <%= f.file_field :attachment %>
+    <%= f.submit "Save", class: "btn btn-primary" %>
+  <% end %>
+</div>
