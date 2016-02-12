@@ -18,7 +18,7 @@ class EventPhoto < ActiveRecord::Base
 		#defining location and setting up the structure of the path
 		path = Rails.root.join('public', 'photos', "#{id}.#{format}")
 		image = MiniMagick::Image.open(@file.path)
-		image.resize "300x300"
+		image.resize "600x300"
 		image.write path
 		# FileUtils.mv(@file.path, path)
 	end
