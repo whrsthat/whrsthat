@@ -6,21 +6,21 @@ class Event < ActiveRecord::Base
 	belongs_to :user
 	has_many :invitees
 	has_many :event_photos
-	has_one  :main_photo
+	has_one  :main_image
 	#validates :url, presence: true 
 	attr_accessor :photo
 	#what is attr_accessor doing here and how does it work with the strong params?
 
-	validates :format, inclusion: ['jpeg', 'jpg']
-
-	before_validation do
+	validate do 
 		if @photo.present?
-			format = MimeMagic.by_magic(File.open(@photo.tempfile))
-			image_type = format.subtype
+			@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
 			#pass type to after save to add to file before local storage
-
-		end
+			if @format != 'jpeg'
+				errors.add(:photo => 'Please upload a jpeg')
+			end
+		end	
 	end
+
 
 	after_save do
 		if !self.lat && !self.lng
@@ -33,10 +33,6 @@ class Event < ActiveRecord::Base
 	        #read about fileutils functionality
 	        FileUtils.cp(@photo.path, "public/photos/#{id}.jpg")
 
-	        event_id = self.id.to_s
-	        image_path = event_id + ".jpg"
-	        self.update_attributes(:event_img_url => image_path )
-
 	        google_server_key = ENV['GOOGLE_SERVER_KEY']
 	 		google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{self.lat},#{self.lng}&key=#{google_server_key}")
 	        result = Net::HTTP.get(google_uri)
@@ -45,6 +41,9 @@ class Event < ActiveRecord::Base
 			self.update_attributes(:event_address => event_address)
 
 			self.save()
+
+			new_image = MainImage.new(url: self.id.to_s + '.' + @format, format: @format)
+			new_image.save()	
 		end
 	end
 end
