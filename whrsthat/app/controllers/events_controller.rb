@@ -22,10 +22,9 @@ class EventsController < ApplicationController
       marker.lat user.latitude
       marker.lng user.longitude
       marker.picture({
-                    anchor: [40, 58], # added this optionally <- doesn't work either
-                    url: "#{view_context.image_path("http://people.mozilla.com/~faaborg/files/shiretoko/firefoxIcon/firefox-32.png") }",
+                    url: "#{view_context.image_path('/assets/precious.png') }",
                     width: "44",
-                    height: "58"
+                    height: "90"
      })
       marker.infowindow user.title
     end
