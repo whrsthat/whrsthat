@@ -24,14 +24,21 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def set_session(user)
+    session[:user_name] = user.email
+    @name = session[:user_name]
+  end
+
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
-
+    tmp_obj = JSON.parse(JSON.generate(user_params))
+    tmp_obj['password'] = params['password']
+    @user = User.new( tmp_obj )
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        set_session @user
+        format.html { render 'events/index', notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -48,19 +55,13 @@ class UsersController < ApplicationController
 
     if user && user.authenticate(params['password'])
       #if user exists and password is legit then.....
-      
-      session[:user_name] = user.email
-      session[:user_id] = user.id
-      @name = session[:user_name]
-
-      cookies[:email]=user.email
-      cookies[:sess_age]= {:value => 'Expires in one hour.', :expires => Time.now + 60}
+      set_session user
 
       render 'events/index'
 
     else
       @error = true
-      render :index
+      render :home
     end
   end
 
@@ -96,6 +97,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :prof_img_url)
+      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :password_digest, :prof_img_url)
     end
 end
