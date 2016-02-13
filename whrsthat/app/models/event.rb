@@ -16,13 +16,17 @@ class Event < ActiveRecord::Base
 	#what is attr_accessor doing here and how does it work with the strong params?
 
 	validate do 
-		if @photo.present?
+		if @photo.present? && @title.present? && @time_at.present?
 			@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
 			#pass type to after save to add to file before local storage
 			if @format != 'jpeg'
-				errors.add(:photo => 'Please upload a jpeg file.')
+				errors.add(:photo)
 			end
-		end	
+		else
+			errors.add(:photo)
+			errors.add(:title)
+			errors.add(:time_at)
+		end
 	end
 
 
