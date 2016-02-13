@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require underscore
+//= require lodash/dist/lodash.min.js
 //= require gmaps/google
+//= require datetimepicker/jquery.datetimepicker.js
 //= require_tree .

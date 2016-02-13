@@ -50,6 +50,7 @@ class UsersController < ApplicationController
       #if user exists and password is legit then.....
       
       session[:user_name] = user.email
+      session[:user_id] = user.id
       @name = session[:user_name]
 
       cookies[:email]=user.email

@@ -3,7 +3,7 @@ require 'pry'
 require 'mimemagic'
 require 'exifr'
 require 'mini_magick'
-
+require 'date'
 
 class Event < ActiveRecord::Base
 	belongs_to :user
@@ -16,23 +16,34 @@ class Event < ActiveRecord::Base
 	#what is attr_accessor doing here and how does it work with the strong params?
 
 	validate do 
-		if @photo.present? && @title.present? && @time_at.present?
+		if @photo.present?
 			@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
+			@photo_data = EXIFR::JPEG.new(@photo.path).exif
 			#pass type to after save to add to file before local storage
 			if @format != 'jpeg'
 				errors.add(:photo)
+			elsif !@photo_data
+				errors.add(:photo)
 			end
-		else
-			errors.add(:photo)
+		elsif self.title.present?
 			errors.add(:title)
+		elsif self.time_at.present?
 			errors.add(:time_at)
 		end
 	end
 
+	def image_url
+		"/photos/#{self.id.to_s}.jpeg"
+	end
+
+	def date
+		self.time_at
+	end
 
 	after_save do
 		if !self.latitude && !self.longitude
 	        photo_data = EXIFR::JPEG.new(@photo.path).exif
+
 	        lat = photo_data.gps_latitude[0].to_f + (photo_data.gps_latitude[1].to_f / 60) + (photo_data.gps_latitude[2].to_f / 3600)
 	        long = photo_data.gps_longitude[0].to_f + (photo_data.gps_longitude[1].to_f / 60) + (photo_data.gps_longitude[2].to_f / 3600)
 	        self.longitude = ((photo_data.gps_longitude_ref == "W") ? (long * -1) : long)    # (W is -, E is +)

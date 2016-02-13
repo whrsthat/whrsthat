@@ -6,7 +6,7 @@
 <img src="/photos/<%= @event.id %>.jpeg">
 
 <p>
-  <strong>Title:</strong>_
+  <strong>Title:</strong>
   <%= @event.title %>
 </p>
 
@@ -17,16 +17,14 @@
 
 <p>
   <strong>Time at:</strong>
-  <%= @event.time_at %>
+  <span><%= @event.date.strftime('%A %d, %Y') %> <%= @event.date.strftime('%-I%p').downcase %></span>
 </p>
 
 <p><%= @event.event_address %></p>
 
-<div style='width: 800px;'>
-  <div id="map" style='width: 800px; height: 400px;'></div>
+<div style='' class="map-container">
+  <div id="map" style='display: inline-block; width: 800px; height: 400px;'></div>
 </div>
-
-
 
 
 <%= link_to 'Edit', edit_event_path(@event) %> |

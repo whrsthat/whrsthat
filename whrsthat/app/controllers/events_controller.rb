@@ -43,6 +43,9 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     ev_params = event_params.clone
+
+    ev_params[:time_at]  = Time.parse(ev_params[:time_at])
+    ev_params[:user_id] = session[:user_id]
     @event = Event.new(ev_params)
 
     respond_to do |format|
