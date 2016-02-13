@@ -1,5 +1,6 @@
 require 'pry'
 require 'exifr' 
+require 'gmaps4rails'
 
 
 class EventsController < ApplicationController
@@ -16,7 +17,11 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @address = Event.find(params['id'])
+    @users_current_location = Event.find(params['id'])
+    @hash = Gmaps4rails.build_markers(@users_current_location) do |user, marker|
+      marker.lat user.latitude
+      marker.lng user.longitude
+    end
   end
 
   # GET /events/new
