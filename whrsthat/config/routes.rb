@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   resources :users
   resources :event_photo, only: [:index, :new, :create, :destroy]
 
+  resources :events do
+    resources :event_photos
+  end
 
   get '/' => 'users#home'
   get '/about' => 'users#about'

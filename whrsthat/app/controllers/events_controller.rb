@@ -16,7 +16,7 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @address = @@address
+    @address = Event.find(params['id'])
   end
 
   # GET /events/new
@@ -31,11 +31,12 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    JSON.parse(JSON.generate(event_params))
-    @event = Event.new()
+    event_p = JSON.parse(JSON.generate(event_params))
+    @event = Event.new(event_p)
 
     respond_to do |format|
-      tempfile = params[:event][:attachment].tempfile.open
+      # tempfile = params[:event][:photo]
+      
       if @event.save
 
         # file = File.open('./public/IMG_3503.JPG')
@@ -91,13 +92,12 @@ class EventsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      debugger
+    def set_event    
       @event = Event.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:title, :caption, :time_at, :event_img_url, :lng, :lat)
+      params.require(:event).permit(:title, :caption, :time_at, :event_img_url, :lng, :lat, :photo)
     end
 end

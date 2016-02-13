@@ -1,4 +1,15 @@
 class EventPhotosController < ApplicationController
+  before_action :set_event
+  before_action :set_event_photo, only: [:show, :edit, :update, :destory]
+
+  def set_event
+    @event = Event.find(params[:event_id])
+  end
+
+  def set_event_photo
+    @event_photo = EventPhoto.find(params[:id])
+  end
+
   def index
   	@event_photos = Event_photo.all 
   end
@@ -25,6 +36,6 @@ class EventPhotosController < ApplicationController
 
   private
   def event_photos_params
-    params.require(:event_photo).permit(:attachment)
+    params.require(:event_photo).permit(:attachment, :file)
   end
 end
