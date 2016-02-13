@@ -1,0 +1,19 @@
+{
+  "name": "whrsthat",
+  "homepage": "https://github.com/whrsthat/whrsthat",
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "material-design-lite": "~1.1.1",
+    "jquery": "~2.2.0"
+  }
+}
