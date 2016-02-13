@@ -21,6 +21,13 @@ class EventsController < ApplicationController
     @hash = Gmaps4rails.build_markers(@users_current_location) do |user, marker|
       marker.lat user.latitude
       marker.lng user.longitude
+      marker.picture({
+                    anchor: [40, 58], # added this optionally <- doesn't work either
+                    url: "#{view_context.image_path("http://people.mozilla.com/~faaborg/files/shiretoko/firefoxIcon/firefox-32.png") }",
+                    width: "44",
+                    height: "58"
+     })
+      marker.infowindow user.title
     end
   end
 

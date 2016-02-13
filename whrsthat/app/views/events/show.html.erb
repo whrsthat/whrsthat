@@ -33,8 +33,44 @@
 <%= link_to 'Back', events_path %>
 
 <script type="text/javascript">
+  var mapStyle = [
+    {
+        "stylers": [
+            {
+                "hue": "#dd0d0d"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "lightness": 100
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    }
+  ];
   handler = Gmaps.build('Google');
-  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  handler.buildMap({ 
+    provider: {  
+      zoom:      15,
+      styles:    mapStyle
+    }, 
+    internal: {id: 'map'}
+  }, function(){
     markers = handler.addMarkers(<%=raw @hash.to_json %>);
     handler.bounds.extendWith(markers);
     handler.fitMapToBounds();
