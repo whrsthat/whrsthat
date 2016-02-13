@@ -11,6 +11,7 @@
 /log/*
 !/log/.keep
 /tmp
+
 .env
-vendor/assets/components
+whrsthat/vendor/assets/components
 whrsthat/public/photos
