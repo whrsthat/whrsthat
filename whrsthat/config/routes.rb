@@ -28,6 +28,9 @@ Rails.application.routes.draw do
   
   resources :event_photo, only: [:index, :new, :create, :destroy]
 
+  resources :events do
+    resources :event_photos
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

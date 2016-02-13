@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160211184620) do
+ActiveRecord::Schema.define(version: 20160213170744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,12 +26,12 @@ ActiveRecord::Schema.define(version: 20160211184620) do
     t.string   "title"
     t.string   "caption"
     t.string   "time_at"
-    t.string   "event_img_url"
-    t.integer  "lng"
-    t.integer  "lat"
+    t.float    "longitude"
+    t.float    "latitude"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "user_id"
+    t.string   "event_address"
   end
 
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
@@ -47,6 +47,16 @@ ActiveRecord::Schema.define(version: 20160211184620) do
   add_index "invitees", ["event_id"], name: "index_invitees_on_event_id", using: :btree
   add_index "invitees", ["user_id"], name: "index_invitees_on_user_id", using: :btree
 
+  create_table "main_images", force: :cascade do |t|
+    t.string   "url"
+    t.string   "format"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "event_id"
+  end
+
+  add_index "main_images", ["event_id"], name: "index_main_images_on_event_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "phone"
     t.string   "fname"
@@ -61,4 +71,5 @@ ActiveRecord::Schema.define(version: 20160211184620) do
   add_foreign_key "events", "users"
   add_foreign_key "invitees", "events"
   add_foreign_key "invitees", "users"
+  add_foreign_key "main_images", "events"
 end

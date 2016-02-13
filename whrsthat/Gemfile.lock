@@ -44,15 +44,14 @@ GEM
       tzinfo (~> 1.1)
     arel (6.0.3)
     bcrypt (3.1.10)
+    better_errors (2.1.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
     byebug (8.2.2)
-    carrierwave (0.10.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      json (>= 1.7)
-      mime-types (>= 1.16)
     coderay (1.1.0)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -76,6 +75,7 @@ GEM
       i18n (~> 0.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    gmaps4rails (2.1.2)
     i18n (0.7.0)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
@@ -91,6 +91,8 @@ GEM
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (2.99)
+    mimemagic (0.3.1)
+    mini_magick (4.3.6)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
@@ -191,15 +193,18 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt
+  better_errors
   byebug
-  carrierwave
   coffee-rails (~> 4.1.0)
   dotenv-rails
   exifr!
   factory_girl
   faker
+  gmaps4rails
   jbuilder (~> 2.0)
   jquery-rails
+  mimemagic
+  mini_magick
   pg (~> 0.15)
   pry-rails
   rails (= 4.2.5.1)

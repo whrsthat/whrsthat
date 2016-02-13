@@ -16,6 +16,8 @@
 //= require material-design-lite/material.min.js
 //= require javascript.fullPage.min.js
 //= require javascript.fullPage.js
+//= require underscore
+//= require gmaps/google
 //= require_tree .
 
 $(function () {
@@ -23,11 +25,4 @@ $(function () {
 	'mdl-button mdl-js-button mdl-button--raised'.split(' ').forEach(($class) => {
 		$('button,input[type="submit"]').addClass($class);
 	});
-});
-
-$('#fullpage').fullpage({
-  sectionsColor: ['#1bbc9b', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff'],
-  anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage', 'lastPage'],
-  menu: '#menu',
-  slidesNavigation: true
 });
