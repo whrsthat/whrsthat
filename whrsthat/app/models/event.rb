@@ -1,12 +1,16 @@
 # require 'open-uri'
 require 'pry'
 require 'mimemagic'
+require 'exifr'
+require 'mini_magick'
+
 
 class Event < ActiveRecord::Base
 	belongs_to :user
 	has_many :invitees
 	has_many :event_photos
 	has_one  :main_image
+
 	#validates :url, presence: true 
 	attr_accessor :photo
 	#what is attr_accessor doing here and how does it work with the strong params?
@@ -16,7 +20,7 @@ class Event < ActiveRecord::Base
 			@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
 			#pass type to after save to add to file before local storage
 			if @format != 'jpeg'
-				errors.add(:photo => 'Please upload a jpeg')
+				errors.add(:photo => 'Please upload a jpeg file.')
 			end
 		end	
 	end
@@ -31,7 +35,13 @@ class Event < ActiveRecord::Base
 	        self.lat = ((photo_data.gps_latitude_ref == "S") ? (lat * -1) : lat)      # (N is +, S is -)
 
 	        #read about fileutils functionality
-	        FileUtils.cp(@photo.path, "public/photos/#{id}.jpg")
+	        # Open the tempfile using MiniMagick     (File -> Open)
+			image = MiniMagick::Image.open(@photo.path)
+			# perform any mini_magick operations
+			image.auto_orient
+			# write out the final product  (File -> Save)
+			image.write("public/photos/#{id}." + @format)
+	        # FileUtils.cp(@photo.path, "public/photos/#{id}." + @format)
 
 	        google_server_key = ENV['GOOGLE_SERVER_KEY']
 	 		google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{self.lat},#{self.lng}&key=#{google_server_key}")
@@ -46,4 +56,5 @@ class Event < ActiveRecord::Base
 			new_image.save()	
 		end
 	end
+
 end

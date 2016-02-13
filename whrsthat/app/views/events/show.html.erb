@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<!-- <img src="/photos/<%= @event.event_img_url %>"> -->
+<img src="/photos/<%= @event.id %>.jpeg">
 
 <p>
   <strong>Title:</strong>_
@@ -16,21 +16,6 @@
   <strong>Time at:</strong>
   <%= @event.time_at %>
 </p>
-
-<!-- <p>
-  <strong>Event img url:</strong>
-  <%= @event.event_img_url %>
-</p> -->
-
-<!-- <p>
-  <strong>Lng:</strong>
-  <%= @event.lng %>
-</p>
-
-<p>
-  <strong>Lat:</strong>
-  <%= @event.lat %>
-</p> -->
 
 <p><%= @event.event_address %></p>
 
