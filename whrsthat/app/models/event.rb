@@ -17,6 +17,7 @@ class Event < ActiveRecord::Base
 
 	validate do 
 		if @photo.present?
+			binding.pry
 			@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
 			#pass type to after save to add to file before local storage
 			if @format != 'jpeg'

@@ -31,8 +31,7 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    event_p = JSON.parse(JSON.generate(event_params))
-    @event = Event.new(event_p)
+    @event = Event.new(event_params)
 
     respond_to do |format|
       # tempfile = params[:event][:photo]
