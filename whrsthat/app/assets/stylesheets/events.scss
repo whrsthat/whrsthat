@@ -12,3 +12,26 @@
 .new-event i {
 
 }
+
+.events {
+  text-align: left;
+  padding: 3em;
+}
+
+.events > div {
+	display: inline-block;
+	margin-right: 1.5rem;
+	margin-bottom: 1.5rem;
+	text-align: left;
+}
+
+.events > div .mdl-card__title {
+	background-size: center / cover;
+	color: white;
+}
+
+.page-content {
+	max-width: none !important;
+	width: 100% !important;
+	margin: none !important;
+}

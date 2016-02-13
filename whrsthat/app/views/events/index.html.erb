@@ -3,9 +3,11 @@
 <h1>Listing Events</h1>
 
 <% if @events != nil %>
+  <div class="events">
   <% @events.each do |event| %>
     <%= render partial: "event", locals: { event: event } %>
   <% end %>
+  </div>
 <% end %>
 <div class="new-event">
   <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">

@@ -12,5 +12,6 @@
  *
  *= require_tree .
  *= require_self
+ *= require datetimepicker/jquery.datetimepicker.css
  *= require material-design-lite/material.min.css
  */

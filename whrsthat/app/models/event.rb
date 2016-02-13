@@ -3,7 +3,7 @@ require 'pry'
 require 'mimemagic'
 require 'exifr'
 require 'mini_magick'
-
+require 'date'
 
 class Event < ActiveRecord::Base
 	belongs_to :user
@@ -30,6 +30,10 @@ class Event < ActiveRecord::Base
 
 	def image_url
 		"/photos/#{self.id.to_s}.jpeg"
+	end
+
+	def date
+		self.time_at
 	end
 
 	after_save do
