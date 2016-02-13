@@ -13,7 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require material.min.js
+//= require material-design-lite/material.min.js
+//= require javascript.fullPage.min.js
+//= require javascript.fullPage.js
 //= require_tree .
 
 $(function () {

@@ -3,8 +3,6 @@ class UsersController < ApplicationController
 
   # GET /users
   # GET /users.json
-  def home
-  end
 
   def index
     @users = User.all
@@ -46,8 +44,6 @@ class UsersController < ApplicationController
       end
     end
   end
-
-# NoMethodError Users#login for user.each
 
   def login
     user = User.find_by(email: params['email'])

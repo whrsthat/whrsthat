@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>** Whrsthat? The Event Shouting App **</title>
+	<meta name="description" content="WhrsThat? is a new web app that makes sharing an active or future event easy and simple!" />
+	<link rel="canonical" href="http://whrsthat.github.io" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="WhrsThat? The Event Shouting App" />
+	<meta property="og:description" content="WhrsThat? is a new web application that makes sharing an active or future event easy and simple!" />
+	<meta property="og:url" content="http://whrsthat.github.io" />
+	<meta property="og:site_name" content="Super Missile Command Bros." />
+	<meta property="og:image" content="mugato_temp_logo.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:description" content="WhrsThat? is a new web application that makes sharing an active or future event easy and simple!" />
+	<meta name="twitter:title" content="WhrsThat? The Event Shouting App." />
+  <title>Whrsthat? The Event Shouting App</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+	<link rel="shortcut icon" type="image/x-icon" href="/mugatu_favicon.png">
+
+	<style>
+
+		/* fullPage Main */
+		body {
+			font-family: arial,helvetica;
+			color: #F2F2F2;
+		}
+
+		h1 {
+			font-size: 6em;
+		}
+
+		p {
+			font-size: 2em;
+		}
+
+		.content {
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+			text-align: center;
+		}
+
+		/* Section 1 */
+		#section0 {
+			background-color: #6532be;
+		}
+
+		#section0 h1 {
+			color: #fff;
+		}
+
+		#section0 p {
+			color: #333;
+			opacity: 0.4;
+		}
+
+		/* Section 2 */
+		#section1 {
+			background-color: #202020;
+		}
+
+		#section1 h1 {
+			color: #fff;
+		}
+
+		#section1 p {
+			opacity: 0.8;
+		}
+
+		/* transparent header */
+		.layout-transparent {
+			background: url('../assets/demos/transparent.jpg') center / cover;
+		}
+
+		.layout-transparent .mdl-layout__header,
+		.layout-transparent .mdl-layout__drawer-button {
+		/* Use 87% black if bg is light. */
+			color: white;
+		}
+
+		/* image card */
+		.card-wide.mdl-card {
+			width: 512px;
+		}
+
+		.card-wide > .mdl-card__title {
+			color: #fff;
+			height: 300px;
+			background: url('./pregame.jpg') center / cover;
+		}
+
+		.card-wide > .mdl-card__menu {
+			color: #fff;
+		}
+
+		/* miscellaneous */
+		.land-head {
+			/*color: #fff !important;*/
+			margin-bottom: 50px;
+		}
+
+	</style>
+</head>
+
+<body>
+
+<div class="layout-transparent mdl-layout mdl-js-layout">
+  <header class="mdl-layout__header mdl-layout__header--transparent">
+    <!-- js menu // material.min.js -->
+    <div class="mdl-layout__header-row">
+      <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="/">Home</a>
+      	<a class="mdl-navigation__link" href="/about">About</a>
+      	<a class="mdl-navigation__link" href="/contact">Contact</a>
+      	<a class="mdl-navigation__link" href="/login">Login</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Title</span>
+    <nav class="mdl-navigation">
+		<a class="mdl-navigation__link" href="/">Home</a>
+		<a class="mdl-navigation__link" href="/about">About</a>
+		<a class="mdl-navigation__link" href="/contact">Contact</a>
+		<a class="mdl-navigation__link" href="/login">Login</a>
+    </nav>
+  </div>
+</div>
+
+<%= yield %>
+
+</body>
+<script>
+fullpage.initialize('#fullpage', {
+    anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage', 'lastPage'],
+    menu: '#menu',
+    css3:false
+});
+/* ++ anchors: ['3rdPage', '4thpage', 'lastPage'] */
+</script>
+</html>
