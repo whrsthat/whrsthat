@@ -13,5 +13,5 @@
 /tmp
 
 .env
-whrsthat/vendor/assets/components
-whrsthat/public/photos
+vendor/assets/components
+public/photos
