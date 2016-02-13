@@ -18,17 +18,23 @@ class Event < ActiveRecord::Base
 	validate do 
 		if @photo.present?
 			@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
+			@photo_data = EXIFR::JPEG.new(@photo.path).exif
 			#pass type to after save to add to file before local storage
 			if @format != 'jpeg'
 				errors.add(:photo => 'Please upload a jpeg file.')
+			elsif !@photo_data
+				errors.add(:photo)
 			end
 		end	
 	end
 
+	def image_url
+		"/photos/#{self.id.to_s}.jpeg"
+	end
 
 	after_save do
 		if !self.lat && !self.lng
-	        photo_data = EXIFR::JPEG.new(@photo.path).exif
+	        photo_data = @photo_data
 	        lat = photo_data.gps_latitude[0].to_f + (photo_data.gps_latitude[1].to_f / 60) + (photo_data.gps_latitude[2].to_f / 3600)
 	        long = photo_data.gps_longitude[0].to_f + (photo_data.gps_longitude[1].to_f / 60) + (photo_data.gps_longitude[2].to_f / 3600)
 	        self.lng = ((photo_data.gps_longitude_ref == "W") ? (long * -1) : long)    # (W is -, E is +)
