@@ -67,15 +67,14 @@ class UsersController < ApplicationController
     access_token = JSON.parse(response.body)["access_token"]
 
     google_user = JSON.parse(open("https://www.googleapis.com/plus/v1/people/me?access_token=#{access_token}").read)
-    binding.pry
+
     user = User.create({
-
-      # google_user["displayName"]
-      # email = google_user["emails"][0]["value"]
-      # google_user["image"]["url"]
-
-
+      fname:         google_user["name"]["givenName"],
+      lname_initial: google_user["name"]["familyName"],
+      email:         google_user["emails"][0]["value"],
+      prof_img_url:  google_user["image"]["url"]
     })
+    binding.pry
 
     if user.save
       redirect_to('/events')
