@@ -21,7 +21,7 @@ class EventUser < ActiveRecord::Base
 		account_sid = ENV['TWILIO_SID']
 		auth_token = ENV['TWILIO_AUTH_TOKEN']
 
-		 = Twilio::REST::Client.new account_sid, auth_token
+		 Twilio::REST::Client.new account_sid, auth_token
 	end
 
 	after_save do
