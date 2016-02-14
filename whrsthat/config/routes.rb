@@ -33,9 +33,16 @@ Rails.application.routes.draw do
 
   resources :events do
 
-    resources :event_photos
+  resources :event_photos
   
   end
+
+  get 'auth/:provider/callback', to: 'users#google_create'
+  get 'auth/failure', to: redirect('/')
+  get 'signout', to: 'users#google_signout', as: 'signout'
+
+  post '/events/:id/invite' => 'events#invite'
+  delete '/events/:id/:invite_id' => 'events#invite_destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

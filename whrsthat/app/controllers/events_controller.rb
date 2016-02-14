@@ -15,7 +15,11 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @users_current_location = Event.find(params['id'])
+    @event = Event.find(params['id'])
+    @invites = EventUser.where(event_id: params['id'].to_i)
+    @new_invite = EventUser.new
     @hash = Gmaps4rails.build_markers(@users_current_location) do |user, marker|
+
       marker.lat user.latitude
       marker.lng user.longitude
       marker.picture({
@@ -24,6 +28,9 @@ class EventsController < ApplicationController
                     height: "90"
      })
       marker.infowindow user.title
+
+      current_user.local_ip = open('http://ifconfig.me/ip').read.gsub("\n", "")
+      current_user.save()
     end
   end
 
@@ -86,6 +93,23 @@ class EventsController < ApplicationController
     end
   end
 
+  def invite 
+    in_params = invite_params.clone
+    @event = Event.find(params['id'])
+    in_params['event_id'] = @event.id
+    @new_invite = EventUser.new(in_params)
+    @new_invite.save()
+    @invites = EventUser.where(event_id: params['id'].to_i)
+    render :show
+  end
+
+  def invite_destroy 
+    invite = EventUser.find(params['invite_id'])
+    invite.destroy
+
+    render :nothing => true, :status => 200, :content_type => 'text/plain'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event    
@@ -95,5 +119,9 @@ class EventsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
       params.require(:event).permit(:title, :caption, :time_at, :event_img_url, :lng, :lat, :photo)
+    end
+
+    def invite_params
+      params.require(:event_user).permit(:number, :event_id)
     end
 end
