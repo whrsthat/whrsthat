@@ -21,6 +21,12 @@ Rails.application.routes.draw do
   get '/contact' => 'users#contact'
   post '/login' => 'users#login'
   get '/event_photo' => 'event_photos_controller#index'
+
+
+  get 'auth/:provider/callback', to: 'users#google_create'
+  get 'auth/failure', to: redirect('/')
+  get 'signout', to: 'users#google_signout', as: 'signout'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

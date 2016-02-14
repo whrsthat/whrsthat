@@ -59,7 +59,8 @@ nav a:hover {
         <a class="mdl-navigation__link" href="/">Home</a>
         <a class="mdl-navigation__link" href="/about">About</a>
         <a class="mdl-navigation__link" href="/contact">Contact</a>
-        <a class="mdl-navigation__link" href="/login">Login</a>
+        <!-- <a class="mdl-navigation__link" href="/login">Login</a> -->
+        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
       </nav>
     </div>
   </header>
