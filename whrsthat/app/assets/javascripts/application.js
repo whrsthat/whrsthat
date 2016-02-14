@@ -12,14 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require datetimepicker/jquery.datetimepicker.js
 //= require turbolinks
 //= require lodash/dist/lodash.min.js
 //= require gmaps/google
-//= require datetimepicker/jquery.datetimepicker.js
 //= require material-design-lite/material.min.js
 //= require javascript.fullPage.min.js
 //= require javascript.fullPage.js
-//= require underscore
 //= require gmaps/google
 //= require_tree .
 
