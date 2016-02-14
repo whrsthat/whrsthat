@@ -38,6 +38,7 @@ gem 'exifr', :git => 'git://github.com/picuous/exifr.git'
 gem 'mini_magick'
 gem 'mimemagic'
 gem 'gmaps4rails'
+gem 'geocoder'
 gem 'omniauth-google-oauth2', "~> 0.2.1"
 
 group :development, :test do
