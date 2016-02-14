@@ -16,4 +16,16 @@
 //= require lodash/dist/lodash.min.js
 //= require gmaps/google
 //= require datetimepicker/jquery.datetimepicker.js
+//= require material-design-lite/material.min.js
+//= require javascript.fullPage.min.js
+//= require javascript.fullPage.js
+//= require underscore
+//= require gmaps/google
 //= require_tree .
+
+$(function () {
+	$('input[type="password"]').addClass('mdl-textfield__input')
+	'mdl-button mdl-js-button mdl-button--raised'.split(' ').forEach(($class) => {
+		$('button,input[type="submit"]').addClass($class);
+	});
+});

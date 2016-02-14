@@ -1,3 +1,8 @@
+<% 
+  def field_class
+    "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+  end
+%>
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -11,27 +16,37 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :phone %><br>
-    <%= f.text_field :phone %>
+  <div class="<%= field_class %>">
+    <%= f.label :phone, :class => 'mdl-textfield__label' %>
+    <%= f.text_field :phone, :class => 'mdl-textfield__input' %>
   </div>
-  <div class="field">
-    <%= f.label :fname %><br>
-    <%= f.text_field :fname %>
+  <div class="<%= field_class %>">
+    <%= f.label :First_name, :class => 'mdl-textfield__label' %>
+    <%= f.text_field :fname, :class => 'mdl-textfield__input' %>
   </div>
-  <div class="field">
-    <%= f.label :lname_initial %><br>
-    <%= f.text_field :lname_initial %>
+  <div class="<%= field_class %>">
+    <%= f.label :Last_name, :class => 'mdl-textfield__label' %>
+    <%= f.text_field :lname_initial, :class => 'mdl-textfield__input' %>
+  <br/>
   </div>
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
+  <div class="<%= field_class %>">
+    <%= f.label :email, :class => 'mdl-textfield__label' %>
+    <%= f.text_field :email,:class => 'mdl-textfield__input' %>
+  <br/>
   </div>
-  <div class="field">
-    <%= f.label :prof_img_url %><br>
-    <%= f.text_field :prof_img_url %>
+  <div class="<%= field_class %>">
+    <%= f.label :password,:class => 'mdl-textfield__label' %>
+    <%= password_field_tag :password,:class => 'mdl-textfield__input'  %>
+ </div>
+ <!--
+  Use vvvv  for upload button
+  http://codepen.io/akhmed_gaziev/pen/JdVQQm 
+-->
+  <div class="mdl-textfield mdl-js-textfield textfield-demo">
+    <%= f.file_field :prof_img_url, :class => 'file_input_text mdl-textfield__input' %>
+    <label class="mdl-textfield__label" for="file_input_text"></label>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="<%= field_class %>">
+    <%= f.submit :class => 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' %>
   </div>
 <% end %>
