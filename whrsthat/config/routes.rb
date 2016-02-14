@@ -22,7 +22,9 @@ Rails.application.routes.draw do
   post '/login' => 'users#login'
   get '/login' => 'users#login'
   get '/event_photo' => 'event_photos_controller#index'
-  get '/logout' => 'users#logout'
+  get '/login' => 'users#login'
+  post '/events/:id/invite' => 'events#invite'
+  delete '/events/:id/:invite_id' => 'events#invite_destroy'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
