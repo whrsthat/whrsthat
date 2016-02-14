@@ -13,25 +13,25 @@
 
   <% 
     def input_class
-      ""
+      "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
     end
   %>
 
   <div class="<%= input_class %>">
-    <%= f.label :title %>
-    <%= f.text_field :title  %>
+    <%= f.label :title, :class => 'mdl-textfield__label' %>
+    <%= f.text_field :title,  :class => 'mdl-textfield__input' %>
   </div>
   <div class="<%= input_class %>">
-    <%= f.label :caption %>
-    <%= f.text_field :caption %>
+    <%= f.label :caption, :class => 'mdl-textfield__label' %>
+    <%= f.text_field :caption, :class => 'mdl-textfield__input' %>
   </div>
   <div class="<%= input_class %>">
-    <%= f.label :time_at %>
-    <%= f.text_field :time_at %>
+    <%= f.label :time_at, :class => 'mdl-textfield__label' %>
+    <%= f.text_field :time_at, :class => 'mdl-textfield__input' %>
   </div>
   <div class="<%= input_class %>">
-    <%= f.label :photo %>
-    <%= f.file_field :photo %>
+    <%= f.label :photo, :class => 'mdl-textfield__label' %>
+    <%= render partial: 'upload', locals: { } %>
   </div>
 
   <div class="actions">

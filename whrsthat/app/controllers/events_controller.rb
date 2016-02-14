@@ -6,7 +6,9 @@ require 'gmaps4rails'
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
-
+  def current_user
+    session[:user]
+  end
 
   # GET /events
   # GET /events.json

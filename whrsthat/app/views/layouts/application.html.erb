@@ -59,7 +59,11 @@ nav a:hover {
         <a class="mdl-navigation__link" href="/">Home</a>
         <a class="mdl-navigation__link" href="/about">About</a>
         <a class="mdl-navigation__link" href="/contact">Contact</a>
+        <% if current_user == nil %>
         <a class="mdl-navigation__link" href="/login">Login</a>
+        <% else %>
+        <a class="mdl-navigation__link" href="/logout">Logout</a>
+        <% end %>
       </nav>
     </div>
   </header>
