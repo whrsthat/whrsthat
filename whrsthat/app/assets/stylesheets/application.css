@@ -12,6 +12,7 @@
  *
  *= require datetimepicker/jquery.datetimepicker.css
  *= require material-design-lite/material.min.css
+ *= require javascript.fullPage.css
  *= require_tree .
  *= require_self
  */

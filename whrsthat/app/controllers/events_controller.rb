@@ -2,10 +2,8 @@ require 'pry'
 require 'exifr' 
 require 'gmaps4rails'
 
-
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-
 
   # GET /events
   # GET /events.json
@@ -16,8 +14,8 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @users_current_location = Event.find(params['id'])
-    @hash = Gmaps4rails.build_markers(@users_current_location) do |user, marker|
+    @event_current_location = Event.find(params['id'])
+    @hash = Gmaps4rails.build_markers(@event_current_location) do |user, marker|
       marker.lat user.latitude
       marker.lng user.longitude
       marker.picture({
@@ -26,6 +24,9 @@ class EventsController < ApplicationController
                     height: "90"
      })
       marker.infowindow user.title
+
+      current_user.local_ip = open('http://ifconfig.me/ip').read.gsub("\n", "")
+      current_user.save()
     end
   end
 

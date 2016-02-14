@@ -1,4 +1,19 @@
 Rails.application.routes.draw do
+  
+  get '/' => 'main#home'
+
+  get '/about' => 'main#about'
+
+  get '/contact' => 'main#contact'
+
+  get '/login' => 'users#login'
+  
+  post '/login' => 'users#login'
+
+  get '/logout' => 'users#logout'
+  
+  get '/event_photo' => 'event_photos_controller#index'
+  
   get 'event_photos_controller/index'
 
   get 'event_photos_controller/new'
@@ -6,23 +21,32 @@ Rails.application.routes.draw do
   get 'event_photos_controller/create'
 
   get 'event_photos_controller/destroy'
+  
 
   resources :invitees 
-  resources :events
+  
   resources :users
+
+  resources :events
+  
   resources :event_photo, only: [:index, :new, :create, :destroy]
 
   resources :events do
-    resources :event_photos
+
+  resources :event_photos
+  
   end
 
   get '/' => 'users#home'
   get '/about' => 'users#about'
   get '/contact' => 'users#contact'
   post '/login' => 'users#login'
-  get '/login' => 'users#login'
   get '/event_photo' => 'event_photos_controller#index'
-  get '/logout' => 'users#logout'
+
+  get 'auth/:provider/callback', to: 'users#google_create'
+  get 'auth/failure', to: redirect('/')
+  get 'signout', to: 'users#google_signout', as: 'signout'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
