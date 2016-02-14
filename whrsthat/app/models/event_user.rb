@@ -13,6 +13,10 @@ class EventUser < ActiveRecord::Base
 		(self.user_id && User.find(self.user_id)) || nil
 	end
 
+	def event_author 
+		User.find(event.user_id)
+	end
+
 	def set_default_values
 		self.accepted ||= false
 	end
@@ -23,6 +27,11 @@ class EventUser < ActiveRecord::Base
 
 		@twilio ||= Twilio::REST::Client.new account_sid, auth_token
 	
+
+	end
+
+	def message_body
+		""
 	end
 
 	after_save do
