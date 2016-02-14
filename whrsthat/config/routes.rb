@@ -37,15 +37,12 @@ Rails.application.routes.draw do
   
   end
 
-  get '/' => 'users#home'
-  get '/about' => 'users#about'
-  get '/contact' => 'users#contact'
-  post '/login' => 'users#login'
-  get '/event_photo' => 'event_photos_controller#index'
-
   get 'auth/:provider/callback', to: 'users#google_create'
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'users#google_signout', as: 'signout'
+
+  post '/events/:id/invite' => 'events#invite'
+  delete '/events/:id/:invite_id' => 'events#invite_destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
