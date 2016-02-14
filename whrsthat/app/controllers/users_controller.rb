@@ -78,7 +78,6 @@ class UsersController < ApplicationController
       email:         google_user["emails"][0]["value"],
       prof_img_url:  google_user["image"]["url"]
     })
-    binding.pry
 
     if user.save
       redirect_to('/events')
