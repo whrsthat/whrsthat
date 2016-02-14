@@ -1,4 +1,8 @@
-<% if @error %>
-	<h3>Sorry, that username / password combination did not work. Please try again.</h3>
+<div>
+	<% if @error %>
+		<h3>Sorry, that username / password combination did not work. Please try again.</h3>
+	<% else %>
+		<h3>Login to WhrsThat</h3>
 	<% end %>
+	<%= render partial: 'login', locals: { user: @user } %>
 </div>

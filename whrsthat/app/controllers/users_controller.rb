@@ -2,8 +2,14 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
-  # GET /users.json
-  def home
+  # GET /users.jso
+
+  def home  
+    if current_user != nil
+      redirect_to '/events'
+    else
+      render 'users/home'
+    end
   end
 
   def index
@@ -26,6 +32,8 @@ class UsersController < ApplicationController
 
   def set_session(user)
     session[:user_name] = user.email
+    session[:user] = user.id
+    @user = current_user
     @name = session[:user_name]
   end
 
@@ -50,18 +58,22 @@ class UsersController < ApplicationController
 # NoMethodError Users#login for user.each
 
   def login
-    user = User.find_by(email: params['email'])
-      # checks the db for a user that matches the name submitted.
+    if params['email'] && params['password']
+      user = User.find_by(email: params['email'])
+        # checks the db for a user that matches the name submitted.
 
-    if user && user.authenticate(params['password'])
-      #if user exists and password is legit then.....
-      set_session user
+      if user && user.authenticate(params['password'])
+        #if user exists and password is legit then.....
+        set_session user
 
-      render 'events/index'
+        render 'events/index'
 
+      else
+        @error = true
+        render :home
+      end
     else
-      @error = true
-      render :home
+      render 'users/login'
     end
   end
 
@@ -87,6 +99,12 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def logout
+    reset_session
+    @user = nil
+    redirect_to('/login')
   end
 
   private
