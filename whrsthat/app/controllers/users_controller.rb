@@ -1,17 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  # GET /users
-  # GET /users.jso
-
-  def home  
-    if current_user != nil
-      redirect_to '/events'
-    else
-      render 'users/home'
-    end
-  end
-
   def index
     @users = User.all
   end
@@ -55,8 +44,6 @@ class UsersController < ApplicationController
     end
   end
 
-# NoMethodError Users#login for user.each
-
   def login
     if params['email'] && params['password']
       user = User.find_by(email: params['email'])
@@ -70,7 +57,7 @@ class UsersController < ApplicationController
 
       else
         @error = true
-        render :home
+        render 'main/home'
       end
     else
       render 'users/login'
