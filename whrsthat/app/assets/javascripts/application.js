@@ -19,7 +19,6 @@
 //= require material-design-lite/material.min.js
 //= require javascript.fullPage.min.js
 //= require javascript.fullPage.js
-//= require underscore
 //= require gmaps/google
 //= require_tree .
 
