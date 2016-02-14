@@ -57,7 +57,7 @@ class UsersController < ApplicationController
 
     else
       @error = true
-      render :home
+      render 'main/home'
     end
   end
 
