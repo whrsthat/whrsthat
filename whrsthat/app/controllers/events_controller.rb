@@ -2,11 +2,8 @@ require 'pry'
 require 'exifr' 
 require 'gmaps4rails'
 
-
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-
-
 
   # GET /events
   # GET /events.json
@@ -48,8 +45,8 @@ class EventsController < ApplicationController
     ev_params = event_params.clone
 
     ev_params[:time_at]  = Time.parse(ev_params[:time_at])
-    ev_params[:user_id] = session[:user_id]
-    @event = Event.new(ev_params)
+    ev_params[:user_id] = current_user.id
+    @event = Event.new(ev_params, params[:event][:photo])
 
     respond_to do |format|
       # tempfile = params[:event][:photo]

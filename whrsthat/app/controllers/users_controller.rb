@@ -1,10 +1,7 @@
+require 'open-uri'
+
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
-  # GET /users
-  # GET /users.json
-  def home
-  end
 
   def index
     @users = User.all
@@ -24,14 +21,23 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def set_session(user)
+    session[:user_name] = user.email
+    session[:user] = user.id
+    @user = current_user
+    @name = session[:user_name]
+  end
+
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
-
+    tmp_obj = JSON.parse(JSON.generate(user_params))
+    tmp_obj['password'] = params['password']
+    @user = User.new( tmp_obj )
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        set_session @user
+        format.html { render 'events/index', notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -42,25 +48,63 @@ class UsersController < ApplicationController
 
 # NoMethodError Users#login for user.each
 
-  def login
-    user = User.find_by(email: params['email'])
-      # checks the db for a user that matches the name submitted.
+  def google_create
+    code = params[:code]
+    our_url = "https://d076d188.ngrok.io"
 
-    if user && user.authenticate(params['password'])
-      #if user exists and password is legit then.....
-      
-      session[:user_name] = user.email
-      session[:user_id] = user.id
-      @name = session[:user_name]
+    form = {
+        :code => code,
+        :client_id => ENV['GOOGLE_OAUTH_CLIENT_ID'],
+        :client_secret => ENV['GOOGLE_OAUTH_CLIENT_SECRET'],
+        :grant_type => 'authorization_code',
+        :redirect_uri => "#{our_url}/auth/google_oauth2/callback"
+      }
 
-      cookies[:email]=user.email
-      cookies[:sess_age]= {:value => 'Expires in one hour.', :expires => Time.now + 60}
+    uri = URI.parse("https://www.googleapis.com")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    request = Net::HTTP::Post.new("/oauth2/v4/token")
+    request.set_form_data form
+    response = http.request(request)
 
-      render 'events/index'
+    access_token = JSON.parse(response.body)["access_token"]
 
+    google_user = JSON.parse(open("https://www.googleapis.com/plus/v1/people/me?access_token=#{access_token}").read)
+
+    user = User.create({
+      fname:         google_user["name"]["givenName"],
+      lname_initial: google_user["name"]["familyName"],
+      email:         google_user["emails"][0]["value"],
+      prof_img_url:  google_user["image"]["url"]
+    })
+
+    if user.save
+      redirect_to('/events')
     else
-      @error = true
-      render :index
+      redirect_to('/login')
+
+    end
+
+  end
+
+  def login
+    if params['email'] && params['password']
+      user = User.find_by(email: params['email'])
+        # checks the db for a user that matches the name submitted.
+
+      if user && user.authenticate(params['password'])
+        #if user exists and password is legit then.....
+        set_session user
+
+        render 'events/index'
+
+      else
+        @error = true
+        render 'main/home'
+      end
+    else
+      render 'users/login'
     end
   end
 
@@ -88,6 +132,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def logout
+    reset_session
+    @user = nil
+    redirect_to('/login')
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -96,6 +146,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :prof_img_url)
+      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :password_digest, :prof_img_url)
     end
 end
