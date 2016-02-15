@@ -23,10 +23,37 @@
   <%= csrf_meta_tags %>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <link rel="shortcut icon" type="image/x-icon" href="/mugatu_favicon.png">
+
 </head>
 
 <body>
 
+<% if @homepage %>
+<div class="layout-transparent mdl-layout mdl-js-layout">
+  <header class="mdl-layout__header mdl-layout__header--transparent">
+    <!-- js menu // material.min.js -->
+    <div class="mdl-layout__header-row">
+      <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="/">Home</a>
+        <a class="mdl-navigation__link" href="/about">About</a>
+        <a class="mdl-navigation__link" href="/contact">Contact</a>
+        <a class="mdl-navigation__link" href="/login">Login</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
+    <nav class="mdl-navigation">
+    <a class="mdl-navigation__link" href="/">Home</a>
+    <a class="mdl-navigation__link" href="/about">About</a>
+    <a class="mdl-navigation__link" href="/contact">Contact</a>
+    <a class="mdl-navigation__link" href="/login">Login</a>
+    </nav>
+  </div>
+</div>
+<% else %>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <!-- js menu // material.min.js -->
@@ -38,8 +65,8 @@
         <a class="mdl-navigation__link" href="/about">About</a>
         <a class="mdl-navigation__link" href="/contact">Contact</a>
         <!-- <a class="mdl-navigation__link" href="/login">Login</a> -->
-        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
         <% if current_user == nil %>
+        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
         <a class="mdl-navigation__link" href="/login">Login</a>
         <% else %>
         <a class="mdl-navigation__link" href="/logout">Logout</a>
@@ -59,12 +86,25 @@
 
 <main class="mdl-layout__content">
   <div class="page-content">
-    	
+<% end %>
+
     <%= yield %>
 
+<% if !(@homepage) %>
   </div>
 </main>
-
 </div>
+<% end %>
+
 </body>
+<% if @homepage %>
+<script>
+fullpage.initialize('#fullpage', {
+    anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage', 'lastPage'],
+    menu: '#menu',
+    css3:false
+});
+/* ++ anchors: ['3rdPage', '4thpage', 'lastPage'] */
+</script>
+<% end %>
 </html>
