@@ -18,6 +18,10 @@
   padding: 3em;
 }
 
+.events .mdl-card__title h4  {
+	color: white;
+}
+
 .events > div {
 	display: inline-block;
 	margin-right: 1.5rem;
@@ -43,4 +47,60 @@
 
 .events .map-container div {
 	display: inline-block;
+}
+
+.events .delete {
+	position: relative;
+	right: 0;
+}
+
+.title {
+	text-align: center;
+	width: 100%;
+}
+
+.photo {
+	display: inline-block;
+}
+
+#map {
+	display: inline-block;
+	width: 100%;
+	height: 300px;
+}
+
+.middle > div {
+	padding: 4em;
+}
+
+.bottom {
+	text-align: center;
+}
+
+.bottom > div {
+	display: inline-block;
+	margin: 0 auto;
+}
+
+.info-container {
+	text-align: left;
+}
+
+.add-on {
+
+}
+
+section.invite {
+	text-align:center;
+}
+
+section.invite ul {
+	display: inline-block;
+}
+
+
+.toggle {
+	width: 2em;
+	position: absolute;
+	right: 10em;
 }

@@ -12,11 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require datetimepicker/jquery.datetimepicker.js
 //= require turbolinks
 //= require lodash/dist/lodash.min.js
 //= require gmaps/google
-//= require datetimepicker/jquery.datetimepicker.js
 //= require material-design-lite/material.min.js
+//= require javascript.fullPage.min.js
+//= require javascript.fullPage.js
+//= require gmaps/google
 //= require_tree .
 
 $(function () {
@@ -25,3 +28,30 @@ $(function () {
 		$('button,input[type="submit"]').addClass($class);
 	});
 });
+
+function geoFindUser() {
+
+	function success(position) {
+		var latitude  = position.coords.latitude;
+		var longitude = position.coords.longitude;
+
+
+	 	$.ajax({
+	        type: 'POST',
+	        url: `/users/geo`,
+	        data: { latitude: latitude, longitude: longitude }
+    	});
+	};
+
+	// function error() {
+	// 	output.innerHTML = "Unable to retrieve your location";
+	// };
+
+	navigator.geolocation.getCurrentPosition(success, function () {
+		clearInterval(window.locationInterval);
+	});
+
+}
+
+//window.locationInterval = setInterval(geoFindUser, 3000);
+

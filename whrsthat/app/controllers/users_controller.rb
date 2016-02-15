@@ -1,10 +1,8 @@
+require 'open-uri'
+
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
-  # GET /users
-  # GET /users.json
-  def home
-  end
+  protect_from_forgery with: :null_session
 
   def index
     @users = User.all
@@ -17,6 +15,10 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    reset_session
+    if request.referer
+      session[:referer] = request.referer
+    end
     @user = User.new
   end
 
@@ -26,6 +28,8 @@ class UsersController < ApplicationController
 
   def set_session(user)
     session[:user_name] = user.email
+    session[:user] = user.id
+    @user = current_user
     @name = session[:user_name]
   end
 
@@ -35,33 +39,102 @@ class UsersController < ApplicationController
     tmp_obj = JSON.parse(JSON.generate(user_params))
     tmp_obj['password'] = params['password']
     @user = User.new( tmp_obj )
-    respond_to do |format|
-      if @user.save
-        set_session @user
-        format.html { render 'events/index', notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      set_session @user
+        if session[:referer] 
+          redirect_to session[:referer]
+        else
+          redirect_to '/events'
+        end
+    else
+      render :new 
     end
   end
 
 # NoMethodError Users#login for user.each
 
-  def login
-    user = User.find_by(email: params['email'])
-      # checks the db for a user that matches the name submitted.
+  def google_create
+    code = params[:code]
+    our_url = ENV['EXTERNAL_URL']
 
-    if user && user.authenticate(params['password'])
-      #if user exists and password is legit then.....
-      set_session user
+    form = {
+        :code => code,
+        :client_id => ENV['GOOGLE_OAUTH_CLIENT_ID'],
+        :client_secret => ENV['GOOGLE_OAUTH_CLIENT_SECRET'],
+        :grant_type => 'authorization_code',
+        :redirect_uri => "#{our_url}/auth/google_oauth2/callback"
+      }
 
-      render 'events/index'
+    uri = URI.parse("https://www.googleapis.com")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    request = Net::HTTP::Post.new("/oauth2/v4/token")
+    request.set_form_data form
+    response = http.request(request)
 
+    access_token = JSON.parse(response.body)["access_token"]
+
+    google_user = JSON.parse(open("https://www.googleapis.com/plus/v1/people/me?access_token=#{access_token}").read)
+
+    user = User.create({
+      fname:         google_user["name"]["givenName"],
+      lname_initial: google_user["name"]["familyName"],
+      email:         google_user["emails"][0]["value"],
+      prof_img_url:  google_user["image"]["url"]
+    })
+
+    set_session user
+
+    if user.save
+      redirect_to('/events')
     else
-      @error = true
-      render :home
+      redirect_to('/login')
+
+    end
+
+  end
+
+  def geo
+    if current_user != nil
+      latitude = params["latitude"].to_f
+      longitude = params["longitude"].to_f
+      current_user.latitude = latitude
+      current_user.longitude = longitude
+      current_user.save
+    end
+
+    render :nothing => true, :status => 204
+  end
+
+
+  def login
+    if request.method == 'POST'
+      user = User.find_by(email: params['email'])
+        # checks the db for a user that matches the name submitted.
+
+      if user && user.authenticate(params['password'])
+        #if user exists and password is legit then.....
+        set_session user
+
+        if session[:referer] 
+          redirect_to session[:referer]
+        else
+          redirect_to '/events'
+        end
+      else
+        @error = true
+        render 'users/login'
+      end
+    else
+      if current_user == nil
+        if request.referer
+          session[:referer] = request.referer
+        end
+        render 'users/login'
+      else
+        redirect_to('/events')
+      end
     end
   end
 
@@ -87,6 +160,12 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def logout
+    reset_session
+    @user = nil
+    redirect_to('/login')
   end
 
   private

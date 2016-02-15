@@ -8,7 +8,6 @@ div.mdl-textfield {
 	position: relative;
 }
 
-
 body {
   display: flex;
 }
@@ -35,4 +34,23 @@ body {
 
 .mdl-button {
 	
+}
+
+.file_input_div {
+  margin-right: 0;
+}
+
+#file_input_text {
+  border-bottom: none;
+}
+
+.file_input_box {
+  margin-left: 5em;
+}
+
+.login-container {
+  width: 300px; left: 40%; position: relative;
+}
+.no_user {
+  opacity: .25;
 }

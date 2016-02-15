@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  
+  get '/' => 'main#home'
+
+  get '/about' => 'main#about'
+
+  get '/contact' => 'main#contact'
+
+  get '/login' => 'users#login'
+  
+  get '/logout' => 'users#logout'
+  
+  get '/event_photo' => 'event_photos_controller#index'
+  
   get 'event_photos_controller/index'
 
   get 'event_photos_controller/new'
@@ -6,21 +19,37 @@ Rails.application.routes.draw do
   get 'event_photos_controller/create'
 
   get 'event_photos_controller/destroy'
+  
+  post '/api/text/inbound' => 'invitees#text'
+  
+  get 'auth/:provider/callback', to: 'users#google_create'
+
+  get 'auth/failure', to: redirect('/')
+
+  # get 'signout', to: 'users#google_signout', as: 'signout'
+
+  post '/login' => 'users#login'
+  
+  post '/events/:id/invite' => 'events#invite'
+  
+  
+  delete '/events/:id/:invite_id' => 'events#invite_destroy'
 
   resources :invitees 
-  resources :events
+  
   resources :users
+
+  resources :events
+  
   resources :event_photo, only: [:index, :new, :create, :destroy]
 
   resources :events do
-    resources :event_photos
-  end
 
-  get '/' => 'users#home'
-  get '/about' => 'users#about'
-  get '/contact' => 'users#contact'
-  post '/login' => 'users#login'
+  resources :event_photos
+  
+  end
   get '/event_photo' => 'event_photos_controller#index'
+
   get '/uber/me' => 'rides#user_info'
   get '/uber/history' => 'rides#user_activities'
   post '/uber/requests' => 'rides#requests'
@@ -29,6 +58,16 @@ Rails.application.routes.draw do
   get '/uber/estimates/time' => 'rides#time'
   get '/uber/estimates/price' => 'rides#price'
   
+
+  get 'auth/:provider/callback', to: 'users#google_create'
+  get 'auth/failure', to: redirect('/')
+  get 'signout', to: 'users#google_signout', as: 'signout'
+  post '/users/geo' => "users#geo"
+
+  get '/rsvp/:id' => 'invitees#show'
+  post '/rsvp/:id/respond' => 'invitees#respond'
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

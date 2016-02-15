@@ -1,9 +1,28 @@
-<p id="notice"><%= notice %></p>
+<div class="mdl-grid">
+	<% if current_user == nil %>
+		<div class="mdl-cell mdl-cell--12-col">
+			<h3>	
+				Create an account to respond to <%= @invite.event_author.name %>'s invite 
+			</h3>
+			<div>
+				<button class="create mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='button'>Create an Account</button>
+			</div>
+		</div>
+	</div>
+	<% end %>
 
-<p>
-  <strong>Attending:</strong>
-  <%= @invitee.attending %>
-</p>
 
-<%= link_to 'Edit', edit_invitee_path(@invitee) %> |
-<%= link_to 'Back', invitees_path %>
+<div class="mdl-grid invitee <%= current_user ? '' : 'no_user' %>">
+  <div class="mdl-cell mdl-cell--6-col">
+  	<h5 class="status"></h5>
+  	<%= render partial: 'event', locals: { event: @invite.event, invite: @invite } %>
+  </div>
+  <div class="mdl-cell mdl-cell--6-col">
+  	Your friend <b><%= "#{@invite.event_author.fname} #{@invite.event_author.lname_initial}" %></b> has invited you to this event
+  </div>
+</div>
+<% if current_user == nil %>
+<script>
+	$('.invitee').find('button').attr('disabled', 'true');
+</script>
+<% end %>
