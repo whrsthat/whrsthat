@@ -15,6 +15,10 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    reset_session
+    if request.referer
+      session[:referer] = request.referer
+    end
     @user = User.new
   end
 
@@ -35,15 +39,15 @@ class UsersController < ApplicationController
     tmp_obj = JSON.parse(JSON.generate(user_params))
     tmp_obj['password'] = params['password']
     @user = User.new( tmp_obj )
-    respond_to do |format|
-      if @user.save
-        set_session @user
-        format.html { render 'events/index', notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      set_session @user
+        if session[:referer] 
+          redirect_to session[:referer]
+        else
+          redirect_to '/events'
+        end
+    else
+      render :new 
     end
   end
 
@@ -51,7 +55,7 @@ class UsersController < ApplicationController
 
   def google_create
     code = params[:code]
-    our_url = "https://71398c44.ngrok.io"
+    our_url = ENV['EXTERNAL_URL']
 
     form = {
         :code => code,
@@ -105,7 +109,7 @@ class UsersController < ApplicationController
 
 
   def login
-    if params['email'] && params['password']
+    if request.method == 'POST'
       user = User.find_by(email: params['email'])
         # checks the db for a user that matches the name submitted.
 
@@ -113,14 +117,24 @@ class UsersController < ApplicationController
         #if user exists and password is legit then.....
         set_session user
 
-        render 'events/index'
-
+        if session[:referer] 
+          redirect_to session[:referer]
+        else
+          redirect_to '/events'
+        end
       else
         @error = true
         render 'users/login'
       end
     else
-      render 'users/login'
+      if current_user == nil
+        if request.referer
+          session[:referer] = request.referer
+        end
+        render 'users/login'
+      else
+        redirect_to('/events')
+      end
     end
   end
 

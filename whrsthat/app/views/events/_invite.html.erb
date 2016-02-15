@@ -1,7 +1,7 @@
 <li class="mdl-list__item invitation" data-id="<%= invite.id %>">
   <span class="mdl-list__item-primary-content">
   <i class="material-icons mdl-list__item-icon"><%= 
-  	!invite.accepted ? 'assignment ind' : 'assignment turned in'
+  	invite.accepted == nil ? 'assignment ind' : (invite.accepted ? 'done' : 'delete')
   %></i>
   	<% if invite.user == nil %>
   		<span><%= invite.number %></span>
@@ -9,7 +9,9 @@
   		<span><%= invite.user.fname %> <%= invite.user.lname_initial %></span>
   	<% end %>
   </span>
+  <% if invite.accepted == nil %>
   <button class="delete mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
     <i class="material-icons mdl-list__item-icon">delete</i>
   </button>
+  <% end %>
 </li>

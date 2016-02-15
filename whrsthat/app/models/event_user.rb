@@ -10,7 +10,7 @@ class EventUser < ActiveRecord::Base
 	end
 
 	def user
-		(self.user_id && User.find(self.user_id)) || nil
+		User.find_by(:phone => self.number)
 	end
 
 	def event_author 
@@ -21,6 +21,10 @@ class EventUser < ActiveRecord::Base
 		self.accepted ||= false
 	end
 
+	def event_author
+		User.find(event.user_id)
+	end
+
 	def twilio 
 		account_sid = ENV['TWILIO_SID']
 		auth_token = ENV['TWILIO_AUTH_TOKEN']
@@ -29,15 +33,26 @@ class EventUser < ActiveRecord::Base
 	end
 
 	def message_body
-		"Hello! #{event_author.fname} has sent you an invite! Please check URL for details."
+		base = "#{event_author.fname} #{event_author.lname_initial} has invited you to the event #{event.title}, which will be at #{event.event_address} #{event.date} at #{event.time}"
+		if user
+			base += " Text Y to RSVP or N to decline"
+		else
+			base += " Click #{ENV['EXTERNAL_URL']}/rsvp/#{event.id} to rsvp"
+		end
 	end
 
 	after_save do
-		twilio.messages.create(
-			from: '+16467624288',
-			to: '+15167545877',
-			body: message_body
-		)
-		number = self.number
+		if self.accepted == nil
+			# Twilio code goes here
+			number = self.number
+
+			twilio.messages.create(
+				from: ENV['TWILIO_FROM_NUMBER'],
+				to: self.number,
+				body: message_body
+			)
+
+		end
+
 	end
 end

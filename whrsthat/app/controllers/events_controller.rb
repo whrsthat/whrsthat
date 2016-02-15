@@ -33,7 +33,11 @@ class EventsController < ApplicationController
 
       current_user.local_ip = open('http://ifconfig.me/ip').read.gsub("\n", "")
       current_user.save()
-    end
+
+      #get event users from table
+      #if they have accepted event invite 
+      #get their info from users table using user id
+      #user lat long
 
     # get place_id from event
     @event_place_id = @event.place_id

@@ -20,5 +20,11 @@ $ =>
 		)
 		return false
 
+	$('#event_user_number').keyup((e) =>
+		num = $('#event_user_number').val()
+		if num.indexOf('+') is -1
+			num = "+1#{num}"
+			$('#event_user_number').val(num)
+	)
 
 	$('#event_time_at').datetimepicker()

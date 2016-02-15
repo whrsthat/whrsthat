@@ -20,6 +20,9 @@ Rails.application.routes.draw do
 
   get 'event_photos_controller/destroy'
   
+<<<<<<< HEAD
+  post '/api/text/inbound' => 'invitees#text'
+=======
   get 'auth/:provider/callback', to: 'users#google_create'
 
   get 'auth/failure', to: redirect('/')
@@ -34,6 +37,7 @@ Rails.application.routes.draw do
   
   delete '/events/:id/:invite_id' => 'events#invite_destroy'
 
+>>>>>>> 260a0347d5a015c605d6eb36fbe92ac53120bb0a
 
   resources :invitees 
   
@@ -59,6 +63,9 @@ Rails.application.routes.draw do
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'users#google_signout', as: 'signout'
   post '/users/geo' => "users#geo"
+
+  get '/rsvp/:id' => 'invitees#show'
+  post '/rsvp/:id/respond' => 'invitees#respond'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
