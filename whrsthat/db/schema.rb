@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20160214194711) do
     t.integer "user_id"
     t.integer "event_id"
     t.boolean "accepted"
+    t.string  "number"
   end
 
   add_index "event_users", ["event_id"], name: "index_event_users_on_event_id", using: :btree

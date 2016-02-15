@@ -117,7 +117,7 @@ class UsersController < ApplicationController
 
       else
         @error = true
-        render 'main/home'
+        render 'users/login'
       end
     else
       render 'users/login'
