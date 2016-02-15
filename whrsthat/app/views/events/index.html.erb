@@ -2,6 +2,13 @@
 
 <h1>Listing Events</h1>
 
+<div>
+	<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="event_switch">
+	  <input type="checkbox" id="event_switch" class="mdl-switch__input">
+	  <span class="mdl-switch__label">Invitations</span>
+	</label>
+</div>
+
 <% if @events != nil %>
   <div class="events">
   <% @events.each do |event| %>
