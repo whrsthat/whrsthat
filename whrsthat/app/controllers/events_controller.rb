@@ -17,23 +17,8 @@ class EventsController < ApplicationController
     @event = Event.find(params['id'])
     # @event = Event.find(params['id'])
     @invites = EventUser.where(event_id: params['id'].to_i)
+    @invites = @invites.where.not(accepted: false)
     @new_invite = EventUser.new
-    @hash = Gmaps4rails.build_markers(@event) do |event, marker|
-
-      marker.lat event.latitude
-      marker.lng event.longitude
-      marker.picture({
-        url: "#{view_context.image_path('/assets/precious.png')}",
-        
-        width: "44",
-        height: "90"
-      })
-      marker.infowindow event.title
-
-      current_user.local_ip = request.remote_ip
-      current_user.save()
-    end
-
     @event_place_id = @event.place_id
 
     @invites.each { |invite|
@@ -43,35 +28,66 @@ class EventsController < ApplicationController
         google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{@user.latitude},#{@user.longitude}&key=#{google_server_key}")
         result = Net::HTTP.get(google_uri)
         google_user_location_data = JSON.parse(result)
+        binding.pry
         @invite_place_id = google_user_location_data.flatten[1][0]["place_id"]
         invite.update_attributes(:place_id => @invite_place_id)
         invite_eta = URI("https://maps.googleapis.com/maps/api/directions/json?origin=place_id:#{@invite_place_id}&destination=place_id:#{@event_place_id}&mode=transit&transit_mode=subway&key=#{google_server_key}")
-        eta_result = Net::HTTP.get(invite_eta)
+        eta_result  = Net::HTTP.get(invite_eta)
         eta_parsed = JSON.parse(eta_result)
         arrival_time = eta_parsed.flatten[3][0]["legs"][0]["arrival_time"]["text"]
         invite.update_attributes(:eta => arrival_time)
       end
     }
 
-    @hash = Gmaps4rails.build_markers(@invites) do |invite, marker|
-      @invites.each { |invite|
-        if invite.accepted == true
-          @user = User.find(params[invite.user_id])
-          user_photo = @user.prof_img_url
-            user_event_info = EventUser.find(params[invite.user_id])
-            user_event_eta = user_event_info.eta
-          user_full_name = @user.fname + " " + lname_initial
-          marker.lat @user.latitude
-          marker.lng @user.longitude
-          marker.picture({
-            url: "#{view_context.image_path('/assets/precious.png')}",
-            width: "44",
-            height: "90"
-          })
+    markers = [@event, @event.user].concat(@invites)
+     @hash = Gmaps4rails.build_markers(markers) do |obj, marker|
+      if obj.class.name === 'Event'
+        event = obj
+        marker.lat event.latitude
+        marker.lng event.longitude
+        marker.picture({
+          url: "#{view_context.image_path('/assets/precious.png')}",
+          
+          width: "44",
+          height: "90"
+        })
+        # marker.infowindow event.title
+        marker.title event.title
 
-          marker.infowindow user_full_name, user_event_eta
-        end
-      }
+        current_user.local_ip = request.remote_ip
+        current_user.save()
+      elsif obj.class.name === 'EventUser'
+        invite = obj
+        @user = invite.user
+        @invite = invite
+        user_photo = @user.prof_img_url
+        user_event_eta = @invite.eta
+        user_full_name = @user.name
+        marker.lat @user.latitude
+        marker.lng @user.longitude
+        marker.picture({
+          url: "#{view_context.image_path('/assets/precious.png')}",
+          width: "44",
+          height: "90"
+        })
+
+        marker.infowindow user_full_name
+
+      elsif 
+        @user = obj
+        user_photo = @user.prof_img_url
+        # user_event_eta = @invite.eta
+        user_full_name = @user.name
+        marker.lat @user.latitude
+        marker.lng @user.longitude
+        marker.picture({
+          url: "#{view_context.image_path('/assets/precious.png')}",
+          width: "44",
+          height: "90"
+        })
+
+        marker.infowindow user_full_name        
+      end
     end
 
   end
