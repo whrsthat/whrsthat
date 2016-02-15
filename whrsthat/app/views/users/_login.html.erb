@@ -1,10 +1,10 @@
-<div class="mdl-textfield mdl-js-textfield" id='loginform'>
+<div id='loginform'>
 	<form method='POST' action='/login'>
   	<!-- <label class="mdl-textfield__label" for="email">Email:</label> -->
   	<input class="mdl-textfield__input" type='text' name='email' placeholder="Enter Email"><br />
   	<!-- <label class="mdl-textfield__label" for="password">Password:</label> -->
   	<input class="mdl-textfield__input" type='password' name='password' placeholder="Enter Password"><br /><br /><br />
   	<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token() %>' size='65'>
-  	<button style="margin-left: -35px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='submit'>Log In</button>
+  	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='submit'>Log In</button>
   </form>
 </div>

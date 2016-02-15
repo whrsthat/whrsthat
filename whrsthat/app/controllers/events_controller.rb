@@ -29,8 +29,8 @@ class EventsController < ApplicationController
      })
       marker.infowindow user.title
 
-      current_user.local_ip = open('http://ifconfig.me/ip').read.gsub("\n", "")
-      current_user.save()
+      #current_user.local_ip = open('http://ifconfig.me/ip').read.gsub("\n", "")
+      #current_user.save()
     end
   end
 

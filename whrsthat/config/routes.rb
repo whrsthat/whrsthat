@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   get 'event_photos_controller/destroy'
   
+  post '/api/text/inbound' => 'invitees#text'
 
   resources :invitees 
   
@@ -43,6 +44,9 @@ Rails.application.routes.draw do
 
   post '/events/:id/invite' => 'events#invite'
   delete '/events/:id/:invite_id' => 'events#invite_destroy'
+
+  get '/rsvp/:id' => 'invitees#show'
+  post '/rsvp/:id/respond' => 'invitees#respond'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
