@@ -2,6 +2,7 @@ require 'open-uri'
 
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery with: :null_session
 
   def index
     @users = User.all
@@ -50,7 +51,7 @@ class UsersController < ApplicationController
 
   def google_create
     code = params[:code]
-    our_url = "https://d076d188.ngrok.io"
+    our_url = "https://71398c44.ngrok.io"
 
     form = {
         :code => code,
@@ -79,6 +80,8 @@ class UsersController < ApplicationController
       prof_img_url:  google_user["image"]["url"]
     })
 
+    set_session user
+
     if user.save
       redirect_to('/events')
     else
@@ -87,6 +90,19 @@ class UsersController < ApplicationController
     end
 
   end
+
+  def geo
+    if current_user != nil
+      latitude = params["latitude"].to_f
+      longitude = params["longitude"].to_f
+      current_user.latitude = latitude
+      current_user.longitude = longitude
+      current_user.save
+    end
+
+    render :nothing => true, :status => 204
+  end
+
 
   def login
     if params['email'] && params['password']

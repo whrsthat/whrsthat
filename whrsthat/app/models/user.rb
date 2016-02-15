@@ -5,6 +5,6 @@ class User < ActiveRecord::Base
 	has_secure_password
 
 	geocoded_by :local_ip,
-  		:latitude => :lat, :longitude => :lon
+  		:latitude => :latitude, :longitude => :longitude
 	after_validation :geocode
 end

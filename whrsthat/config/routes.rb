@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'users#google_create'
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'users#google_signout', as: 'signout'
+  post '/users/geo' => "users#geo"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
