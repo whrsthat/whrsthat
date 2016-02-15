@@ -50,4 +50,6 @@ $ =>
 			$('.status').text("you've created")
 	$('#event_switch').click()
 
-	$('#event_time_at').datetimepicker()	
+	$('#event_time_at').datetimepicker()
+
+	
