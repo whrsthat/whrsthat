@@ -21,6 +21,9 @@
 //= require javascript.fullPage.js
 //= require gmaps/google
 //= require exif-js/exif.js
+//= require typeahead.js/dist/typeahead.bundle.min.js
+//= require typeahead.js/dist/bloodhound.min.js
+//= require typeahead-addresspicker/dist/typeahead-addresspicker.min.js
 //= require_tree .
 
 $(function () {

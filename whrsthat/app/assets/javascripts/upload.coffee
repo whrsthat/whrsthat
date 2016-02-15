@@ -9,12 +9,31 @@ $ ->
         $('#image-upload-toast')[0].MaterialSnackbar.showSnackbar({ message: "Sorry, the image you uploaded does not contain location data" });
         return
 
-      lat = this.exifdata.GPSLatitude.slice(-1)[0].valueOf()
-      lng = this.exifdata.GPSLongitude.slice(-1)[0].valueOf()
-      debugger
+      GPSLatitude = this.exifdata.GPSLatitude
+      GPSLongitude = this.exifdata.GPSLongitude
+      lat = GPSLatitude[0] + (GPSLatitude[1]/60)+(GPSLatitude[2]/(60*60))
+      lng = GPSLongitude[0] + (GPSLongitude[1]/60)+(GPSLongitude[2]/(60*60))
+      lat = ((this.exifdata.GPSLatitudeRef == 'N') and lat) or (lat*-1)
+      lng = ((this.exifdata.GPSLongitudeRef == 'E') and lng) or (lng*-1)
+      
+      geo = new google.maps.Geocoder()
+      geo.geocode({ location: { lat: lat, lng: lng } }, (results, status) =>
+        if results and results[0] and results[0].formatted_address
+          $('.address').val(results[0].formatted_address)
+      )
+
+      
       reader.readAsDataURL(image);
       reader.onload = (e) ->
         data_url = e.target.result;
+
         $('.sample').show()
         $('.sample img').attr('src',  data_url)
     ) 
+
+  addressPicker = new AddressPicker()
+
+  $('.address').typeahead(null, {
+    displayKey: 'description',
+    source: addressPicker.ttAdapter()
+  })
