@@ -31,7 +31,17 @@
 </p>
 
 
+<p>
+  <% @events.each do |event| %>
+    <%= event.title %>
+  <% end %>
+</p>
 
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
+
+
+
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> 
 <%= link_to 'Back', users_path %>

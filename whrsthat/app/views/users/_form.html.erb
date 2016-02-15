@@ -36,7 +36,7 @@
   </div>
   <div class="<%= field_class %>">
     <%= f.label :password,:class => 'mdl-textfield__label' %>
-    <%= password_field_tag :password,:class => 'mdl-textfield__input'  %>
+    <%= f.text_field :password, :class => 'mdl-textfield__input'  %>
  </div>
  <!--
   Use vvvv  for upload button
@@ -44,7 +44,7 @@
 -->
   <div class="<%= field_class %>">
     <%= f.label :bio,:class => 'mdl-textfield__label' %>
-    <%= bio_field_tag :bio,:class => 'mdl-textfield__input'  %>
+    <%= f.text_area :bio,:class => 'mdl-textfield__input'  %>
  </div>
   <div class="mdl-textfield mdl-js-textfield textfield-demo">
     <%= f.file_field :prof_img_url, :class => 'file_input_text mdl-textfield__input' %>

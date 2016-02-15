@@ -53,5 +53,8 @@ function geoFindUser() {
 
 }
 
-window.locationInterval = setInterval(geoFindUser, 3000);
+// window.locationInterval = setInterval(geoFindUser, 3000);
+
+
+
 

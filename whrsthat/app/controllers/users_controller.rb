@@ -11,10 +11,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @events = Event.where(user_id: current_user.id)
-    # @events = Event.where(id: User.select(:user_id))
-     @events.order('created_at DESC')
-      # render 'users/profile'
+    @events = Event.where(user_id: current_user.id).order('created_at DESC')
   end
 
   # GET /users/new
@@ -44,7 +41,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     tmp_obj = JSON.parse(JSON.generate(user_params))
-    tmp_obj['password'] = params['password']
+    binding.pry
     @user = User.new( tmp_obj )
     if @user.save
       set_session @user
@@ -183,6 +180,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :password_digest, :prof_img_url, :bio)
+      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :password, :prof_img_url, :bio)
     end
 end
