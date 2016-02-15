@@ -37,7 +37,7 @@ class EventUser < ActiveRecord::Base
 		if user
 			base += " Text Y to RSVP or N to decline"
 		else
-			base += " Click #{ENV['EXTERNAL_URL']}/rsvp/#{event.id} to rsvp"
+			base += " Click #{ENV['EXTERNAL_URL']}/rsvp/#{self.id} to rsvp"
 		end
 	end
 

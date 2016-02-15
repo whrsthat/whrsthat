@@ -21,20 +21,19 @@ Rails.application.routes.draw do
   get 'event_photos_controller/destroy'
   
   post '/api/text/inbound' => 'invitees#text'
+
   get 'auth/:provider/callback', to: 'users#google_create'
 
   get 'auth/failure', to: redirect('/')
 
   # get 'signout', to: 'users#google_signout', as: 'signout'
 
-  
   post '/login' => 'users#login'
   
   post '/events/:id/invite' => 'events#invite'
   
   
   delete '/events/:id/:invite_id' => 'events#invite_destroy'
-
 
   resources :invitees 
   
