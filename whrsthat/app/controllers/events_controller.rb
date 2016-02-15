@@ -9,8 +9,7 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.where({ user_id: current_user.id })
-
-    @invitations = EventUser.where({ number: current_user.phone }).map {   }
+    @invitations = EventUser.where({ number: current_user.phone }).map { |invite| invite.event }
   end
 
   # GET /events/1
