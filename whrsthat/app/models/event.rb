@@ -73,7 +73,9 @@ class Event < ActiveRecord::Base
 	        result = Net::HTTP.get(google_uri)
 	        google_photo_data = JSON.parse(result)
 			event_address = google_photo_data.flatten[1][0]["formatted_address"]
+			place_id = google_photo_data.flatten[1][0]["place_id"]
 			self.update_attributes(:event_address => event_address)
+			self.update_attributes(:place_id => place_id)
 
 			self.save()
 

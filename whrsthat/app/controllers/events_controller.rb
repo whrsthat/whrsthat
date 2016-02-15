@@ -14,29 +14,66 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @event_location = Event.find(params['id'])
     @event = Event.find(params['id'])
+    # @event = Event.find(params['id'])
     @invites = EventUser.where(event_id: params['id'].to_i)
     @new_invite = EventUser.new
-    @hash = Gmaps4rails.build_markers(@event_location) do |event, marker|
+    binding.pry
+    @hash = Gmaps4rails.build_markers(@event) do |event, marker|
 
       marker.lat event.latitude
       marker.lng event.longitude
       marker.picture({
-                    url: "#{view_context.image_path('/assets/precious.png') }",
-                    width: "44",
-                    height: "90"
-     })
+        url: "#{view_context.image_path('/assets/precious.png') }",
+        
+        event_place_id = width: "44",
+        height: "90"
+      })
       marker.infowindow event.title
-
-      #get event users from table
-      #if they have accepted event invite 
-      #get their info from users table using user id
-      #user lat long
 
       current_user.local_ip = open('http://ifconfig.me/ip').read.gsub("\n", "")
       current_user.save()
     end
+
+    # get place_id from event
+    @event_place_id = @event.place_id
+
+    # @invites.each { |invite|
+    #   @user = User.find(params[invite.user_id])
+    #   google_server_key = ENV['GOOGLE_SERVER_KEY']
+    #   google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{@user.latitude},#{@user.longitude}&key=#{google_server_key}")
+    #   result = Net::HTTP.get(google_uri)
+    #   google_user_location_data = JSON.parse(result)
+    #   binding.pry
+    #   @invite_place_id = google_user_location_data.flatten[1][0]["place_id"]
+    #   invite.update_attributes(:place_id => @invite_place_id)
+    #   invite_eta = URI("https://maps.googleapis.com/maps/api/directions/json?origin=place_id:#{@user_place_id}&destination=place_id:#{@event_place_id}&key=#{google_server_key}")
+    #   eta_result = Net::HTTP.get(user_eta)
+    #   binding.pry
+    #   invite.update_attributes(:eta => eta)
+    # }
+
+    # @hash = Gmaps4rails.build_markers(@invites) do |invite, marker|
+    #   @invites.each { |invite|
+    #     if invite.accepted == true
+    #       @user = User.find(params[invite.user_id])
+    #       user_photo = @user.prof_img_url
+            # user_event_info = EventUser.find(params[invite.user_id])
+            # user_event_eta = user_event_info.eta
+    #       user_full_name = @user.fname + " " + lname_initial
+    #       marker.lat @user.latitude
+    #       marker.lng @user.longitude
+    #       marker.picture({
+    #         url: "#{user_photo}",
+    #         width: "44",
+    #         height: "90"
+    #       })
+
+    #       marker.infowindow user_full_name, user_event_eta
+    #     end
+    #   end
+    # end
+
   end
 
   # GET /events/new
