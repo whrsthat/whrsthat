@@ -14,20 +14,25 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @users_current_location = Event.find(params['id'])
+    @event_location = Event.find(params['id'])
     @event = Event.find(params['id'])
     @invites = EventUser.where(event_id: params['id'].to_i)
     @new_invite = EventUser.new
-    @hash = Gmaps4rails.build_markers(@users_current_location) do |user, marker|
+    @hash = Gmaps4rails.build_markers(@event_location) do |event, marker|
 
-      marker.lat user.latitude
-      marker.lng user.longitude
+      marker.lat event.latitude
+      marker.lng event.longitude
       marker.picture({
                     url: "#{view_context.image_path('/assets/precious.png') }",
                     width: "44",
                     height: "90"
      })
-      marker.infowindow user.title
+      marker.infowindow event.title
+
+      #get event users from table
+      #if they have accepted event invite 
+      #get their info from users table using user id
+      #user lat long
 
       current_user.local_ip = open('http://ifconfig.me/ip').read.gsub("\n", "")
       current_user.save()

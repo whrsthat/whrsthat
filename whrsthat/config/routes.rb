@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   get 'auth/failure', to: redirect('/')
 
-  get 'signout', to: 'users#google_signout', as: 'signout'
+  # get 'signout', to: 'users#google_signout', as: 'signout'
 
   
   post '/login' => 'users#login'
