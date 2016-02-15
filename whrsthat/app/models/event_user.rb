@@ -26,18 +26,18 @@ class EventUser < ActiveRecord::Base
 		auth_token = ENV['TWILIO_AUTH_TOKEN']
 
 		@twilio ||= Twilio::REST::Client.new account_sid, auth_token
-	
-
 	end
 
 	def message_body
-		""
+		"Hello! #{event_author.fname} has sent you an invite! Please check URL for details."
 	end
 
 	after_save do
-		# Twilio code goes here
+		twilio.messages.create(
+			from: '+16467624288',
+			to: '+15167545877',
+			body: message_body
+		)
 		number = self.number
-
-		binding.pry
 	end
 end
