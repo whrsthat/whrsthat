@@ -1,9 +1,6 @@
-$ =>
-
-	$('.new-event button.invite-submit').click () =>
+$ =>	
+	$('.new-event').click () =>
 		window.document.location = '/events/new'
-
-	$('#event_time_at').datetimepicker()
 
 	$('.submit-invite').click () ->
 		$('form.new_event_user').submit()
@@ -22,3 +19,6 @@ $ =>
 			$(inv).remove()
 		)
 		return false
+
+
+	$('#event_time_at').datetimepicker()

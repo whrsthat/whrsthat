@@ -16,3 +16,108 @@
  *= require_tree .
  *= require_self
  */
+
+/* fullPage Main */
+body {
+  font-family: arial, helvetica;
+  color: #F2F2F2;
+}
+
+h1 {
+  font-size: 6em;
+}
+
+p {
+  font-size: 2em;
+}
+
+.content {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+/* Section 1 */
+#section0 {
+  background-color: rgba(101,50,190,0.9);
+}
+
+#section00 {
+  background: url(/event_bg.jpg) #000 no-repeat center center fixed;
+  min-width: 100%;
+  min-height: 100%;
+  background-size: cover;
+  padding: 0;
+  margin: 0;
+}
+
+#section0 h1 {
+  color: #fff;
+  margin-bottom: 50px;
+}
+
+#section0 p {
+  color: #333;
+  opacity: 0.4;
+}
+
+/* Section 2 */
+#section1 {
+  background-color: #202020;
+}
+
+#section1 h1 {
+  color: #fff;
+}
+
+#section1 p {
+  opacity: 0.8;
+}
+
+/* transparent header */
+.layout-transparent {
+  background: url('../assets/demos/transparent.jpg') center / cover;
+}
+
+.layout-transparent .mdl-layout__header,
+.layout-transparent .mdl-layout__drawer-button {
+/* Use 87% black if bg is light. */
+  color: white;
+}
+
+/* image card */
+.card-wide.mdl-card {
+  width: 600px;
+}
+
+.card-wide > .mdl-card__title {
+  color: #fff;
+  height: 350px;
+  background: url('./pregame.jpg') center / cover;
+}
+
+.card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.mdl-button--raised.mdl-button--colored {
+  background: #000000;
+}
+
+.mdl-button--raised.mdl-button--colored:hover {
+  background-color: #732c7b;
+}
+
+/* Custom CSS */
+nav a:hover {
+  color: #732c7b !important;
+  background-color: #000;
+}
+
+.page-content {
+  max-width: 1020px;
+  margin: 0 auto;
+  text-align: center;
+}
+

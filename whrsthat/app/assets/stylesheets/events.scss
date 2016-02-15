@@ -50,6 +50,42 @@
 	right: 0;
 }
 
+.title {
+	text-align: center;
+	width: 100%;
+}
+
+.photo {
+	display: inline-block;
+}
+
+#map {
+	display: inline-block;
+	width: 100%;
+	height: 300px;
+}
+
+.middle > div {
+	padding: 4em;
+}
+
+.bottom {
+	text-align: center;
+}
+
+.bottom > div {
+	display: inline-block;
+	margin: 0 auto;
+}
+
+.info-container {
+	text-align: left;
+}
+
+.add-on {
+
+}
+
 section.invite {
 	text-align:center;
 }
@@ -57,3 +93,4 @@ section.invite {
 section.invite ul {
 	display: inline-block;
 }
+
