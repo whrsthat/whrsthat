@@ -8,8 +8,6 @@ Rails.application.routes.draw do
 
   get '/login' => 'users#login'
   
-  post '/login' => 'users#login'
-
   get '/logout' => 'users#logout'
   
   get '/event_photo' => 'event_photos_controller#index'
@@ -22,7 +20,24 @@ Rails.application.routes.draw do
 
   get 'event_photos_controller/destroy'
   
+<<<<<<< HEAD
   post '/api/text/inbound' => 'invitees#text'
+=======
+  get 'auth/:provider/callback', to: 'users#google_create'
+
+  get 'auth/failure', to: redirect('/')
+
+  # get 'signout', to: 'users#google_signout', as: 'signout'
+
+  
+  post '/login' => 'users#login'
+  
+  post '/events/:id/invite' => 'events#invite'
+  
+  
+  delete '/events/:id/:invite_id' => 'events#invite_destroy'
+
+>>>>>>> 260a0347d5a015c605d6eb36fbe92ac53120bb0a
 
   resources :invitees 
   
@@ -38,12 +53,16 @@ Rails.application.routes.draw do
   
   end
 
+  get '/' => 'users#home'
+  get '/about' => 'users#about'
+  get '/contact' => 'users#contact'
+  post '/login' => 'users#login'
+  get '/event_photo' => 'event_photos_controller#index'
+
   get 'auth/:provider/callback', to: 'users#google_create'
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'users#google_signout', as: 'signout'
-
-  post '/events/:id/invite' => 'events#invite'
-  delete '/events/:id/:invite_id' => 'events#invite_destroy'
+  post '/users/geo' => "users#geo"
 
   get '/rsvp/:id' => 'invitees#show'
   post '/rsvp/:id/respond' => 'invitees#respond'

@@ -13,6 +13,10 @@ class EventUser < ActiveRecord::Base
 		User.find_by(:phone => self.number)
 	end
 
+	def event_author 
+		User.find(event.user_id)
+	end
+
 	def set_default_values
 		self.accepted ||= false
 	end
@@ -25,7 +29,7 @@ class EventUser < ActiveRecord::Base
 		account_sid = ENV['TWILIO_SID']
 		auth_token = ENV['TWILIO_AUTH_TOKEN']
 
-		 Twilio::REST::Client.new account_sid, auth_token
+		@twilio ||= Twilio::REST::Client.new account_sid, auth_token
 	end
 
 	def message_body
@@ -49,5 +53,6 @@ class EventUser < ActiveRecord::Base
 			)
 
 		end
+
 	end
 end
