@@ -28,7 +28,6 @@ Rails.application.routes.draw do
 
   # get 'signout', to: 'users#google_signout', as: 'signout'
 
-  
   post '/login' => 'users#login'
   
   post '/events/:id/invite' => 'events#invite'
@@ -49,11 +48,6 @@ Rails.application.routes.draw do
   resources :event_photos
   
   end
-
-  get '/' => 'users#home'
-  get '/about' => 'users#about'
-  get '/contact' => 'users#contact'
-  post '/login' => 'users#login'
   get '/event_photo' => 'event_photos_controller#index'
 
   get 'auth/:provider/callback', to: 'users#google_create'

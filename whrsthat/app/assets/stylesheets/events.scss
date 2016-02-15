@@ -18,6 +18,10 @@
   padding: 3em;
 }
 
+.events .mdl-card__title h4  {
+	color: white;
+}
+
 .events > div {
 	display: inline-block;
 	margin-right: 1.5rem;
@@ -94,3 +98,9 @@ section.invite ul {
 	display: inline-block;
 }
 
+
+.toggle {
+	width: 2em;
+	position: absolute;
+	right: 10em;
+}
