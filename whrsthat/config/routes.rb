@@ -21,6 +21,14 @@ Rails.application.routes.draw do
   get '/contact' => 'users#contact'
   post '/login' => 'users#login'
   get '/event_photo' => 'event_photos_controller#index'
+  get '/uber/me' => 'rides#user_info'
+  get '/uber/history' => 'rides#user_activities'
+  post '/uber/requests' => 'rides#requests'
+  delete '/uber/requests/current' => 'rides#destroy'
+  get '/uber/products' => 'rides#products'
+  get '/uber/estimates/time' => 'rides#time'
+  get '/uber/estimates/price' => 'rides#price'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
