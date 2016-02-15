@@ -10,6 +10,10 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @events = Event.where(user_id: current_user.id)
+    # @events = Event.where(id: User.select(:user_id))
+     @events.order('created_at DESC')
+      # render 'users/profile'
   end
 
   # GET /users/new
@@ -19,7 +23,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @user = current_user
   end
+
+
 
   def set_session(user)
     session[:user_name] = user.email
@@ -141,11 +148,11 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = current_user
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :password_digest, :prof_img_url)
+      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :password_digest, :prof_img_url, :bio)
     end
 end

@@ -11,6 +11,12 @@ Rails.application.routes.draw do
   post '/login' => 'users#login'
 
   get '/logout' => 'users#logout'
+
+  get '/users/profile' => 'users#show'
+
+  get '/users/profile' => 'users#edit'
+
+  patch '/users/profile' => 'users#edit'
   
   get '/event_photo' => 'event_photos_controller#index'
   
