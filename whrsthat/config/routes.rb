@@ -20,9 +20,7 @@ Rails.application.routes.draw do
 
   get 'event_photos_controller/destroy'
   
-<<<<<<< HEAD
   post '/api/text/inbound' => 'invitees#text'
-=======
   get 'auth/:provider/callback', to: 'users#google_create'
 
   get 'auth/failure', to: redirect('/')
@@ -37,7 +35,6 @@ Rails.application.routes.draw do
   
   delete '/events/:id/:invite_id' => 'events#invite_destroy'
 
->>>>>>> 260a0347d5a015c605d6eb36fbe92ac53120bb0a
 
   resources :invitees 
   
