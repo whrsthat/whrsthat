@@ -107,10 +107,24 @@ p {
 .card-wide > .mdl-card__title {
   color: #fff;
   height: 350px;
-  background: url('./pregame.jpg') center / cover;
+  background: url('/pregame.jpg') center / cover;
 }
 
 .card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.card-tall.mdl-card {
+  width: 350px;
+}
+
+.card-tall > .mdl-card__title {
+  color: #fff;
+  height: 600px;
+  background: url('/photos/4.jpeg') center / cover;
+}
+
+.card-tall > .mdl-card__menu {
   color: #fff;
 }
 
