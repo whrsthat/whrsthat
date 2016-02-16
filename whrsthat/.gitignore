@@ -15,3 +15,5 @@
 .env
 vendor/assets/components
 public/photos
+.byebug_history
+docker-compose.yml
