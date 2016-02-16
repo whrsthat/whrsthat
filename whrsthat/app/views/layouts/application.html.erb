@@ -112,9 +112,11 @@ fullpage.initialize('#fullpage', {
   css3:false
 });
 /* ++ anchors: ['3rdPage', '4thpage', 'lastPage'] */
-// $('.arrow').on('click', function(){
-//   window.location.replace('/#section1');
-// });
+$(document).on('ready', function () {
+  $('.arrow').click(function(){
+    window.location.replace('/#section1');
+  });
+});
 </script>
 <% end %>
 </html>
