@@ -43,7 +43,15 @@ class EventsController < ApplicationController
     }
 
     markers = [@event, @event.user].concat(@invites)
-     @hash = Gmaps4rails.build_markers(markers) do |obj, marker|
+    markers.reject! do |obj|
+      if obj.class.name === 'Event' || obj.class.name == 'User'
+        !obj.latitude || !obj.longitude 
+      elsif obj.class.name == 'EventUser'
+        !obj.user.latitude || !obj.user.longitude 
+      end
+    end
+    
+    @hash = Gmaps4rails.build_markers(markers) do |obj, marker|
       if obj.class.name === 'Event'
         event = obj
         marker.lat event.latitude
@@ -68,6 +76,7 @@ class EventsController < ApplicationController
         user_full_name = @user.name
         marker.lat @user.latitude
         marker.lng @user.longitude
+        binding.pry
         marker.picture({
           url: "#{view_context.image_path('/assets/precious.png')}",
           width: "44",
