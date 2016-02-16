@@ -22,6 +22,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
   <link rel="shortcut icon" type="image/x-icon" href="/mugatu_favicon.png">
 
 </head>
@@ -29,6 +30,27 @@
 <body data-no-turbolink="true">
 
 <% if @homepage %>
+<style>
+nav a:hover {
+  color: #6532be !important;
+  background-color: #fff;
+}
+::placeholder {
+  color: #FFF300 !important;
+}
+/*::-webkit-input-placeholder {
+   color: #FFF300 !important;
+}
+:-moz-placeholder {
+   color: #FFF300 !important;
+}
+::-moz-placeholder {
+   color: #FFF300 !important;
+}
+:-ms-input-placeholder {
+   color: #FFF300 !important;
+}*/
+</style>
 <div class="layout-transparent mdl-layout mdl-js-layout">
   <header class="mdl-layout__header mdl-layout__header--transparent">
     <!-- js menu // material.min.js -->

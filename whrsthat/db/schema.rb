@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20160216192846) do
     t.string   "event_address"
     t.datetime "time_at"
     t.string   "place_id"
+    t.boolean  "scheduled"
   end
 
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree

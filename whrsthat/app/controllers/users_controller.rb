@@ -54,6 +54,7 @@ class UsersController < ApplicationController
 # NoMethodError Users#login for user.each
 
   def google_create
+
     # code = params[:code]
     # our_url = ENV['EXTERNAL_URL']
 
@@ -133,6 +134,7 @@ class UsersController < ApplicationController
       end
     else
       if current_user == nil
+        @force_redirect = params[:force].present?
         if request.referer
           session[:referer] = request.referer
         end

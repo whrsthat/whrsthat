@@ -11,6 +11,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.where({ user_id: current_user.id })
     @invitations = EventUser.where({ number: current_user.phone }).map { |invite| invite.event }
+    
   end
 
   # GET /events/1
@@ -91,12 +92,16 @@ class EventsController < ApplicationController
         marker.infowindow user_full_name        
       end
     end
-
   end
 
   # GET /events/new
   def new
+    if current_user == nil
+      @force_redirect = true
+      render 'users/login' 
+    else
     @event = Event.new
+    end
   end
 
   # GET /events/1/edit
@@ -170,7 +175,11 @@ class EventsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event    
-      @event = Event.find(params[:id])
+      if current_user != nil
+        @event = Event.find(params[:id])
+      else
+        redirect_to('/login?force=true')
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
