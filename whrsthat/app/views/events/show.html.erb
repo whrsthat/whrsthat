@@ -11,14 +11,11 @@
     <div class="photo">
     
     <div style="margin: 0 auto;" class="card-tall mdl-card mdl-shadow--2dp">
-          <div class="mdl-card__title">
+          <div class="mdl-card__title" style="background: url('/photos/<%= @event.id %>.jpeg') center / cover">
             <h2 class="mdl-card__title-text"></h2>
           </div>
           <div class="mdl-card__supporting-text">
-            WhrsThat? shares the location and the story of anything and everything that's happening around you.
-          </div>
-          <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/users/new">Get Started</a>
+            <%= @event.caption %>
           </div>
         </div style="padding-bottom: 30px;">
 
@@ -29,7 +26,6 @@
 <div class="mdl-grid middle">
   <!--<div class="mdl-cell mdl-cell--2-col"></div>-->
   <div class="mdl-cell mdl-cell--6-col info-container">
-  <h5><%= @event.caption %></h5>
 
   <p><span><%= @event.date %> <%= @event.time.downcase %></span></p>
   

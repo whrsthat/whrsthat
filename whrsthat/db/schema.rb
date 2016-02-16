@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215193259) do
+ActiveRecord::Schema.define(version: 20160216192846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,7 +82,10 @@ ActiveRecord::Schema.define(version: 20160215193259) do
     t.string   "local_ip"
     t.float    "latitude"
     t.float    "longitude"
+    t.text     "bio"
   end
+
+  add_index "users", ["phone", "email"], name: "index_users_on_phone_and_email", unique: true, using: :btree
 
   add_foreign_key "events", "users"
   add_foreign_key "invitees", "events"
