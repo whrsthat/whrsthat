@@ -5,16 +5,16 @@
 	<% if @error %>
 	<h4 style="color: red;">Sorry, that username / password combination did not work.<br />Please try again.</h4>
 	<% end %>
-	
-	<div class="form_wrap" style="background-color: white; display: inline-block;">
-		<h3>Login to WhrsThat?!</h3>
+	<div class="form_wrap">
 		<div class="login-panel">
+			<h3>Login to WhrsThat?!</h3>
 			<%= render partial: 'users/login', locals: { user: @user } %>
-			<br/>
+			<hr/><br />
+			<a href="#"><img class="google" src="/google-oauth.png"></a>
+			<h5>— Or —</h5>
 			<div>
-		  	<button class="create mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='button'>Create an Account</button>
+		  	<button class="create mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='button'>Sign Up</button>
 		  </div>
 		</div>
 	</div>
-
 </div>

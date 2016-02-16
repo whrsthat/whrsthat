@@ -99,19 +99,15 @@ p {
   opacity: 0.8;
 }
 
+
 /* Transparent Header */
 .layout-transparent {
   background: url('../assets/demos/transparent.jpg') center / cover;
 }
 
-/* div.mdl-layout__drawer-button {
-  color: whitesmoke;
-  background-color: #47B5FA !important
-}*/
-
 .layout-transparent .mdl-layout__header,
 .layout-transparent {
-   /*Use 87% black if bg is light*/. 
+   /*Use 87% black if bg is light*/ 
   color: white;
 }
 
@@ -167,10 +163,6 @@ p {
   }
 }
 
-body {
-  background: black;
-}
-
 .arrow {
   position: fixed;
   bottom: 0;
@@ -209,8 +201,7 @@ body {
 
 .card-tall > .mdl-card__title {
   color: #fff;
-  height: 600px;
-  background: url('/photos/4.jpeg') center / cover;
+  height: 15em;
 }
 
 .card-tall > .mdl-card__menu {
@@ -228,16 +219,26 @@ body {
   background-color: #6532be;
 }
 
-/* Custom CSS */
-.page-content {
-  max-width: 1020px;
-  margin: 0 auto;
-  text-align: center;
+/* Navbar Rules */
+.trans nav a:hover {
+  color: #6532be !important;
+  background-color: #fff;
 }
 
 nav a:hover {
   color: #6532be !important;
   background-color: #000;
+}
+
+/* Transparent Header */
+.layout-transparent {
+  background: url('../assets/demos/transparent.jpg') center / cover;
+}
+
+.layout-transparent .mdl-layout__header,
+.layout-transparent .mdl-layout__drawer-button {
+/* Use 87% black if bg is light. */
+  color: white;
 }
 
 /* Submit Button Styling */
@@ -283,4 +284,26 @@ input[type=submit]:focus:not(:active) {
 
 input[type=submit]:active {
 background-color: rgba(158,158,158, 0.40);
+}
+
+/* Custom CSS */
+.form_wrap {
+  background-color: white; 
+  display: inline-block;
+  margin-top: 4em;
+  box-shadow: .3em .3em .7em #000000;
+  padding-bottom: 2em;
+}
+
+.page-content {
+  text-align: center;
+}
+
+.page-content > * {
+  margin: 0 auto;
+  position: relative;
+}
+
+.page-content > form {
+  width: 30em;
 }

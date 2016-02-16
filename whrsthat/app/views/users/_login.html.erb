@@ -1,24 +1,16 @@
 <div id='loginform'>
 	<form method='POST' action='/login'>
-  	<% if !(@homepage) %>
   	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 	    <label class="mdl-textfield__label" for="email">Email</label>
 	    <input class="mdl-textfield__input" type="text" name="email" id="email" />
   	</div>
-  	<% else %>
-  	<input class="mdl-textfield__input" type='text' name='email' placeholder="Enter Email"><br />
-  	<% end %>
-  	<% if !(@homepage) %>
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 	    <label class="mdl-textfield__label" for="password">Password</label>
 	    <input class="mdl-textfield__input" type="password" name="password" id="password" />
   	</div>
-  	<br /><br /><br />
-  	<% else %>
-  	<input class="mdl-textfield__input" type='password' name='password' placeholder="Enter Password"><br /><br /><br />
-  	<% end %>
+  	<br />
   	<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token() %>' size='65'>
-  	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='submit'>Log In</button>
+  	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='submit'>Log In</button><br/><br/>
   </form>
 </div>
 
