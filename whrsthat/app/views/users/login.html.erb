@@ -6,13 +6,14 @@
 	<h4 style="color: red;">Sorry, that username / password combination did not work.<br />Please try again.</h4>
 	<% end %>
 	
-	<div class="form_wrap" style="background-color: white; display: inline-block;">
+	<div class="form_wrap">
 		<h3>Login to WhrsThat?!</h3>
 		<div class="login-panel">
 			<%= render partial: 'users/login', locals: { user: @user } %>
-			<br/>
+			<br /><hr />
+			<h6>Don't have an account?</h6>
 			<div>
-		  	<button class="create mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='button'>Create an Account</button>
+		  	<button class="create mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='button'>Sign Up</button>
 		  </div>
 		</div>
 	</div>
