@@ -23,4 +23,6 @@ RUN bundle install
 
 ADD . $APP_HOME
 
+ENV DATABASE_URL=postgres://postgres:whrsthat@postgres/postgres
+
 CMD bundle exec passenger start
