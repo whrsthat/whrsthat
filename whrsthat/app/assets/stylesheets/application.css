@@ -284,3 +284,8 @@ background-color: rgba(158,158,158, 0.40);
 .page-content > form {
   width: 30em;
 }
+
+.errors {
+  color: red;
+  margin-bottom: -1em;
+}
