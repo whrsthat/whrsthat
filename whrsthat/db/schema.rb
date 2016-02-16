@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20160216192846) do
     t.string   "local_ip"
     t.float    "latitude"
     t.float    "longitude"
+    t.text     "bio"
   end
 
   add_index "users", ["phone", "email"], name: "index_users_on_phone_and_email", unique: true, using: :btree
