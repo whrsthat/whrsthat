@@ -78,8 +78,11 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-production:
-  <<: *default
-  database: whrsthat_production
-  username: whrsthat
-  password: <%= ENV['WHRSTHAT_DATABASE_PASSWORD'] %>
+production: &default
+  adapter: postgresql
+  encoding: unicode
+  database: postgres
+  pool: 5
+  username: postgres
+  password:
+  host: db
