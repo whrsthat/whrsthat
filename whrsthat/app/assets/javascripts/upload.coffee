@@ -16,8 +16,8 @@ $ ->
       lat = ((this.exifdata.GPSLatitudeRef == 'N') and lat) or (lat*-1)
       lng = ((this.exifdata.GPSLongitudeRef == 'E') and lng) or (lng*-1)
       
-      $('.longitude').val(lat)
-      $('.latitude').val(lng)  
+      $('.longitude').val(lng)
+      $('.latitude').val(lat)  
       
       geo = new google.maps.Geocoder()
       geo.geocode({ location: { lat: lat, lng: lng } }, (results, status) =>

@@ -69,8 +69,9 @@ $ =>
 		$('.address').bind('typeahead:change', addressPicker.updateMap);
 
 		$(addressPicker).on('addresspicker:selected', (event, result) =>
+			debugger
 			$('.longitude').val(result.lng())
 			$('.latitude').val(result.lat())
 			$('.place_id').val(result.placeResult.place_id)
-			debugger
+			
 		)

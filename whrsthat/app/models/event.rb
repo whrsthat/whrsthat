@@ -63,7 +63,7 @@ class Event < ActiveRecord::Base
 	end
 
 	def url
-		"/events/#{self.id}"
+		"#{ENV['EXTERNAL_URL']}/events/#{self.id}"
 	end
 
 	after_save do

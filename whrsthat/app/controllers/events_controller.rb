@@ -4,6 +4,7 @@ require 'gmaps4rails'
 
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery with: :null_session
 
   # GET /events
   # GET /events.json
@@ -21,10 +22,10 @@ class EventsController < ApplicationController
     @event = Event.find(params['id'])
     # @event = Event.find(params['id'])
     @invites = EventUser.where(event_id: params['id'].to_i)
-    @invites = @invites.where.not(accepted: false)
+    @accepted_invites = @invites.where.not(accepted: false)
     @new_invite = EventUser.new
     @event_place_id = @event.place_id
-    @invites.each { |invite|
+    @accepted_invites.each { |invite|
       @user = invite.user
       if @user.longitude && @user.latitude
         google_server_key = ENV['GOOGLE_SERVER_KEY']
@@ -41,7 +42,7 @@ class EventsController < ApplicationController
       end
     }
 
-    markers = [@event, @event.user].concat(@invites)
+    markers = [@event, @event.user].concat(@accepted_invites)
      @hash = Gmaps4rails.build_markers(markers) do |obj, marker|
       if obj.class.name === 'Event'
         event = obj
@@ -107,8 +108,10 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     ev_params = event_params.clone
-    
+
     ev_params[:user_id] = current_user.id
+    ev_params[:longitude] = ev_params[:longitude].to_f
+    ev_params[:latitude] = ev_params[:latitude].to_f
     @event = Event.new(ev_params, params[:event][:photo])
 
     respond_to do |format|
