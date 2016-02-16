@@ -35,3 +35,5 @@ function file_input() {
     }
   }
 }
+
+$('#file_input_file').length && file_input()
