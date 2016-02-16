@@ -35,21 +35,6 @@ nav a:hover {
   color: #6532be !important;
   background-color: #fff;
 }
-::placeholder {
-  color: #FFF300 !important;
-}
-/*::-webkit-input-placeholder {
-   color: #FFF300 !important;
-}
-:-moz-placeholder {
-   color: #FFF300 !important;
-}
-::-moz-placeholder {
-   color: #FFF300 !important;
-}
-:-ms-input-placeholder {
-   color: #FFF300 !important;
-}*/
 </style>
 <div class="layout-transparent mdl-layout mdl-js-layout">
   <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -122,11 +107,14 @@ nav a:hover {
 <% if @homepage %>
 <script>
 fullpage.initialize('#fullpage', {
-    anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage', 'lastPage'],
-    menu: '#menu',
-    css3:false
+  anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage', 'lastPage'],
+  menu: '#menu',
+  css3:false
 });
 /* ++ anchors: ['3rdPage', '4thpage', 'lastPage'] */
+// $('.arrow').on('click', function(){
+//   window.location.replace('/#section1');
+// });
 </script>
 <% end %>
 </html>
