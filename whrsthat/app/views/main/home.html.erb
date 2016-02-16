@@ -8,7 +8,10 @@
 				<% end %>
 				<% if current_user == nil %>
 					<h3>Ready To Share An Event?<br />Create An Account & Get Started!</h3>
-					<div class="login-container"><%= render partial: 'users/login' %></div>
+					<div class="login-container">
+						<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/users/new">Sign Up</a>&nbsp;&nbsp;&nbsp;
+						<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/login">Log In</a>
+					</div>
 				<% end %>
 			</div>
 		</div>
