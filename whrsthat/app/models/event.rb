@@ -60,38 +60,8 @@ class Event < ActiveRecord::Base
 		user.id == current_user.id 
 	end
 
-	def url
-		"/events/#{self.id}"
-	end
-
-	def schedule
-		@@scheduler ||= Rufus::Scheduler.new
-	end
-
-	def remind(number)
-		binding.pry
-    twilio.messages.create(
-      from: ENV['TWILIO_FROM_NUMBER'],
-      to: number,
-      body: "Reminder: #{self.user.name}'s event #{self.title} starts in 15 minutes. See details about this event at #{ENV['EXTERNAL_URL']}/#{self.url}"
-    )
-	end
-
-	def twilio 
-		account_sid = ENV['TWILIO_SID']
-		auth_token = ENV['TWILIO_AUTH_TOKEN']
-
-		@twilio ||= Twilio::REST::Client.new account_sid, auth_token
-	end
-
 	after_save do
-		if !self.latitude && !self.longitude
-	        photo_data = EXIFR::JPEG.new(@photo.path).exif
-
-	        lat = photo_data.gps_latitude[0].to_f + (photo_data.gps_latitude[1].to_f / 60) + (photo_data.gps_latitude[2].to_f / 3600)
-	        long = photo_data.gps_longitude[0].to_f + (photo_data.gps_longitude[1].to_f / 60) + (photo_data.gps_longitude[2].to_f / 3600)
-	        self.longitude = ((photo_data.gps_longitude_ref == "W") ? (long * -1) : long)    # (W is -, E is +)
-	        self.latitude = ((photo_data.gps_latitude_ref == "S") ? (lat * -1) : lat)      # (N is +, S is -)
+		if MainImage.find_by(url: self.id.to_s + '.' + @format) == nil
 
 	        #read about fileutils functionality
 	        # Open the tempfile using MiniMagick     (File -> Open)
@@ -102,6 +72,10 @@ class Event < ActiveRecord::Base
 			image.write("public/photos/#{self.id}." + @format)
 	        # FileUtils.cp(@photo.path, "public/photos/#{id}." + @format)
 
+			new_image = MainImage.new(url: self.id.to_s + '.' + @format, format: @format)
+			new_image.save()
+
+
 	        google_server_key = ENV['GOOGLE_SERVER_KEY']
 	 		google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{self.latitude},#{self.longitude}&key=#{google_server_key}")
 	        result = Net::HTTP.get(google_uri)
@@ -111,22 +85,7 @@ class Event < ActiveRecord::Base
 			self.update_attributes(:event_address => event_address)
 			self.update_attributes(:place_id => place_id)
 
-			self.save()
-
-			new_image = MainImage.new(url: self.id.to_s + '.' + @format, format: @format)
-			new_image.save()	
-		end
-
-		if self.scheduled != true
-			schedule.at "#{(self.time_at - 15.minutes).to_s}" do
-				self.remind(self.user.phone)
-				EventUser.where(event_id: self.id).each do |invite|
-					self.remind(invite.number)
-				end
-
-				self.scheduled = true
-				self.save()
-			end
+			self.save()	
 		end
 	end
 
