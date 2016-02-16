@@ -31,7 +31,6 @@ class EventsController < ApplicationController
         google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{@user.latitude},#{@user.longitude}&key=#{google_server_key}")
         result = Net::HTTP.get(google_uri)
         google_user_location_data = JSON.parse(result)
-        binding.pry
         @invite_place_id = google_user_location_data.flatten[1][0]["place_id"]
         invite.update_attributes(:place_id => @invite_place_id)
         invite_eta = URI("https://maps.googleapis.com/maps/api/directions/json?origin=place_id:#{@invite_place_id}&destination=place_id:#{@event_place_id}&mode=transit&transit_mode=subway&key=#{google_server_key}")
@@ -50,7 +49,7 @@ class EventsController < ApplicationController
         !obj.user.latitude || !obj.user.longitude 
       end
     end
-    
+
     @hash = Gmaps4rails.build_markers(markers) do |obj, marker|
       if obj.class.name === 'Event'
         event = obj
@@ -76,7 +75,6 @@ class EventsController < ApplicationController
         user_full_name = @user.name
         marker.lat @user.latitude
         marker.lng @user.longitude
-        binding.pry
         marker.picture({
           url: "#{view_context.image_path('/assets/precious.png')}",
           width: "44",

@@ -51,3 +51,4 @@ $ =>
 	$('#event_switch').click()
 
 	$('#event_time_at').datetimepicker()	
+	$('#file_input_text_div').click(() -> $('#file_input_file').click())
