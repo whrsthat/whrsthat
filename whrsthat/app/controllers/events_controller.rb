@@ -109,6 +109,8 @@ class EventsController < ApplicationController
 
     ev_params[:time_at]  = Time.parse(ev_params[:time_at])
     ev_params[:user_id] = current_user.id
+    ev_params[:latitude] = ev_params[:latitude].to_f
+    ev_params[:longitude] = ev_params[:longitude].to_f
     @event = Event.new(ev_params, params[:event][:photo])
 
     respond_to do |format|
@@ -177,7 +179,7 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:title, :caption, :time_at, :event_img_url, :lng, :lat, :photo)
+      params.require(:event).permit(:title, :caption, :time_at, :event_img_url, :longitude, :latitude, :photo)
     end
 
     def invite_params

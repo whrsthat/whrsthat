@@ -34,11 +34,21 @@
     <%= render partial: 'upload', locals: { } %>
   </div>
 
+  <div>
+    <%= f.hidden_field :latitude %>
+    <%= f.hidden_field :longitude %>
+  </div>
+
   <div class="sample">
     <img />
   </div>
 
   <div class="actions">
     <%= f.submit %>
+  </div>
+
+  <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+    <div class="mdl-snackbar__text"></div>
+    <button class="mdl-snackbar__action" type="button"></button>
   </div>
 <% end %>
