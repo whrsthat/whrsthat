@@ -117,7 +117,6 @@ class Event < ActiveRecord::Base
 			new_image.save()	
 		end
 
-		binding.pry
 		if self.scheduled != true
 			schedule.at "#{(self.time_at - 15.minutes).to_s}" do
 				self.remind(self.user.phone)
