@@ -54,45 +54,48 @@ class UsersController < ApplicationController
 # NoMethodError Users#login for user.each
 
   def google_create
-    code = params[:code]
-    our_url = ENV['EXTERNAL_URL']
+    # code = params[:code]
+    # our_url = ENV['EXTERNAL_URL']
 
-    form = {
-        :code => code,
-        :client_id => ENV['GOOGLE_OAUTH_CLIENT_ID'],
-        :client_secret => ENV['GOOGLE_OAUTH_CLIENT_SECRET'],
-        :grant_type => 'authorization_code',
-        :redirect_uri => "#{our_url}/auth/google_oauth2/callback"
-      }
+    # form = {
+    #     :code => code,
+    #     :client_id => ENV['GOOGLE_OAUTH_CLIENT_ID'],
+    #     :client_secret => ENV['GOOGLE_OAUTH_CLIENT_SECRET'],
+    #     :grant_type => 'authorization_code',
+    #     :redirect_uri => "#{our_url}/auth/google_oauth2/callback"
+    #   }
 
-    uri = URI.parse("https://www.googleapis.com")
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    request = Net::HTTP::Post.new("/oauth2/v4/token")
-    request.set_form_data form
-    response = http.request(request)
+    # uri = URI.parse("https://www.googleapis.com")
+    # http = Net::HTTP.new(uri.host, uri.port)
+    # http.use_ssl = true
+    # http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    # request = Net::HTTP::Post.new("/oauth2/v4/token")
+    # request.set_form_data form
+    # response = http.request(request)
 
-    access_token = JSON.parse(response.body)["access_token"]
-    binding.pry
-    json = open("https://www.googleapis.com/plus/v1/people/me?access_token=#{access_token}").read
-   
-    google_user = JSON.parse(json)
+    # access_token = JSON.parse(response.body)["access_token"]
 
+    google_user = request.env['omniauth.auth'][:info]
+    
     user = User.create({
-      fname:         google_user["name"]["givenName"],
-      lname_initial: google_user["name"]["familyName"],
-      email:         google_user["emails"][0]["value"],
-      prof_img_url:  google_user["image"]["url"]
+      fname:         google_user["first_name"],
+      lname_initial: google_user["last_name"],
+      email:         google_user["email"],
+      prof_img_url:  google_user["image"]
     })
 
-    set_session user
 
     if user.save
+      set_session user
       redirect_to('/events')
     else
-      redirect_to('/login')
-
+      user = User.find_by(:email => google_user["email"])
+      if user
+        set_session user
+        redirect_to('/events')
+      else
+        redirect_to('/login')
+      end
     end
 
   end
