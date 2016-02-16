@@ -11,9 +11,7 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
 //= require datetimepicker/jquery.datetimepicker.js
-//= require turbolinks
 //= require lodash/dist/lodash.min.js
 //= require gmaps/google
 //= require material-design-lite/material.min.js
