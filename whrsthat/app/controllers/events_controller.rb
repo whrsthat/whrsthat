@@ -55,14 +55,10 @@ class EventsController < ApplicationController
         event = obj
         marker.lat event.latitude
         marker.lng event.longitude
-        marker.picture({
-          url: "#{view_context.image_path('/assets/precious.png')}",
-          
-          width: "44",
-          height: "90"
-        })
+
+
         # marker.infowindow event.title
-        marker.title event.title
+        marker.infowindow event.title
 
         current_user.local_ip = request.remote_ip
         current_user.save()
@@ -75,11 +71,6 @@ class EventsController < ApplicationController
         user_full_name = @user.name
         marker.lat @user.latitude
         marker.lng @user.longitude
-        marker.picture({
-          url: "#{view_context.image_path('/assets/precious.png')}",
-          width: "44",
-          height: "90"
-        })
 
         marker.infowindow user_full_name
 
@@ -90,11 +81,6 @@ class EventsController < ApplicationController
         user_full_name = @user.name
         marker.lat @user.latitude
         marker.lng @user.longitude
-        marker.picture({
-          url: "#{view_context.image_path('/assets/precious.png')}",
-          width: "44",
-          height: "90"
-        })
 
         marker.infowindow user_full_name        
       end
