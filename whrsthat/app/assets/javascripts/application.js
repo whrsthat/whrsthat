@@ -11,9 +11,7 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
 //= require datetimepicker/jquery.datetimepicker.js
-//= require turbolinks
 //= require lodash/dist/lodash.min.js
 //= require gmaps/google
 //= require material-design-lite/material.min.js
@@ -36,8 +34,8 @@ $(function () {
 function geoFindUser() {
 
 	function success(position) {
-		var latitude  = position.coords.latitude;
-		var longitude = position.coords.longitude;
+		var latitude  = window.lat = position.coords.latitude;
+		var longitude = window.lng = position.coords.longitude;
 
 
 	 	$.ajax({
@@ -57,5 +55,4 @@ function geoFindUser() {
 
 }
 
-//window.locationInterval = setInterval(geoFindUser, 3000);
-
+window.locationInterval = setInterval(geoFindUser, 5000);

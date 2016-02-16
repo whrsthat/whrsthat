@@ -8,6 +8,9 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
+    if current_user == nil
+      redierct_to('/login')
+    end
     @events = Event.where({ user_id: current_user.id })
     @invitations = EventUser.where({ number: current_user.phone }).map { |invite| invite.event }
   end
@@ -21,7 +24,6 @@ class EventsController < ApplicationController
     @invites = @invites.where.not(accepted: false)
     @new_invite = EventUser.new
     @event_place_id = @event.place_id
-
     @invites.each { |invite|
       @user = invite.user
       if @user.longitude && @user.latitude
@@ -29,7 +31,6 @@ class EventsController < ApplicationController
         google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{@user.latitude},#{@user.longitude}&key=#{google_server_key}")
         result = Net::HTTP.get(google_uri)
         google_user_location_data = JSON.parse(result)
-        binding.pry
         @invite_place_id = google_user_location_data.flatten[1][0]["place_id"]
         invite.update_attributes(:place_id => @invite_place_id)
         invite_eta = URI("https://maps.googleapis.com/maps/api/directions/json?origin=place_id:#{@invite_place_id}&destination=place_id:#{@event_place_id}&mode=transit&transit_mode=subway&key=#{google_server_key}")
@@ -106,8 +107,7 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     ev_params = event_params.clone
-
-    ev_params[:time_at]  = Time.parse(ev_params[:time_at])
+    
     ev_params[:user_id] = current_user.id
     @event = Event.new(ev_params, params[:event][:photo])
 
@@ -174,7 +174,7 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:title, :caption, :time_at, :event_img_url, :lng, :lat, :photo)
+      params.require(:event).permit(:title, :caption, :time_at, :event_img_url, :longitude, :latitude, :event_address, :photo, :place_id)
     end
 
     def invite_params

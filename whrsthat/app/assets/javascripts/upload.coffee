@@ -16,10 +16,14 @@ $ ->
       lat = ((this.exifdata.GPSLatitudeRef == 'N') and lat) or (lat*-1)
       lng = ((this.exifdata.GPSLongitudeRef == 'E') and lng) or (lng*-1)
       
+      $('.longitude').val(lat)
+      $('.latitude').val(lng)  
+      
       geo = new google.maps.Geocoder()
       geo.geocode({ location: { lat: lat, lng: lng } }, (results, status) =>
         if results and results[0] and results[0].formatted_address
-          $('.address').val(results[0].formatted_address)
+          $('.address').typeahead('val', results[0].formatted_address).trigger('input')
+          $('.place_id').val(results[0].place_id)
       )
 
       
@@ -30,10 +34,3 @@ $ ->
         $('.sample').show()
         $('.sample img').attr('src',  data_url)
     ) 
-
-  addressPicker = new AddressPicker()
-
-  $('.address').typeahead(null, {
-    displayKey: 'description',
-    source: addressPicker.ttAdapter()
-  })

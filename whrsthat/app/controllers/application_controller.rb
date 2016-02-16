@@ -8,6 +8,12 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @user ||= User.find_by_id(session[:user])
+
+    if request.remote_ip
+    	@user.local_ip = request.remote_ip
+    	@user.save
+    end
+    @user
   end
 
  	def twilio 
