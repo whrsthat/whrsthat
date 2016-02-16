@@ -74,8 +74,10 @@ class UsersController < ApplicationController
     response = http.request(request)
 
     access_token = JSON.parse(response.body)["access_token"]
-
-    google_user = JSON.parse(open("https://www.googleapis.com/plus/v1/people/me?access_token=#{access_token}").read)
+    binding.pry
+    json = open("https://www.googleapis.com/plus/v1/people/me?access_token=#{access_token}").read
+   
+    google_user = JSON.parse(json)
 
     user = User.create({
       fname:         google_user["name"]["givenName"],

@@ -66,7 +66,6 @@
         <a class="mdl-navigation__link" href="/contact">Contact</a>
         <!-- <a class="mdl-navigation__link" href="/login">Login</a> -->
         <% if current_user == nil %>
-        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
         <a class="mdl-navigation__link" href="/login">Login</a>
         <% else %>
         <a class="mdl-navigation__link" href="/logout">Logout</a>
