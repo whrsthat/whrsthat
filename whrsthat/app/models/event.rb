@@ -64,6 +64,26 @@ class Event < ActiveRecord::Base
 		"/events/#{self.id}"
 	end
 
+	def schedule
+		@@scheduler ||= Rufus::Scheduler.new
+	end
+
+	def remind(number)
+		binding.pry
+    twilio.messages.create(
+      from: ENV['TWILIO_FROM_NUMBER'],
+      to: number,
+      body: "Reminder: #{self.user.name}'s event #{self.title} starts in 15 minutes. See details about this event at #{ENV['EXTERNAL_URL']}/#{self.url}"
+    )
+	end
+
+	def twilio 
+		account_sid = ENV['TWILIO_SID']
+		auth_token = ENV['TWILIO_AUTH_TOKEN']
+
+		@twilio ||= Twilio::REST::Client.new account_sid, auth_token
+	end
+
 	after_save do
 		if !self.latitude && !self.longitude
 	        photo_data = EXIFR::JPEG.new(@photo.path).exif
@@ -95,6 +115,18 @@ class Event < ActiveRecord::Base
 
 			new_image = MainImage.new(url: self.id.to_s + '.' + @format, format: @format)
 			new_image.save()	
+		end
+
+		if self.scheduled != true
+			scheduler.at "#{(self.time_at - 15.minutes).to_s}" do
+				self.remind(self.user.phone)
+				EventUser.where(event_id: self.id).each do |invite|
+					self.remind(invite.number)
+				end
+				
+				self.scheduled = true
+				self.save()
+			end
 		end
 	end
 
