@@ -25,6 +25,14 @@ body {
   /*background: #ffe6eb;*/
 }
 
+main.mdl-layout__content {
+  background-color: #E1EFFD
+}
+
+.mdl-layout__header-row {
+  background-color: #47B5FA
+}
+
 h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   font-family: 'Righteous', 'Helvetica', 'Arial', sans;
@@ -38,6 +46,7 @@ h1 {
 p {
   font-size: 2em;
 }
+
 
 .content {
   position: relative;
@@ -95,9 +104,14 @@ p {
   background: url('../assets/demos/transparent.jpg') center / cover;
 }
 
+/* div.mdl-layout__drawer-button {
+  color: whitesmoke;
+  background-color: #47B5FA !important
+}*/
+
 .layout-transparent .mdl-layout__header,
-.layout-transparent .mdl-layout__drawer-button {
-/* Use 87% black if bg is light. */
+.layout-transparent {
+   /*Use 87% black if bg is light*/. 
   color: white;
 }
 
@@ -205,7 +219,9 @@ body {
 
 /* Button Colors */
 .mdl-button--raised.mdl-button--colored {
-  background: #000000;
+ /* background: #0AD6D2;*/
+ background-color: #34085D;
+ color: #F5FDFE;
 }
 
 .mdl-button--raised.mdl-button--colored:hover {
