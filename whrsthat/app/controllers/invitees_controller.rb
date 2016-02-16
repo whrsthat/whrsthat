@@ -1,5 +1,46 @@
 class InviteesController < ApplicationController
   before_action :set_invitee, only: [:show, :edit, :update, :destroy]
+  # Allow Twilio to POST to this endpoint
+  protect_from_forgery with: :null_session
+ 
+
+
+  def text
+    # The number the text came from 
+    from_number = params['From']
+    body = params['Body']
+
+    invite = EventUser.find_by(:number => from_number)
+
+    if invite != nil && invite.user != nil && invite.accepted == false
+      if body.downcase.include?('y')
+        invite.accepted = true
+        invite.save()
+
+        twilio.messages.create(
+          from: ENV['TWILIO_FROM_NUMBER'],
+          to: invite.number,
+          body: "Thank you for attening #{invite.event.title}. See details about this event at #{event.url}"
+        )
+      elsif body.downcase.include?('n')
+        invite.accepted = false
+        invite.save()
+      else
+        # If the user didn't send Y(es) or N(o)
+
+      end
+    end
+    render :nothing => true, :status => 204, :content_type => 'text/html'
+  end
+
+  def respond 
+    @invite = EventUser.find(params['id'])
+
+    @invite.accepted = (params['accepted'] === 'true')
+    @invite.save
+
+    render :nothing => true, :status => 204, :content_type => 'text/html'
+  end
 
   # GET /invitees
   # GET /invitees.json
@@ -10,6 +51,11 @@ class InviteesController < ApplicationController
   # GET /invitees/1
   # GET /invitees/1.json
   def show
+
+    @invite = EventUser.find(params['id'])
+    if @invite.accepted != nil
+      redirect_to("/events/#{@invite.event.id}")
+    end
   end
 
   # GET /invitees/new
@@ -19,7 +65,10 @@ class InviteesController < ApplicationController
 
   # GET /invitees/1/edit
   def edit
+
   end
+
+
 
   # POST /invitees
   # POST /invitees.json
@@ -64,7 +113,8 @@ class InviteesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invitee
-      @invitee = Invitee.find(params[:id])
+      # binding.pry
+      @invitee = EventUser.find(params['id'])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

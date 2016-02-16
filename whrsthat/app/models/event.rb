@@ -24,8 +24,23 @@ class Event < ActiveRecord::Base
 		User.find(self.user_id)
 	end
 
+	def date
+		self.time_at.strftime('%A %d, %Y')
+	end
+
+	def time
+		self.time_at.strftime('%-I%p')
+	end
+
 	validate do 
-		if @photo.present?
+		if !@photo.present?
+			errors.add(:photo)
+		elsif !self.title.present?
+
+			errors.add(:title)
+		elsif !self.time_at.present?
+			errors.add(:time_at)
+		else
 			@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
 			@photo_data = EXIFR::JPEG.new(@photo.path).exif
 			#pass type to after save to add to file before local storage
@@ -34,11 +49,6 @@ class Event < ActiveRecord::Base
 			elsif !@photo_data
 				errors.add(:photo)
 			end
-		elsif !self.title.present?
-
-			errors.add(:title)
-		elsif !self.time_at.present?
-			errors.add(:time_at)
 		end
 	end
 
@@ -46,8 +56,12 @@ class Event < ActiveRecord::Base
 		"/photos/#{self.id.to_s}.jpeg"
 	end
 
-	def date
-		self.time_at
+	def owner?(current_user)
+		user.id == current_user.id 
+	end
+
+	def url
+		"/events/#{self.id}"
 	end
 
 	after_save do
@@ -73,7 +87,9 @@ class Event < ActiveRecord::Base
 	        result = Net::HTTP.get(google_uri)
 	        google_photo_data = JSON.parse(result)
 			event_address = google_photo_data.flatten[1][0]["formatted_address"]
+			place_id = google_photo_data.flatten[1][0]["place_id"]
 			self.update_attributes(:event_address => event_address)
+			self.update_attributes(:place_id => place_id)
 
 			self.save()
 

@@ -1,3 +1,27 @@
 // Place all the styles related to the invitees controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.invitee .demo-card-event h4{
+	text-align: left;
+	color: white;
+}
+
+.invitee .demo-card-event .mdl-card__actions {
+	text-align: left;
+}
+
+.invitee > div {
+	transition: all 2s;
+	-webkit-transition: all 2s;
+	text-align:center;
+}
+
+.invitee .demo-card-event {
+	display:inline-block;
+}
+
+.view {
+	display:none;
+}

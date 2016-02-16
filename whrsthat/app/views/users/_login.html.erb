@@ -1,4 +1,4 @@
-<div class="mdl-textfield mdl-js-textfield" id='loginform'>
+<div id='loginform'>
 	<form method='POST' action='/login'>
   	<% if !(@homepage) %>
   	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -18,7 +18,7 @@
   	<input class="mdl-textfield__input" type='password' name='password' placeholder="Enter Password"><br /><br /><br />
   	<% end %>
   	<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token() %>' size='65'>
-  	<button style="margin-left: -35px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='submit'>Log In</button>
+  	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='submit'>Log In</button>
   </form>
 </div>
 

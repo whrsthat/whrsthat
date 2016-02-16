@@ -8,7 +8,7 @@
 				<% end %>
 				<% if current_user == nil %>
 					<h2>Ready To Share An Event? Log In!</h2>
-					<%= render partial: 'users/login'%>
+					<div class="login-container"><%= render partial: 'users/login'%></div>
 				<% end %>
 			</div>
 		</div>

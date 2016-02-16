@@ -4,5 +4,11 @@
 	<% else %>
 		<h3>Login to WhrsThat?!</h3>
 	<% end %>
-	<%= render partial: 'login', locals: { user: @user } %>
+	<div class="login-panel">
+		<%= render partial: 'login', locals: { user: @user } %>
+		<br/>
+		<div>
+	  	<button class="create mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='button'>Create an Account</button>
+	  </div>
+	</div>
 </div>
