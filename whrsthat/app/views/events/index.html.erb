@@ -7,19 +7,20 @@
 	</label>
 </div>
 <% if @invitations != nil %>
-  <div class="events Invitations">
+  <div style="text-align: center;" class="events Invitations">
   <% @invitations.each do |event| %>
     <%= render partial: "event", locals: { event: event } %>
   <% end %>
   </div>
 <% end %>
 <% if @events != nil %>
-  <div class="events Events">
+  <div style="text-align: center;" class="events Events">
   <% @events.each do |event| %>
     <%= render partial: "event", locals: { event: event } %>
   <% end %>
   </div>
 <% end %>
+</div>
 <div class="new-event">
   <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
     <i class="material-icons">add</i>

@@ -20,17 +20,19 @@
 /* fullPage Main */
 body {
   font-family: arial, helvetica;
+  background-color: #FFF300;
   color: #727272;
-  background: #ffe6eb;
+  /*background: #ffe6eb;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
-  display: inline-block;
+  text-transform: uppercase;
+  font-family: 'Righteous', 'Helvetica', 'Arial', sans;
   color: #6532be;
 }
 
 h1 {
-  font-size: 6em;
+  font-size: 5em;
 }
 
 p {
@@ -58,12 +60,12 @@ p {
   margin: 0;
 }
 
-#section0 h1, h2 {
+#fullpage h1, #fullpage h2, #fullpage h3, #fullpage h4, #fullpage h5, #fullpage h6 {
   color: #fff;
 }
 
 #section0 h1 {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 #section0 p {

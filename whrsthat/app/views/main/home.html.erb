@@ -7,8 +7,8 @@
 					<h4 style="color:red;">Sorry, that username / password combination did not work. Please try again.</h4>
 				<% end %>
 				<% if current_user == nil %>
-					<h2>Ready To Share An Event? Log In!</h2>
-					<div class="login-container"><%= render partial: 'users/login'%></div>
+					<h3>Ready To Share An Event?<br />Create An Account & Get Started!</h3>
+					<div class="login-container"><%= render partial: 'users/login' %></div>
 				<% end %>
 			</div>
 		</div>
