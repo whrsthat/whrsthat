@@ -8,17 +8,22 @@ class RidesController < ActionController::Base
 		end
 	end
 
+	def event
+		@event = Event.find(params['event_id'])
+	end
+
 	def products
-		uber.products(latitude: lat, longitude: lon)
+		@products = uber.products(latitude: event.latitude, longitude: event.longitude)
+		render json: @products
 	end
 
 	def price 
-		uber.price_estimations(start_latitude: slat, start_longitude: slon,
-                         		end_latitude: dlat, end_longitude: dlon)
+		uber.price_estimations(start_latitude: current_user.latitude, start_longitude: current_user.longitude,
+                         		end_latitude: event.latitude , end_longitude: event.longitude)
 	end 
 
 	def time 
-		uber.time_estimations(start_latitude: slat, start_longitude: slon)
+		uber.time_estimations(start_latitude: current_user.latitude, start_longitude: current_user.longitude)
 	end 
 
 	def uber_bearer
@@ -32,6 +37,7 @@ class RidesController < ActionController::Base
 
 	def user_info
 		uber_bearer.me 
+		render 'events/show'
 	end 
 
 	def user_activities
@@ -47,10 +53,11 @@ class RidesController < ActionController::Base
 	end
 
 	def requests
-		@event = Event.find(params['event_id']).select('latitude', 'longitude').take 
-		uber_ride.trip_request(product_id: product_id, 
+		# @event = Event.find(params['event_id']).select('latitude', 'longitude').take 
+		@request = uber_ride.trip_request(product_id: product_id, 
 								start_latitude: current_user.latitude, start_longitude: current_user.longitude, 
-									end_latitude: @event.latitude, end_longitude: @event.longitude)
+									end_latitude: event.latitude, end_longitude: event.longitude)
+		render json: @request
 	end 
 
 	def request_details

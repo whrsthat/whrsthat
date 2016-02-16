@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20160215193259) do
     t.string   "local_ip"
     t.float    "latitude"
     t.float    "longitude"
+    t.text     "bio"
   end
 
   add_foreign_key "events", "users"

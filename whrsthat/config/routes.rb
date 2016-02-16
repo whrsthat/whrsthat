@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   get '/uber/history' => 'rides#user_activities'
   post '/uber/requests' => 'rides#requests'
   delete '/uber/requests/current' => 'rides#destroy'
-  get '/uber/products' => 'rides#products'
+  get '/uber/:event_id/products' => 'rides#products'
   get '/uber/estimates/time' => 'rides#time'
   get '/uber/estimates/price' => 'rides#price'
   
