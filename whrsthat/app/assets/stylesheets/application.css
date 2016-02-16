@@ -122,8 +122,7 @@ p {
 
 .card-tall > .mdl-card__title {
   color: #fff;
-  height: 600px;
-  background: url('/photos/4.jpeg') center / cover;
+  height: 15em;
 }
 
 .card-tall > .mdl-card__menu {
@@ -141,9 +140,16 @@ p {
 
 /* Custom CSS */
 .page-content {
-  max-width: 1020px;
-  margin: 0 auto;
   text-align: center;
+}
+
+.page-content > * {
+  margin: 0 auto;
+  position: relative;
+}
+
+.page-content > form {
+  width: 30em;
 }
 
 nav a:hover {
