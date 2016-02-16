@@ -3,13 +3,26 @@
 <meta name="event-id" content="<%= @event.id %>"/>
 
 
-<div class="mdl-grid">
+<div class="mdl-grid" style="background-color: #feeca9; max-height: 700px;">
   <div class="mdl-cell mdl-cell--12-col add-on">
     <div class="title">
-      <h1><%= @event.title %></h1>
+      <h1 style="font-size: 3em"><%= @event.title %></h1>
     </div>
     <div class="photo">
-      <img src="/photos/<%= @event.id %>.jpeg">
+    
+    <div style="margin: 0 auto;" class="card-tall mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text"></h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            WhrsThat? shares the location and the story of anything and everything that's happening around you.
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/users/new">Get Started</a>
+          </div>
+        </div style="padding-bottom: 30px;">
+
+      <!-- <img style="height: 450px; padding-bottom: 30px;" src="/photos/<%= @event.id %>.jpeg"> -->
     </div>
   </div>
 </div>

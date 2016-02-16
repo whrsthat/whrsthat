@@ -1,0 +1,22 @@
+  <div class="<%= field_class %>">
+    <%= f.label :phone, :class => 'mdl-textfield__label' %>
+    <%= f.text_field :phone, :class => 'mdl-textfield__input' %>
+  </div>
+  <div class="<%= field_class %>">
+    <%= f.label :First_name, :class => 'mdl-textfield__label' %>
+    <%= f.text_field :fname, :class => 'mdl-textfield__input' %>
+  </div>
+  <div class="<%= field_class %>">
+    <%= f.label :Last_name, :class => 'mdl-textfield__label' %>
+    <%= f.text_field :lname_initial, :class => 'mdl-textfield__input' %>
+  <br/>
+  </div>
+  <div class="<%= field_class %>">
+    <%= f.label :email, :class => 'mdl-textfield__label' %>
+    <%= f.text_field :email,:class => 'mdl-textfield__input' %>
+  <br/>
+  </div>
+  <div class="<%= field_class %>">
+    <%= f.label :password,:class => 'mdl-textfield__label' %>
+    <%= password_field_tag :password,:class => 'mdl-textfield__input'  %>
+ </div>

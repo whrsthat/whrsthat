@@ -127,6 +127,7 @@ class UsersController < ApplicationController
       end
     else
       if current_user == nil
+        @force_redirect = params[:force].present?
         if request.referer
           session[:referer] = request.referer
         end
