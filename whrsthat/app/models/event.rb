@@ -118,12 +118,12 @@ class Event < ActiveRecord::Base
 		end
 
 		if self.scheduled != true
-			scheduler.at "#{(self.time_at - 15.minutes).to_s}" do
+			schedule.at "#{(self.time_at - 15.minutes).to_s}" do
 				self.remind(self.user.phone)
 				EventUser.where(event_id: self.id).each do |invite|
 					self.remind(invite.number)
 				end
-				
+
 				self.scheduled = true
 				self.save()
 			end
