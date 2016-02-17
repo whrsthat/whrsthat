@@ -18,6 +18,7 @@
 //= require javascript.fullPage.min.js
 //= require javascript.fullPage.js
 //= require gmaps/google
+//= require exif-js/exif.js
 //= require_tree .
 
 $(function () {
