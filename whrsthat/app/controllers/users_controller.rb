@@ -41,7 +41,6 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     tmp_obj = JSON.parse(JSON.generate(user_params))
-    binding.pry
     @user = User.new( tmp_obj )
     if @user.save
       set_session @user

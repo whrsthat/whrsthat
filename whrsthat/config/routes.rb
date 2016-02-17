@@ -40,7 +40,6 @@ Rails.application.routes.draw do
 
   post '/events/:id/invite' => 'events#invite'
   
-  
   delete '/events/:id/:invite_id' => 'events#invite_destroy'
 
   resources :invitees 
@@ -56,10 +55,6 @@ Rails.application.routes.draw do
   resources :event_photos
   
   end
-
-  get '/' => 'users#home'
-  get '/about' => 'users#about'
-  get '/contact' => 'users#contact'
 
   get '/event_photo' => 'event_photos_controller#index'
 

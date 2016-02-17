@@ -32,7 +32,6 @@ navigator.geolocation.watchPosition(function (position) {
 	var latitude  = position.coords.latitude;
 	var longitude = position.coords.longitude;
 
-
  	$.ajax({
         type: 'POST',
         url: `/users/geo`,
