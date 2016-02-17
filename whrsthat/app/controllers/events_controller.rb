@@ -90,8 +90,6 @@ class EventsController < ApplicationController
           height: 80
         })
 
-        
-
         marker.infowindow render_to_string("events/marker_infowindow", :layout => false, locals: { user: @user, invite: @event })     
       end
     end
@@ -188,7 +186,7 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:title, :caption, :time_at, :event_img_url, :longitude, :latitude, :photo)
+      params.require(:event).permit(:title, :caption, :time_at, :event_img_url, :longitude, :latitude, :photo, :event_address)
     end
 
     def invite_params

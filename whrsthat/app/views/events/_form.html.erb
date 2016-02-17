@@ -1,3 +1,7 @@
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+  <div class="mdl-snackbar__text"></div>
+  </div>
 <%= form_for @event, html: { multipart: true } do |f| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">

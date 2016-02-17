@@ -34,21 +34,20 @@ class Event < ActiveRecord::Base
 
 	validate do 
 		if !MainImage.find_by(event_id: self.id)
-			if !@photo.present?
-				errors.add(:photo)
-			elsif !self.title.present?
-
+			if !self.title.present?
 				errors.add(:title)
 			elsif !self.time_at.present?
 				errors.add(:time_at)
 			else
-				@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
-				@photo_data = EXIFR::JPEG.new(@photo.path).exif
-				#pass type to after save to add to file before local storage
-				if @format != 'jpeg'
-					errors.add(:photo)
-				elsif !@photo_data
-					errors.add(:photo)
+				if @photo.present?
+					@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
+					@photo_data = EXIFR::JPEG.new(@photo.path).exif
+					#pass type to after save to add to file before local storage
+					if @format != 'jpeg'
+						errors.add(:photo)
+					elsif !@photo_data
+						errors.add(:photo)
+					end
 				end
 			end
 		end
@@ -88,19 +87,19 @@ class Event < ActiveRecord::Base
 
 	after_save do
 		if MainImage.find_by(url: self.id.to_s + '.' + 'jpeg') == nil
+			if @photo
+		        #read about fileutils functionality
+		        # Open the tempfile using MiniMagick     (File -> Open)
+				image = MiniMagick::Image.open(@photo.path)
+				# perform any mini_magick operations
+				image.auto_orient
+				# write out the final product  (File -> Save)
+				image.write("public/photos/#{self.id}." + @format)
+		        # FileUtils.cp(@photo.path, "public/photos/#{id}." + @format)
 
-	        #read about fileutils functionality
-	        # Open the tempfile using MiniMagick     (File -> Open)
-			image = MiniMagick::Image.open(@photo.path)
-			# perform any mini_magick operations
-			image.auto_orient
-			# write out the final product  (File -> Save)
-			image.write("public/photos/#{self.id}." + @format)
-	        # FileUtils.cp(@photo.path, "public/photos/#{id}." + @format)
-
-			new_image = MainImage.new(url: self.id.to_s + '.' + @format, format: @format)
-			new_image.save()
-
+				new_image = MainImage.new(url: self.id.to_s + '.' + @format, format: @format)
+				new_image.save()
+			end
 
 	        google_server_key = ENV['GOOGLE_SERVER_KEY']
 	 		google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{self.latitude},#{self.longitude}&key=#{google_server_key}")
@@ -112,8 +111,10 @@ class Event < ActiveRecord::Base
 			self.update_attributes(:place_id => place_id)
 			self.save()	
 
-			new_image.event_id = self.id
-			new_image.save()
+			if @photo
+				new_image.event_id = self.id
+				new_image.save()
+			end
 		end
 
 		# if self.scheduled != true
