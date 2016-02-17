@@ -3,7 +3,7 @@ require 'exifr'
 require 'gmaps4rails'
 
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update]
   protect_from_forgery with: :null_session
 
   # GET /events
@@ -155,6 +155,7 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
+    @event = Event.find(params[:id])
     @event.destroy
     render :nothing => true, :status => 200, :content_type => 'text/plain'
   end
