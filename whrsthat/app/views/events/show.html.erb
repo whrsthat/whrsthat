@@ -20,11 +20,10 @@
   window.$event = { latitude: <%= @event.latitude %>, longitude: <%= @event.longitude %>, id: <%= @event.id %> };
 </script>
 
-<div class="mdl-grid">
 <%= csrf_meta_tag %>
 
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--12-col add-on">
+  <div class="mdl-cell mdl-cell--6-col add-on">
     <div class="title">
       <h1 style="font-size: 3em"><%= @event.title %></h1>
     </div>
@@ -42,15 +41,13 @@
       <!-- <img style="height: 450px; padding-bottom: 30px;" src="/photos/<%= @event.id %>.jpeg"> -->
     </div>
   </div>
-</div>
-<div class="mdl-grid middle align">
   <!--<div class="mdl-cell mdl-cell--2-col"></div>-->
-  <div class="mdl-cell mdl-cell--12-col info-container max-widths">
+  <div class="mdl-cell mdl-cell--6-col info-container max-widths">
 
   <p><span><%= @event.date %> <%= @event.time.downcase %></span></p>
-  
-<p><%= @event.event_address %></p>
-<!--   </div>
+
+  <p><%= @event.event_address %></p>
+  <!--   </div>
   <div class="mdl-cell mdl-cell--6-col map-container"> -->
 
   <div style='' class="map-container">
@@ -101,12 +98,12 @@
       });
     </script>
   </div>
-</div>
+  </div>
 
-<!-- <div class="mdl-cell mdl-cell--2-col"></div> -->
-</div>
-<div class="mdl-grid bottom">
-  <div class="mdl-cell mdl-cell--12-col">
+  <!-- <div class="mdl-cell mdl-cell--2-col"></div> -->
+  </div>
+  <div class="mdl-grid bottom">
+  <div class="mdl-cell mdl-cell--3-col">
     <h4><%= @event.owner?(current_user) ? 'Invite your friends' : 'People who are attending' %></h4>
     <ul class="demo-list-icon mdl-list invites">
       <% if !@event.owner?(current_user) %>
@@ -139,5 +136,4 @@
       <% end %>
     </ul>
   </div>
-</div>
 <%= render partial: 'uber', locals: { event: @event } %>

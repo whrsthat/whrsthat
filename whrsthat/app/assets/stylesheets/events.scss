@@ -105,3 +105,23 @@ section.invite ul {
 	right: 10em;
 }
 
+.bottom div.mdl-textfield {
+  width: auto !important;
+	display: block !important;
+	position: relative;
+}
+.bottom h4 {
+	width: 9.37em;
+}
+
+
+.bottom .mdl-textfield {
+	width: 12em;
+  display: block !important;
+  position: relative;
+  margin-left: 2rem;
+}
+
+.bottom button.submit-invite {
+    width: 0;
+}
