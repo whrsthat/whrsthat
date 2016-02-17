@@ -30,30 +30,8 @@
 <body data-no-turbolink="true">
 
 <% if @homepage %>
-<style>
-nav a:hover {
-  color: #6532be !important;
-  background-color: #fff;
-}
-::placeholder {
-  color: #FFF300 !important;
-}
-/*::-webkit-input-placeholder {
-   color: #FFF300 !important;
-}
-:-moz-placeholder {
-   color: #FFF300 !important;
-}
-::-moz-placeholder {
-   color: #FFF300 !important;
-}
-:-ms-input-placeholder {
-   color: #FFF300 !important;
-}*/
-</style>
 <div class="layout-transparent mdl-layout mdl-js-layout">
   <header class="mdl-layout__header mdl-layout__header--transparent">
-    <!-- js menu // material.min.js -->
     <div class="mdl-layout__header-row">
       <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
       <div class="mdl-layout-spacer"></div>
@@ -61,11 +39,15 @@ nav a:hover {
         <a class="mdl-navigation__link" href="/">Home</a>
         <a class="mdl-navigation__link" href="/about">About</a>
         <a class="mdl-navigation__link" href="/contact">Contact</a>
+        <% if current_user == nil %>
         <a class="mdl-navigation__link" href="/login">Login</a>
+        <% else %>
+        <a class="mdl-navigation__link" href="/logout">Logout</a>
+        <% end %>
       </nav>
     </div>
   </header>
-  <div class="mdl-layout__drawer">
+<!--   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
     <nav class="mdl-navigation">
     <a class="mdl-navigation__link" href="/">Home</a>
@@ -73,12 +55,11 @@ nav a:hover {
     <a class="mdl-navigation__link" href="/contact">Contact</a>
     <a class="mdl-navigation__link" href="/login">Login</a>
     </nav>
-  </div>
+  </div> -->
 </div>
 <% else %>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
-    <!-- js menu // material.min.js -->
     <div class="mdl-layout__header-row">
     <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
     <div class="mdl-layout-spacer"></div>
@@ -95,7 +76,7 @@ nav a:hover {
       </nav>
     </div>
   </header>
-  <div class="mdl-layout__drawer">
+<!--   <div class="mdl-layout__drawer">
   <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
     <nav class="mdl-navigation">
     <a class="mdl-navigation__link" href="/">Home</a>
@@ -103,7 +84,7 @@ nav a:hover {
     <a class="mdl-navigation__link" href="/contact">Contact</a>
     <a class="mdl-navigation__link" href="">Sign Up Now!</a>
   </nav>
-</div>
+</div> -->
 
 <main class="mdl-layout__content">
   <div class="page-content">
@@ -121,11 +102,16 @@ nav a:hover {
 <% if @homepage %>
 <script>
 fullpage.initialize('#fullpage', {
-    anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage', 'lastPage'],
-    menu: '#menu',
-    css3:false
+  anchors: ['firstPage', 'secondPage'],
+  menu: '#menu',
+  css3:false
 });
 /* ++ anchors: ['3rdPage', '4thpage', 'lastPage'] */
+$(document).on('ready', function () {
+  $('.arrow').click(function(){
+    window.location.replace('/#section1');
+  });
+});
 </script>
 <% end %>
 </html>
