@@ -277,7 +277,7 @@ input[type=submit]:active {
   display: inline-block;
   margin-top: 4em !important;
   box-shadow: .3em .3em .7em #000000;
-  padding: 2em 2em 4em 2em;
+  padding: 1em 2em 3em 2em;
 }
 
 .page-content {
