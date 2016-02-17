@@ -1,14 +1,26 @@
-<p id="notice"><%= notice %></p>
+<h3>Events <span class="status">you've been invited to</span></h3>
 
-<h1>Listing Events</h1>
-
+<div class="toggle">
+	<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="event_switch">
+	  <input type="checkbox" id="event_switch" class="mdl-switch__input">
+	  <span class="mdl-switch__label">Invitations</span>
+	</label>
+</div>
+<% if @invitations != nil %>
+  <div style="text-align: center;" class="events Invitations">
+  <% @invitations.each do |event| %>
+    <%= render partial: "event", locals: { event: event } %>
+  <% end %>
+  </div>
+<% end %>
 <% if @events != nil %>
-  <div class="events">
+  <div style="text-align: center;" class="events Events">
   <% @events.each do |event| %>
     <%= render partial: "event", locals: { event: event } %>
   <% end %>
   </div>
 <% end %>
+</div>
 <div class="new-event">
   <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
     <i class="material-icons">add</i>

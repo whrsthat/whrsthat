@@ -8,6 +8,18 @@ $ =>
 
 	$('#event_user_number').attr('type', 'tel')
 
+	$('.demo-card-event .delete').click () ->
+		button = $(this)
+		ev = $(this).parents('.event')
+		$.ajax({
+			method: 'delete',
+			url: '/events/'+$(ev).attr('data-id')
+		})
+		.done(() ->
+			$(ev).fadeOut()
+		)
+		return false
+
 	$('.invitation .delete').click () ->
 		button = $(this)
 		inv = $(this).parents('.invitation')
@@ -27,4 +39,16 @@ $ =>
 			$('#event_user_number').val(num)
 	)
 
-	$('#event_time_at').datetimepicker()
+	$('#event_switch').change () ->
+		if $('#event_switch').is(':checked')
+			$('.Events').hide()
+			$('.Invitations').show()
+			$('.status').text("you've been invited to")
+		else
+			$('.Events').show()
+			$('.Invitations').hide()
+			$('.status').text("you've created")
+	$('#event_switch').click()
+
+	$('#event_time_at').datetimepicker()	
+	$('#file_input_text_div').click(() -> $('#file_input_file').click())

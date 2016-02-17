@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 div.mdl-textfield {
-	left: 40%;
+  width: 100%;
 	display: block;
 	position: relative;
 }
@@ -48,12 +48,14 @@ body {
   margin-left: 5em;
 }
 
-#loginform  {
-  position: relative;
-  width: 300px;
-  left: 40%;
-}
-
 .no_user {
   opacity: .25;
+}
+
+.login-panel {
+  padding: 2em;
+}
+
+[name="commit"] {
+  right: 9em;
 }

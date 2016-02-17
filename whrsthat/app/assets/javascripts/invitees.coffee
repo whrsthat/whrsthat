@@ -14,6 +14,7 @@ $ =>
 		$(this).attr('disabled', 'true')
 		$('.decline').hide()
 		$('.status').text("You accepted this event")
+		$('.view').show()
 		$.post(window.document.location.toString()+'/respond', { accepted: 'true' })
 	)
 

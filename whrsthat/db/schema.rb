@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215185229) do
+ActiveRecord::Schema.define(version: 20160217002807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20160215185229) do
     t.integer "event_id"
     t.boolean "accepted"
     t.string  "number"
+    t.string  "eta"
+    t.string  "place_id"
   end
 
   add_index "event_users", ["event_id"], name: "index_event_users_on_event_id", using: :btree
@@ -42,6 +44,9 @@ ActiveRecord::Schema.define(version: 20160215185229) do
     t.integer  "user_id"
     t.string   "event_address"
     t.datetime "time_at"
+    t.string   "place_id"
+    t.boolean  "scheduled"
+    t.string   "eta"
   end
 
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
@@ -81,6 +86,8 @@ ActiveRecord::Schema.define(version: 20160215185229) do
     t.float    "longitude"
     t.text     "bio"
   end
+
+  add_index "users", ["phone", "email"], name: "index_users_on_phone_and_email", unique: true, using: :btree
 
   add_foreign_key "events", "users"
   add_foreign_key "invitees", "events"

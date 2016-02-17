@@ -11,15 +11,14 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
 //= require datetimepicker/jquery.datetimepicker.js
-//= require turbolinks
 //= require lodash/dist/lodash.min.js
 //= require gmaps/google
 //= require material-design-lite/material.min.js
 //= require javascript.fullPage.min.js
 //= require javascript.fullPage.js
 //= require gmaps/google
+//= require exif-js/exif.js
 //= require_tree .
 
 $(function () {
@@ -29,32 +28,16 @@ $(function () {
 	});
 });
 
-function geoFindUser() {
-
-	function success(position) {
-		var latitude  = position.coords.latitude;
-		var longitude = position.coords.longitude;
+navigator.geolocation.watchPosition(function (position) {
+	var latitude  = position.coords.latitude;
+	var longitude = position.coords.longitude;
 
 
-	 	$.ajax({
-	        type: 'POST',
-	        url: `/users/geo`,
-	        data: { latitude: latitude, longitude: longitude }
-    	});
-	};
+ 	$.ajax({
+        type: 'POST',
+        url: `/users/geo`,
+        data: { latitude: latitude, longitude: longitude, authenticity_token: $('meta[name="csrf-token"]').attr('content') }
+  	});
+}, function () {
 
-	// function error() {
-	// 	output.innerHTML = "Unable to retrieve your location";
-	// };
-
-	navigator.geolocation.getCurrentPosition(success, function () {
-		clearInterval(window.locationInterval);
-	});
-
-}
-
-// window.locationInterval = setInterval(geoFindUser, 3000);
-
-
-
-
+}, { enableHighAccuracy: true });

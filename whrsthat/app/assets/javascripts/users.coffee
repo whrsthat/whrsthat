@@ -16,3 +16,5 @@ $ ->
 			$('#user_phone').val(num)
 	)
 
+	$('.google').click () ->
+		window.document.location = '/auth/google_oauth2'

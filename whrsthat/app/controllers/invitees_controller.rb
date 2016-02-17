@@ -12,7 +12,7 @@ class InviteesController < ApplicationController
 
     invite = EventUser.find_by(:number => from_number)
 
-    if invite != nil && invite.user != nil
+    if invite != nil && invite.user != nil && invite.accepted == false
       if body.downcase.include?('y')
         invite.accepted = true
         invite.save()
@@ -20,7 +20,7 @@ class InviteesController < ApplicationController
         twilio.messages.create(
           from: ENV['TWILIO_FROM_NUMBER'],
           to: invite.number,
-          body: "Thank you for attening #{invite.event.title}"
+          body: "Thank you for attening #{invite.event.title}. See details about this event at #{event.url}"
         )
       elsif body.downcase.include?('n')
         invite.accepted = false
@@ -113,7 +113,8 @@ class InviteesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invitee
-      @invitee = EventUser.find(params[:id])
+      # 
+      @invitee = EventUser.find(params['id'])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
