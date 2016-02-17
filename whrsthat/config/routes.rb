@@ -30,7 +30,8 @@ Rails.application.routes.draw do
  
   post '/api/text/inbound' => 'invitees#text'
 
-  get 'auth/:provider/callback', to: 'users#google_create'
+  get 'auth/google/callback', to: 'users#google_create'
+  get 'auth/uber/callback', to: 'rides#uber_create'
 
   get 'auth/failure', to: redirect('/')
 

@@ -5,7 +5,6 @@
   $(() => {
     <% if current_user.uber_access_token %>
     $('.uber_button').click(() => {
-      $('body').css({ cursor: 'wait' })
       $('.uber-dialog')[0].showModal();
       getEstimatesForUserLocation();
     });
@@ -55,9 +54,7 @@
 
   <div style='' class="map-container">
     <div id="map"></div>
-    <div class="uber_button">
-    Uber
-    </div>
+    <div class="uber_button"></div>
     <script>
       var mapStyle = [
         {

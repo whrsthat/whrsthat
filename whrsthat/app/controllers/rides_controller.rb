@@ -34,6 +34,17 @@ class RidesController < ActionController::Base
 		uber.time_estimations(start_latitude: current_user.latitude, start_longitude: current_user.longitude)
 	end 
 
+	def uber_create
+		access_token = request.env['omniauth.auth']['credentials']['token']
+		current_user.uber_access_token = access_token
+		current_user.save()
+		if session[:last_event]
+			redirect_to("/events/#{session[:last_event]}")
+		else
+			redirect_to("/events")
+		end
+	end
+
 	def uber_bearer
 		Uber::Client.new do |config|
 		  config.server_token  = ENV["UBER_SERVER_KEY"]
@@ -67,9 +78,7 @@ class RidesController < ActionController::Base
 								start_latitude: current_user.latitude, start_longitude: current_user.longitude, 
 									end_latitude: event.latitude, end_longitude: event.longitude)
 		
-		binding.pry
-		render json: @request
-
+		render :nothing => true, :status => 204
 	end 
 
 	def request_details
