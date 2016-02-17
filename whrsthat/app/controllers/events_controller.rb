@@ -18,6 +18,7 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @event = Event.find(params['id'])
+    session[:last_event] = @event.id
     # @event = Event.find(params['id'])
     @invites = EventUser.where(event_id: params['id'].to_i)
     @invites = @invites.where.not(accepted: false)

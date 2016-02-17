@@ -123,6 +123,9 @@ GEM
     omniauth-oauth2 (1.3.1)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
+    omniauth-uber (1.0.1)
+      omniauth (~> 1.2)
+      omniauth-oauth2 (~> 1.1)
     passenger (5.0.24)
       rack
       rake (>= 0.8.1)
@@ -212,6 +215,9 @@ GEM
       multi_json (>= 1.3.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uber-ruby (0.6.0)
+      faraday (~> 0.9.0)
+      json (~> 1.8)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -239,6 +245,7 @@ DEPENDENCIES
   mimemagic
   mini_magick
   omniauth-google-oauth2 (~> 0.2.1)
+  omniauth-uber
   passenger
   pg (~> 0.15)
   pry-rails
@@ -251,6 +258,7 @@ DEPENDENCIES
   spring
   turbolinks
   twilio-ruby (~> 4.11.1)
+  uber-ruby
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
 
