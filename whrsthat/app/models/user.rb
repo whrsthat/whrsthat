@@ -20,8 +20,12 @@ class User < ActiveRecord::Base
     invite_eta = URI("https://maps.googleapis.com/maps/api/directions/json?origin=place_id:#{invite_place_id}&destination=place_id:#{invite.event.place_id}&mode=transit&transit_mode=subway&key=#{google_server_key}")
     eta_result  = Net::HTTP.get(invite_eta)
     eta_parsed = JSON.parse(eta_result)
+    begin
+   		arrival_time = eta_parsed.flatten[3][0]["legs"][0]["arrival_time"]["text"]
+   	rescue
+   		arrival_time = 'ETA could not be determined'
+   	end
 
-    arrival_time = eta_parsed.flatten[3][0]["legs"][0]["arrival_time"]["text"]
     invite.update_attributes(:eta => arrival_time)
 	end
 
@@ -37,7 +41,11 @@ class User < ActiveRecord::Base
     eta_result  = Net::HTTP.get(invite_eta)
     eta_parsed = JSON.parse(eta_result)
 
-    arrival_time = eta_parsed.flatten[3][0]["legs"][0]["arrival_time"]["text"]
-    event.update_attributes(:eta => arrival_time)
+    begin
+   		arrival_time = eta_parsed.flatten[3][0]["legs"][0]["arrival_time"]["text"]
+   	rescue
+   		arrival_time = 'ETA could not be determined'
+   	end
+   	event.update_attributes(:eta => arrival_time)
 	end
 end
