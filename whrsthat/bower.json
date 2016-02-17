@@ -16,11 +16,6 @@
     "material-design-lite": "~1.1.1",
     "jquery": "~2.2.0",
     "lodash": "^4.3.0",
-<<<<<<< HEAD
-    "datetimepicker": "~2.4.5",
-=======
-    "datetimepicker": "2.4.5",
->>>>>>> master
-    "material": "~0.1.1"
+    "datetimepicker": "2.4.5"
   }
 }
