@@ -147,7 +147,7 @@ class UsersController < ApplicationController
         end
       else
         @error = true
-        render 'users/login'
+        render :login
       end
     else
       if current_user == nil

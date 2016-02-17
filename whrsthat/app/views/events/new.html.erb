@@ -1,5 +1,9 @@
-<h1>New Event</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', events_path %>
+<% if @error %>
+<h4 class="errors">Please fill in all fields<br />and try again.</h4>
+<% end %>
+<div class="form_wrap">
+	<h3>New Event</h3>
+ 		<%= render 'form' %>
+ 		<br />
+ 		<%= link_to 'Back', events_path %>
+</div>
