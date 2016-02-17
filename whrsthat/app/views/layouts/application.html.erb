@@ -33,7 +33,7 @@
 <% if @homepage %>
 <div class="layout-transparent mdl-layout mdl-js-layout">
   <header class="mdl-layout__header mdl-layout__header--transparent">
-    <div class="mdl-layout__header-row-home">
+    <div class="mdl-layout__header-row clear">
       <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
       <div class="mdl-layout-spacer"></div>
       <nav id="trans" class="mdl-navigation">
@@ -68,7 +68,6 @@
         <a class="mdl-navigation__link" href="/">Home</a>
         <a class="mdl-navigation__link" href="/about">About</a>
         <a class="mdl-navigation__link" href="/contact">Contact</a>
-        <!-- <a class="mdl-navigation__link" href="/login">Login</a> -->
         <% if current_user == nil %>
         <a class="mdl-navigation__link" href="/login">Login</a>
         <% else %>
