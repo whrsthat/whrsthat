@@ -23,9 +23,12 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
+
+# gem 'omniauth-uber'
+gem 'uber-ruby', require: 'uber'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem "passenger"
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -41,8 +44,9 @@ gem 'mini_magick'
 gem 'mimemagic'
 gem 'gmaps4rails'
 gem 'omniauth-google-oauth2', "~> 0.2.1"
+gem 'omniauth-uber'
 gem 'twilio-ruby', '~> 4.11.1'
-gem 'rufus-scheduler'
+gem 'rufus-scheduler', '~> 3.2.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

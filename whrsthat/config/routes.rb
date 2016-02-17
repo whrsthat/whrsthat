@@ -30,7 +30,8 @@ Rails.application.routes.draw do
 
   post '/api/text/inbound' => 'invitees#text'
 
-  get 'auth/:provider/callback', to: 'users#google_create'
+  get 'auth/google/callback', to: 'users#google_create'
+  get 'auth/uber/callback', to: 'rides#uber_create'
 
   get 'auth/failure', to: redirect('/')
 
@@ -58,6 +59,15 @@ Rails.application.routes.draw do
 
   get '/event_photo' => 'event_photos_controller#index'
 
+  get '/uber/me' => 'rides#user_info'
+  get '/uber/history' => 'rides#user_activities'
+  post '/uber/requests' => 'rides#requests'
+  delete '/uber/requests/current' => 'rides#destroy'
+  get '/uber/:event_id/products' => 'rides#products'
+  get '/uber/estimates/time' => 'rides#time'
+  post '/uber/:event_id/estimates/price' => 'rides#price'
+  
+
   get 'auth/:provider/callback', to: 'users#google_create'
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'users#google_signout', as: 'signout'
@@ -65,6 +75,7 @@ Rails.application.routes.draw do
 
   get '/rsvp/:id' => 'invitees#show'
   post '/rsvp/:id/respond' => 'invitees#respond'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
