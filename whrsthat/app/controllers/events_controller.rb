@@ -9,7 +9,7 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.where({ user_id: current_user.id })
+    @events = Event.where({ user_id: current_user.id }).order(created_at: :desc)
     @invitations = EventUser.where({ number: current_user.phone }).map { |invite| invite.event }
     
   end
@@ -31,7 +31,6 @@ class EventsController < ApplicationController
         google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{@user.latitude},#{@user.longitude}&key=#{google_server_key}")
         result = Net::HTTP.get(google_uri)
         google_user_location_data = JSON.parse(result)
-        binding.pry
         @invite_place_id = google_user_location_data.flatten[1][0]["place_id"]
         invite.update_attributes(:place_id => @invite_place_id)
         invite_eta = URI("https://maps.googleapis.com/maps/api/directions/json?origin=place_id:#{@invite_place_id}&destination=place_id:#{@event_place_id}&mode=transit&transit_mode=subway&key=#{google_server_key}")
@@ -43,7 +42,15 @@ class EventsController < ApplicationController
     }
 
     markers = [@event, @event.user].concat(@invites)
-     @hash = Gmaps4rails.build_markers(markers) do |obj, marker|
+    markers.reject! do |obj|
+      if obj.class.name === 'Event' || obj.class.name == 'User'
+        !obj.latitude || !obj.longitude 
+      elsif obj.class.name == 'EventUser'
+        !obj.user.latitude || !obj.user.longitude 
+      end
+    end
+
+    @hash = Gmaps4rails.build_markers(markers) do |obj, marker|
       if obj.class.name === 'Event'
         event = obj
         marker.lat event.latitude

@@ -17,8 +17,6 @@ function file_input() {
   }
 
   function changeState() {
-    if (fileInputText.value.length != 0) {
-      if (!fileInputTextDiv.classList.contains("is-focused")) {
         fileInputTextDiv.classList.add('is-focused');
         var reader = new FileReader();
         reader.readAsDataURL(fileInput.files[0]);
@@ -27,13 +25,30 @@ function file_input() {
           $('.sample').show()
           $('.sample img').attr('src',  data_url);
         }
-      }
-    } else {
-      if (fileInputTextDiv.classList.contains("is-focused")) {
-        fileInputTextDiv.classList.remove('is-focused');
-      }
-    }
-  }
-}
+        EXIF.getData(fileInput.files[0], function() {
+            var photo_data = this;
+            if (!photo_data.exifdata || !photo_data.exifdata.GPSLatitude) {
+              (function() {
+                'use strict';
+                var snackbarContainer = document.querySelector('#demo-toast-example');
+                var data = {message: 'Please upload a jpeg file taken with location services on.'};
+                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+              }());
+              return 
+            } 
 
-$('#file_input_file').length && file_input()
+            var lat = photo_data.exifdata.GPSLatitude[0] + (photo_data.exifdata.GPSLatitude[1] / 60) + (photo_data.exifdata.GPSLatitude[2] / 3600)
+            var long = photo_data.exifdata.GPSLongitude[0] + (photo_data.exifdata.GPSLongitude[1] / 60) + (photo_data.exifdata.GPSLongitude[2] / 3600)
+            
+            var final_latitude = ((photo_data.exifdata.GPSLatitudeRef == "S") ? (lat * -1) : lat) //(N is +, S is -)
+            var final_longitude = ((photo_data.exifdata.GPSLongitudeRef == "W") ? (long * -1) : long) //(W is -, E is +)
+
+            $('#event_latitude').val(final_latitude)
+            $('#event_longitude').val(final_longitude)
+        });
+  }
+} 
+
+$(function() {
+  $('#file_input_text_div').length && file_input()
+})

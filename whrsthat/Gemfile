@@ -40,11 +40,9 @@ gem 'exifr', :git => 'git://github.com/picuous/exifr.git'
 gem 'mini_magick'
 gem 'mimemagic'
 gem 'gmaps4rails'
-gem 'geocoder'
 gem 'omniauth-google-oauth2', "~> 0.2.1"
 gem 'twilio-ruby', '~> 4.11.1'
 gem 'rufus-scheduler'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
