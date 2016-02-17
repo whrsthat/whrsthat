@@ -345,6 +345,10 @@ p {
   background-color: transparent;
 }
 
-.new_event input[name="commit"] {
-  right: 88% !important;
+.create_event {
+    position: relative !important;
+    display: inline-block !important;
+    /* text-align: center; */
+    left: -3em !important;
+    /* margin: 0 auto; */
 }
