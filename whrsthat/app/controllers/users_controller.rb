@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @events = Event.where(user_id: current_user.id).order('created_at DESC')
   end
 
   # GET /users/new
@@ -24,7 +25,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @user = current_user
   end
+
+
 
   def set_session(user)
     session[:user_name] = user.email
@@ -37,7 +41,6 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     tmp_obj = JSON.parse(JSON.generate(user_params))
-    tmp_obj['password'] = params['password']
     @user = User.new( tmp_obj )
     if @user.save
       set_session @user
@@ -82,11 +85,25 @@ class UsersController < ApplicationController
       fname:         google_user["first_name"],
       lname_initial: google_user["last_name"],
       email:         google_user["email"],
-      prof_img_url:  google_user["image"]
+      password: SecureRandom.base64
     })
 
-
+    
     if user.save
+      image = google_user["image"]
+      path = "public/user_photos/#{user.id}"
+      
+      open(path, 'wb') do |file|
+        file << open(image).read
+      end
+      open(image).write(path)
+      image = MiniMagick::Image.open(path)
+      image.resize "40x40"
+      image.write path
+      user.prof_img_url = "/user_photos/#{user.id}"
+      user.save 
+      
+
       set_session user
       redirect_to('/events')
     else
@@ -178,11 +195,11 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = current_user
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :password_digest, :prof_img_url)
+      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :password, :prof_img_url, :bio)
     end
 end

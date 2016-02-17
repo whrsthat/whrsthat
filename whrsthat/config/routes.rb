@@ -7,8 +7,16 @@ Rails.application.routes.draw do
   get '/contact' => 'main#contact'
 
   get '/login' => 'users#login'
+
+  post '/login' => 'users#login'
   
   get '/logout' => 'users#logout'
+
+  get '/users/profile' => 'users#show'
+
+  get '/users/profile' => 'users#edit'
+
+  patch '/users/profile' => 'users#edit'
   
   get '/event_photo' => 'event_photos_controller#index'
   
@@ -19,9 +27,9 @@ Rails.application.routes.draw do
   get 'event_photos_controller/create'
 
   get 'event_photos_controller/destroy'
-  
+
   post '/api/text/inbound' => 'invitees#text'
-  
+
   get 'auth/:provider/callback', to: 'users#google_create'
 
   get 'auth/failure', to: redirect('/')
@@ -29,9 +37,8 @@ Rails.application.routes.draw do
   # get 'signout', to: 'users#google_signout', as: 'signout'
 
   post '/login' => 'users#login'
-  
+
   post '/events/:id/invite' => 'events#invite'
-  
   
   delete '/events/:id/:invite_id' => 'events#invite_destroy'
 
@@ -48,6 +55,7 @@ Rails.application.routes.draw do
   resources :event_photos
   
   end
+
   get '/event_photo' => 'event_photos_controller#index'
 
   get 'auth/:provider/callback', to: 'users#google_create'

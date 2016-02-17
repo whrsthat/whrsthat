@@ -1,4 +1,4 @@
-# require 'open-uri'
+ # require 'open-uri'
 require 'pry'
 require 'mimemagic'
 require 'exifr'
@@ -52,12 +52,36 @@ class Event < ActiveRecord::Base
 		end
 	end
 
+
 	def image_url
 		"/photos/#{self.id.to_s}.jpeg"
 	end
 
 	def owner?(current_user)
 		user.id == current_user.id 
+	end
+
+	def url
+		"/events/#{self.id}"
+	end
+
+	def schedule
+		@@scheduler ||= Rufus::Scheduler.new
+	end
+
+	def remind(number)
+    twilio.messages.create(
+      from: ENV['TWILIO_FROM_NUMBER'],
+      to: number,
+      body: "Reminder: #{self.user.name}'s event #{self.title} starts in 15 minutes. See details about this event at #{ENV['EXTERNAL_URL']}/#{self.url}"
+    )
+	end
+
+	def twilio 
+		account_sid = ENV['TWILIO_SID']
+		auth_token = ENV['TWILIO_AUTH_TOKEN']
+
+		@twilio ||= Twilio::REST::Client.new account_sid, auth_token
 	end
 
 	after_save do
@@ -84,7 +108,6 @@ class Event < ActiveRecord::Base
 			place_id = google_photo_data.flatten[1][0]["place_id"]
 			self.update_attributes(:event_address => event_address)
 			self.update_attributes(:place_id => place_id)
-
 			self.save()	
 		end
 
