@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require datetimepicker/jquery.datetimepicker.js
 //= require lodash/dist/lodash.min.js
 //= require gmaps/google
 //= require material-design-lite/material.min.js
@@ -19,6 +18,10 @@
 //= require javascript.fullPage.js
 //= require gmaps/google
 //= require exif-js/exif.js
+//= require datetimepicker/build/jquery.datetimepicker.full.min.js
+//= require typeahead.js/dist/typeahead.bundle.min.js
+//= require typeahead.js/dist/bloodhound.min.js
+//= require typeahead-addresspicker/dist/typeahead-addresspicker.min.js
 //= require_tree .
 
 $(function () {
@@ -43,3 +46,7 @@ navigator.geolocation.watchPosition(function (position) {
 }, function () {
 
 }, { enableHighAccuracy: true });
+
+$(function () {
+	$('#event_time_at') && $('#event_time_at').datetimepicker()	
+});

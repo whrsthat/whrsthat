@@ -16,9 +16,10 @@
     "material-design-lite": "~1.1.1",
     "jquery": "~2.2.0",
     "lodash": "^4.3.0",
-    "datetimepicker": "2.4.5",
+    "datetimepicker": "git+https://github.com/xdan/datetimepicker.git",
     "material": "~0.1.1",
     "exif-js": "~2.1.1",
-    "dialog-polyfill": "~0.4.3"
+    "dialog-polyfill": "~0.4.3",
+    "typeahead-addresspicker": "~0.1.4"
   }
 }

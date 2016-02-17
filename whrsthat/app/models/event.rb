@@ -33,8 +33,7 @@ class Event < ActiveRecord::Base
 	end
 
 	validate do 
-		binding.pry
-		if !self.place_id
+		if self.place_id == nil
 			if !self.title.present?
 				errors.add(:title)
 			elsif !self.time_at.present?
@@ -87,19 +86,19 @@ class Event < ActiveRecord::Base
 	end
 
 	after_save do
-		binding.pry
-		if !self.place_id
+		if self.place_id == nil
 	    google_server_key = ENV['GOOGLE_SERVER_KEY']
 	 		google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{self.latitude},#{self.longitude}&key=#{google_server_key}")
       result = Net::HTTP.get(google_uri)
+
       google_photo_data = JSON.parse(result)
 			event_address = google_photo_data.flatten[1][0]["formatted_address"]
 			place_id = google_photo_data.flatten[1][0]["place_id"]
-			self.update_attributes(:event_address => event_address)
 			self.update_attributes(:place_id => place_id)
+			self.update_attributes(:event_address => event_address)
+			
 			self.save()	
 		end
-
 		if @photo.present? && (MainImage.find_by(url: self.id.to_s + '.' + 'jpeg') == nil) 
 		
 	        #read about fileutils functionality

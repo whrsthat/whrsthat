@@ -46,7 +46,8 @@ function file_input() {
                   $(address_picker).on('addresspicker:selected', function (event, result) {
                     $('#event_latitude').val(result.lat());
                     $('#event_longitude').val(result.lng());
-                    
+                     
+                    $('#file_input_file').val('');
                   });
                 }
               }());
