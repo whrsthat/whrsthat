@@ -108,7 +108,7 @@ class Event < ActiveRecord::Base
 			place_id = google_photo_data.flatten[1][0]["place_id"]
 			self.update_attributes(:event_address => event_address)
 			self.update_attributes(:place_id => place_id)
-
+			binding.pry
 			self.save()	
 		end
 
