@@ -3,6 +3,7 @@
     "mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
   end
 %>
+<section id="users">
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -55,3 +56,4 @@
     <%= f.submit :class => 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' %>
   </div>
 <% end %>
+</section>

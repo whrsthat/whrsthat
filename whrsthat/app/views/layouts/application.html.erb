@@ -7,7 +7,8 @@
 	<title>** Whrsthat? The Event Shouting App **</title>
 	<meta name="description" content="WhrsThat? is a new web app that makes sharing an active or future event easy and simple!" />
 	<link rel="canonical" href="http://whrsthat.github.io" />
-	<meta property="og:locale" content="en_US" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:locale" content="en_US" />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="WhrsThat? The Event Shouting App" />
 	<meta property="og:description" content="WhrsThat? is a new web application that makes sharing an active or future event easy and simple!" />
@@ -34,7 +35,7 @@
 <% if @homepage %>
 <div class="layout-transparent mdl-layout mdl-js-layout">
   <header class="mdl-layout__header mdl-layout__header--transparent">
-    <div class="mdl-layout__header-row-home">
+    <div class="mdl-layout__header-row clear">
       <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
       <div class="mdl-layout-spacer"></div>
       <nav id="trans" class="mdl-navigation">
@@ -69,7 +70,6 @@
         <a class="mdl-navigation__link" href="/">Home</a>
         <a class="mdl-navigation__link" href="/about">About</a>
         <a class="mdl-navigation__link" href="/contact">Contact</a>
-        <!-- <a class="mdl-navigation__link" href="/login">Login</a> -->
         <% if current_user == nil %>
         <a class="mdl-navigation__link" href="/login">Login</a>
         <% else %>

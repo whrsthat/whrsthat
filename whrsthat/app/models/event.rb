@@ -33,21 +33,23 @@ class Event < ActiveRecord::Base
 	end
 
 	validate do 
-		if !@photo.present?
-			errors.add(:photo)
-		elsif !self.title.present?
+		if !MainImage.find_by(event_id: self.id)
+			if !@photo.present?
+				errors.add(:photo)
+			elsif !self.title.present?
 
-			errors.add(:title)
-		elsif !self.time_at.present?
-			errors.add(:time_at)
-		else
-			@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
-			@photo_data = EXIFR::JPEG.new(@photo.path).exif
-			#pass type to after save to add to file before local storage
-			if @format != 'jpeg'
-				errors.add(:photo)
-			elsif !@photo_data
-				errors.add(:photo)
+				errors.add(:title)
+			elsif !self.time_at.present?
+				errors.add(:time_at)
+			else
+				@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
+				@photo_data = EXIFR::JPEG.new(@photo.path).exif
+				#pass type to after save to add to file before local storage
+				if @format != 'jpeg'
+					errors.add(:photo)
+				elsif !@photo_data
+					errors.add(:photo)
+				end
 			end
 		end
 	end
@@ -85,7 +87,7 @@ class Event < ActiveRecord::Base
 	end
 
 	after_save do
-		if MainImage.find_by(url: self.id.to_s + '.' + @format) == nil
+		if MainImage.find_by(url: self.id.to_s + '.' + 'jpeg') == nil
 
 	        #read about fileutils functionality
 	        # Open the tempfile using MiniMagick     (File -> Open)
@@ -109,6 +111,9 @@ class Event < ActiveRecord::Base
 			self.update_attributes(:event_address => event_address)
 			self.update_attributes(:place_id => place_id)
 			self.save()	
+
+			new_image.event_id = self.id
+			new_image.save()
 		end
 
 		# if self.scheduled != true
