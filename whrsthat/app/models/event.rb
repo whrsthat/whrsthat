@@ -52,6 +52,7 @@ class Event < ActiveRecord::Base
 		end
 	end
 
+
 	def image_url
 		"/photos/#{self.id.to_s}.jpeg"
 	end
@@ -69,7 +70,6 @@ class Event < ActiveRecord::Base
 	end
 
 	def remind(number)
-		binding.pry
     twilio.messages.create(
       from: ENV['TWILIO_FROM_NUMBER'],
       to: number,

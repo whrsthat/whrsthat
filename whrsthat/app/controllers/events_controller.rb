@@ -25,22 +25,10 @@ class EventsController < ApplicationController
     @event_place_id = @event.place_id
 
     @invites.each { |invite|
-      @user = invite.user
-      if @user.longitude && @user.latitude
-        google_server_key = ENV['GOOGLE_SERVER_KEY']
-        google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{@user.latitude},#{@user.longitude}&key=#{google_server_key}")
-        result = Net::HTTP.get(google_uri)
-        google_user_location_data = JSON.parse(result)
-        @invite_place_id = google_user_location_data.flatten[1][0]["place_id"]
-        invite.update_attributes(:place_id => @invite_place_id)
-        invite_eta = URI("https://maps.googleapis.com/maps/api/directions/json?origin=place_id:#{@invite_place_id}&destination=place_id:#{@event_place_id}&mode=transit&transit_mode=subway&key=#{google_server_key}")
-        eta_result  = Net::HTTP.get(invite_eta)
-        eta_parsed = JSON.parse(eta_result)
-        arrival_time = eta_parsed.flatten[3][0]["legs"][0]["arrival_time"]["text"]
-        invite.update_attributes(:eta => arrival_time)
-      end
+      invite.user.eta(invite)
     }
 
+    @event.user.host_eta(@event)
     markers = [@event, @event.user].concat(@invites)
     markers.reject! do |obj|
       if obj.class.name === 'Event' || obj.class.name == 'User'
@@ -80,10 +68,11 @@ class EventsController < ApplicationController
         #   height: "80"
         # })
 
-        marker.infowindow user_full_name
-
+        marker.infowindow render_to_string("events/marker_infowindow", :layout => false, locals: { user: @user, invite: invite })
       elsif 
         @user = obj
+
+
         user_photo = @user.prof_img_url
         # user_event_eta = @invite.eta
         user_full_name = @user.name
@@ -95,7 +84,7 @@ class EventsController < ApplicationController
         #   height: "80"
         # })
 
-        marker.infowindow user_full_name        
+        marker.infowindow render_to_string("events/marker_infowindow", :layout => false, locals: { user: @user, invite: @event })     
       end
     end
   end
