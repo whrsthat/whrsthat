@@ -82,11 +82,25 @@ class UsersController < ApplicationController
       fname:         google_user["first_name"],
       lname_initial: google_user["last_name"],
       email:         google_user["email"],
-      prof_img_url:  google_user["image"]
+      password: SecureRandom.base64
     })
 
-
+    
     if user.save
+      image = google_user["image"]
+      path = "public/user_photos/#{user.id}"
+      
+      open(path, 'wb') do |file|
+        file << open(image).read
+      end
+      open(image).write(path)
+      image = MiniMagick::Image.open(path)
+      image.resize "40x40"
+      image.write path
+      user.prof_img_url = "/user_photos/#{user.id}"
+      user.save 
+      
+
       set_session user
       redirect_to('/events')
     else
