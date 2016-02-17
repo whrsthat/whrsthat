@@ -28,30 +28,12 @@ $(function () {
 		$('button,input[type="submit"]').addClass($class);
 	});
 });
-
-function geoFindUser() {
-
-	function success(position) {
-		var latitude  = position.coords.latitude;
-		var longitude = position.coords.longitude;
-
-
-	 	$.ajax({
-	        type: 'POST',
-	        url: `/users/geo`,
-	        data: { latitude: latitude, longitude: longitude }
-    	});
-	};
-
-	// function error() {
-	// 	output.innerHTML = "Unable to retrieve your location";
-	// };
-
-	navigator.geolocation.getCurrentPosition(success, function () {
-		clearInterval(window.locationInterval);
-	});
-
-}
-
 //window.locationInterval = setInterval(geoFindUser, 3000);
 
+navigator.geolocation.watchPosition(function(position) {
+    // Update latitude and longitude
+    userLatitude = position.coords.latitude;
+    userLongitude = position.coords.longitude;
+
+    window.
+});
