@@ -6,11 +6,13 @@
 					<h3>Ready To Share An Event?<% if current_user == nil %><br />Create An Account & Get Started!</h3>
 						<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/users/new">Sign Up</a>&nbsp;&nbsp;&nbsp;
 						<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/login">Log In</a>
-					<% else %></h3><a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/events/new">Create New Event</a>
+					<% else %></h3><a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/events/new">Create New Event</a><br /><br /><a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/events">View All Events</a>
 					<% end %>
 			</div>
 		</div>
+	<div class="arrow bounce"></div>
 	</div>
+	
 	<div class="section" id="section1">
 		<div class="slide" id="slide1">
 			<div class="content">
