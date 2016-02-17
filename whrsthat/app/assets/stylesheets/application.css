@@ -339,3 +339,11 @@ p {
 .clear {
   background-color: transparent;
 }
+
+.new_event {
+    position: relative;
+    display: inline-block;
+    /* text-align: center; */
+    left: -3em;
+    /* margin: 0 auto; */
+}
