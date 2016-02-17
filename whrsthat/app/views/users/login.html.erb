@@ -6,15 +6,13 @@
 	<h4 class="errors">Sorry, that username / password combination did not work.<br />Please try again.</h4>
 	<% end %>
 	<div class="form_wrap">
-		<div class="login-panel">
-			<h3>Login to WhrsThat?!</h3>
-			<%= render partial: 'users/login', locals: { user: @user } %>
-			<hr/><br />
-			<a href="#"><img class="google" src="/google-oauth.png"></a>
-			<h5>— Or —</h5>
-			<div>
-		  	<button class="create mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='button'>Sign Up</button>
-		  </div>
-		</div>
+		<h3>Login to WhrsThat?!</h3>
+		<%= render partial: 'users/login', locals: { user: @user } %>
+		<hr/><br />
+		<a href="#"><img class="google" src="/google-oauth.png"></a>
+		<h5>— Or —</h5>
+		<div>
+	  	<button class="create mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type='button'>Sign Up</button>
+	  </div>
 	</div>
 </div>
