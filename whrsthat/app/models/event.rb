@@ -33,22 +33,21 @@ class Event < ActiveRecord::Base
 	end
 
 	validate do 
-		if !MainImage.find_by(event_id: self.id)
-			if !@photo.present?
-				errors.add(:photo)
-			elsif !self.title.present?
-
+		if self.place_id == nil
+			if !self.title.present?
 				errors.add(:title)
 			elsif !self.time_at.present?
 				errors.add(:time_at)
 			else
-				@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
-				@photo_data = EXIFR::JPEG.new(@photo.path).exif
-				#pass type to after save to add to file before local storage
-				if @format != 'jpeg'
-					errors.add(:photo)
-				elsif !@photo_data
-					errors.add(:photo)
+				if @photo.present?
+					@format = MimeMagic.by_magic(File.open(@photo.tempfile)).subtype
+					@photo_data = EXIFR::JPEG.new(@photo.path).exif
+					#pass type to after save to add to file before local storage
+					if @format != 'jpeg'
+						errors.add(:photo)
+					elsif !@photo_data
+						errors.add(:photo)
+					end
 				end
 			end
 		end
@@ -87,8 +86,21 @@ class Event < ActiveRecord::Base
 	end
 
 	after_save do
-		if MainImage.find_by(url: self.id.to_s + '.' + 'jpeg') == nil
+		if self.place_id == nil
+	    google_server_key = ENV['GOOGLE_SERVER_KEY']
+	 		google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{self.latitude},#{self.longitude}&key=#{google_server_key}")
+      result = Net::HTTP.get(google_uri)
 
+      google_photo_data = JSON.parse(result)
+			event_address = google_photo_data.flatten[1][0]["formatted_address"]
+			place_id = google_photo_data.flatten[1][0]["place_id"]
+			self.update_attributes(:place_id => place_id)
+			self.update_attributes(:event_address => event_address)
+			
+			self.save()	
+		end
+		if @photo.present? && (MainImage.find_by(url: self.id.to_s + '.' + 'jpeg') == nil) 
+		
 	        #read about fileutils functionality
 	        # Open the tempfile using MiniMagick     (File -> Open)
 			image = MiniMagick::Image.open(@photo.path)
@@ -99,20 +111,9 @@ class Event < ActiveRecord::Base
 	        # FileUtils.cp(@photo.path, "public/photos/#{id}." + @format)
 
 			new_image = MainImage.new(url: self.id.to_s + '.' + @format, format: @format)
-			new_image.save()
-
-
-	        google_server_key = ENV['GOOGLE_SERVER_KEY']
-	 		google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{self.latitude},#{self.longitude}&key=#{google_server_key}")
-	        result = Net::HTTP.get(google_uri)
-	        google_photo_data = JSON.parse(result)
-			event_address = google_photo_data.flatten[1][0]["formatted_address"]
-			place_id = google_photo_data.flatten[1][0]["place_id"]
-			self.update_attributes(:event_address => event_address)
-			self.update_attributes(:place_id => place_id)
-			self.save()	
 
 			new_image.event_id = self.id
+
 			new_image.save()
 		end
 
