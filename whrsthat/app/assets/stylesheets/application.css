@@ -1,15 +1,4 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
  *= require datetimepicker/jquery.datetimepicker.css
  *= require material-design-lite/material.min.css
  *= require javascript.fullPage.css
@@ -27,7 +16,7 @@
 
 /* Section 1 */
 #section0 {
-  background-color: rgba(101,50,190,0.9);
+  background-color: rgba(255,25,26,0.7);
 }
 
 #section00 {
@@ -41,15 +30,6 @@
 
 #fullpage h1, #fullpage h2, #fullpage h3, #fullpage h4, #fullpage h5, #fullpage h6 {
   color: #fff;
-}
-
-#fullpage h1 {
-  font-size: 5em;
-}
-
-#section0 h1 {
-  padding: 0;
-  margin: 0;
 }
 
 #section0 p {
@@ -162,7 +142,18 @@
 .card-wide > .mdl-card__title {
   color: #fff;
   height: 350px;
+}
+
+.card-1 {
   background: url('/pregame.jpg') center / cover;
+}
+
+.card-2 {
+  background: url('/bg_landscape.jpg') center / cover; 
+}
+
+.card-3 {
+  background: url('/bg_crowd.jpg') center / cover;
 }
 
 .card-wide > .mdl-card__menu {
@@ -185,22 +176,22 @@
 /* Button Colors */
 .mdl-button--raised.mdl-button--colored {
  /* background: #0AD6D2;*/
- background-color: #34085D;
- color: #F5FDFE;
+ background-color: #7D7B06;
+ color: #ffffff;
 }
 
 .mdl-button--raised.mdl-button--colored:hover {
-  background-color: #6532be;
+  background-color: #FF191A;
 }
 
 /* Navbar Rules */
 nav a:hover {
-  color: #6532be !important;
-  background-color: #000;
+  color: #FF191A !important;
+  background-color: #47B5FA;
 }
 
 #trans a:hover {
-  color: #6532be !important;
+  color: #FF191A !important;
   background-color: #fff !important;
 }
 
@@ -217,7 +208,7 @@ nav a:hover {
 
 /* Submit Button Styling */
 input[type=submit] {
-  background: #000000;
+  background: #7D7B06;
   border: none;
   border-radius: 2px;
   color: #ffffff;
@@ -248,11 +239,11 @@ input[type=submit]::-moz-focus-inner {
 }
 
 input[type=submit]:hover {
-  background-color: #6532be;
+  background-color: #FF191A;
 }
 
 input[type=submit]:focus:not(:active) {
-  background-color: rgba(0,0,0, 0.12);
+  background-color: rgba(255,25,26, 0.12);
 }
 
 input[type=submit]:active {
@@ -264,25 +255,33 @@ input[type=submit]:active {
   left: 38%;
 }
 
+/* Custom CSS */
+.form_wrap {
+  background-color: white; 
+  display: inline-block;
+  margin: 4em auto !important;
+  box-shadow: .3em .3em .7em #000000;
+  padding: 1em 2em 3em 2em;
+  text-align: center;
+}
+
 .pad_headers {
   margin-top: 1em !important;
 }
 
 .pad_head_lite {
   margin-top: .5em !important;
+  text-align: left;
 }
 
-/* Custom CSS */
-.form_wrap {
-  background-color: white; 
-  display: inline-block;
-  margin: 4em 0 !important;
-  box-shadow: .3em .3em .7em #000000;
-  padding: 1em 2em 3em 2em;
+.pad {
+  display: block;
+  padding: .5em;
 }
 
 .page-content {
-  text-align: center;
+  max-width: 70em;
+  margin: 0 auto;
 }
 
 .page-content > * {
@@ -305,6 +304,27 @@ input[type=submit]:active {
   margin: 0 auto;
 }
 
+.f-left {
+  float: left;
+}
+
+.f-right {
+  float: right;
+}
+
+.p-right {
+  padding-right: 2em;
+}
+
+.p-left {
+  padding-left: 2em;
+}
+
+.rounds {
+  border: 2px #47B5FA solid;
+  border-radius: 100px;
+}
+
 .mdl-layout__header-row {
   background-color: #47B5FA
 }
@@ -324,12 +344,32 @@ body {
 h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   font-family: 'Righteous', 'Helvetica', 'Arial', sans;
-  color: #6532be;
+  color: #FF191A;
 }
 
 h1 {
-  font-size: 4em;
+  font-size: 5em;
 }
+
+h2 {
+  font-size: 4.3em;
+}
+/*
+h3 {
+  font-size: 3.6em;
+}
+
+h4 {
+  font-size: 2.9em;
+}
+
+h5 {
+  font-size: 2.2em;
+}
+
+h6 {
+  font-size: 1.5em;
+}*/
 
 p {
   font-size: 1.2em;
