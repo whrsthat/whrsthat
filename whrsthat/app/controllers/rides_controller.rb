@@ -5,6 +5,7 @@ class RidesController < ActionController::Base
 
 	def uber
 		Uber::Client.new do |config|
+			config.sandbox = true
 		  config.server_token  = ENV["UBER_SERVER_KEY"]
 		  config.client_id     = ENV["UBER_CLIENT_ID"]
 		  config.client_secret = ENV["UBER_CLIENT_SECRET"]
@@ -56,15 +57,19 @@ class RidesController < ActionController::Base
 		  config.client_id     = ENV["UBER_CLIENT_ID"]
 		  config.client_secret = ENV["UBER_CLIENT_SECRET"]
 		  config.bearer_token  = 	 "USER_ACCESS_TOKEN"
+		  config.sandbox = true
 		end
 	end
 
 	def requests
 		# @event = Event.find(params['event_id']).select('latitude', 'longitude').take 
-		@request = uber_ride.trip_request(product_id: product_id, 
+		@request = uber_ride.trip_request(product_id: params[:product_id], 
 								start_latitude: current_user.latitude, start_longitude: current_user.longitude, 
 									end_latitude: event.latitude, end_longitude: event.longitude)
+		
+		binding.pry
 		render json: @request
+
 	end 
 
 	def request_details
