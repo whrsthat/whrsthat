@@ -99,7 +99,6 @@ class Event < ActiveRecord::Base
 		# 		self.save()
 		# 	end
 		# end
->>>>>>> 10b42a97623d2ff0ced2f9c29094c9e2f77f174a
 	end
 
 end
