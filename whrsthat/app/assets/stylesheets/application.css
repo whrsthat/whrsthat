@@ -340,7 +340,7 @@ p {
   background-color: transparent;
 }
 
-.new_event {
+.create_event {
     position: relative;
     display: inline-block;
     /* text-align: center; */
