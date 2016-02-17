@@ -21,9 +21,19 @@
 </p>
 
 <p>
+  <strong>Bio:</strong>
+  <%= @user.bio %>
+</p>
+
+<p>
   <strong>Prof img url:</strong>
   <%= @user.prof_img_url %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<p>
+  <% @events.each do |event| %>
+    <b><%= event.title  %></b>
+  <% end %>
+</p>
+
+

@@ -44,9 +44,10 @@ class EventsController < ApplicationController
         marker.lat event.latitude
         marker.lng event.longitude
         marker.picture({
+          anchor: [40, 80],
           url: "#{view_context.image_path('/assets/precious.png')}",
-          width: "44",
-          height: "80"
+          width: 44,
+          height: 80
         })
         # marker.infowindow event.title
         marker.infowindow event.title
@@ -62,27 +63,33 @@ class EventsController < ApplicationController
         user_full_name = @user.name
         marker.lat @user.latitude
         marker.lng @user.longitude
-        # marker.picture({
-        #   url: "#{view_context.image_path('/assets/precious.png')}",
-        #   width: "44",
-        #   height: "80"
-        # })
+        marker.picture({
+          url: "#{view_context.image_path('<%= user_photo %>')}",
+          width: 44,
+          height: 80
+        })
 
         marker.infowindow render_to_string("events/marker_infowindow", :layout => false, locals: { user: @user, invite: invite })
       elsif 
         @user = obj
 
-
-        user_photo = @user.prof_img_url
+        if @user.prof_img_url == ""
+          user_photo = "/assets/magician.png"
+        else
+          user_photo = @user.prof_img_url
+        end
         # user_event_eta = @invite.eta
         user_full_name = @user.name
         marker.lat @user.latitude
         marker.lng @user.longitude
-        # marker.picture({
-        #   url: "#{view_context.image_path('/assets/precious.png')}",
-        #   width: "44",
-        #   height: "80"
-        # })
+        
+        marker.picture({
+          url: "#{user_photo}",
+          width: 44,
+          height: 80
+        })
+
+        
 
         marker.infowindow render_to_string("events/marker_infowindow", :layout => false, locals: { user: @user, invite: @event })     
       end
