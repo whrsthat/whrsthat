@@ -64,7 +64,7 @@ Rails.application.routes.draw do
   delete '/uber/requests/current' => 'rides#destroy'
   get '/uber/:event_id/products' => 'rides#products'
   get '/uber/estimates/time' => 'rides#time'
-  get '/uber/estimates/price' => 'rides#price'
+  post '/uber/:event_id/estimates/price' => 'rides#price'
   
 
   get 'auth/:provider/callback', to: 'users#google_create'

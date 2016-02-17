@@ -1,4 +1,7 @@
 class RidesController < ActionController::Base
+	def current_user
+		@current_user ||= User.find_by_id(session[:user])
+	end
 
 	def uber
 		Uber::Client.new do |config|
@@ -17,9 +20,13 @@ class RidesController < ActionController::Base
 		render json: @products
 	end
 
+
+
 	def price 
-		uber.price_estimations(start_latitude: current_user.latitude, start_longitude: current_user.longitude,
+		prices = uber.price_estimations(start_latitude: current_user.latitude, start_longitude: current_user.longitude,
                          		end_latitude: event.latitude , end_longitude: event.longitude)
+
+		render json: prices
 	end 
 
 	def time 
