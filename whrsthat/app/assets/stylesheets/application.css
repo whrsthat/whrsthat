@@ -155,7 +155,7 @@
   animation: bounce 2s infinite;
 }
 
-/* Image Card */
+/* Image -1 */
 .card-wide.mdl-card {
   width: 600px;
 }
@@ -163,7 +163,18 @@
 .card-wide > .mdl-card__title {
   color: #fff;
   height: 350px;
-  background: url('/pregame.jpg') center / cover;
+}
+
+.card-1 {
+  background: url('/drinks.jpg') center / cover;
+}
+        
+.card-2 {
+  background: url('/concert.jpg') center / cover; 
+}
+
+.card-3 {
+  background: url('/cupcake.jpg') center / cover;
 }
 
 .card-wide > .mdl-card__menu {
@@ -186,18 +197,18 @@
 /* Button Colors */
 .mdl-button--raised.mdl-button--colored {
  /* background: #0AD6D2;*/
- background-color: #34085D;
+ background-color: #85134A;
  color: #F5FDFE;
 }
 
 .mdl-button--raised.mdl-button--colored:hover {
-  background-color: #6532be;
+  background-color: #AF1D69;
 }
 
 /* Navbar Rules */
 nav a:hover {
-  color: #6532be !important;
-  background-color: #000;
+  color: #85134A !important;
+  background-color: #fff;
 }
 
 #trans a:hover {
@@ -218,7 +229,7 @@ nav a:hover {
 
 /* Submit Button Styling */
 input[type=submit] {
-  background: #000000;
+  background: #85134A;
   border: none;
   border-radius: 2px;
   color: #ffffff;
@@ -241,7 +252,6 @@ input[type=submit] {
   text-decoration: none;
   text-align: center;
   line-height: 36px;
-  /*vertical-align: middle;*/
 }
 
 input[type=submit]::-moz-focus-inner {
@@ -249,7 +259,7 @@ input[type=submit]::-moz-focus-inner {
 }
 
 input[type=submit]:hover {
-  background-color: #6532be;
+  background-color: #AF1D69;
 }
 
 input[type=submit]:focus:not(:active) {
@@ -259,7 +269,6 @@ input[type=submit]:focus:not(:active) {
 input[type=submit]:active {
   background-color: rgba(158,158,158, 0.40);
 }
-
 .create_event {
   position: relative;
   left: 38%;
@@ -277,7 +286,7 @@ input[type=submit]:active {
 .form_wrap {
   background-color: white; 
   display: inline-block;
-  margin: 4em 0 !important;
+  margin: 2em 0 !important;
   box-shadow: .3em .3em .7em #000000;
   padding: 1em 2em 3em 2em;
 }
@@ -310,13 +319,9 @@ input[type=submit]:active {
   background-color: #47B5FA
 }
 
-main.mdl-layout__content {
-  background-color: #E1EFFD
-}
-
 body {
   font-family: arial, helvetica;
-  background-color: #FFDEB8;
+  background-color: #E1EFFD ;
   color: #727272;
   font-size: 10pt;
   /*background: #ffe6eb;*/
@@ -325,7 +330,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   font-family: 'Righteous', 'Helvetica', 'Arial', sans;
-  color: #6532be;
+  color: #85134A;
 }
 
 h1 {
