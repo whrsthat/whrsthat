@@ -259,12 +259,16 @@ input[type=submit]:focus:not(:active) {
 }
 
 input[type=submit]:active {
-background-color: rgba(158,158,158, 0.40);
+  background-color: rgba(158,158,158, 0.40);
 }
 
 .create_event {
   position: relative;
   left: 38%;
+}
+
+.pad_headers {
+  margin-top: 1em !important;
 }
 
 /* Custom CSS */
@@ -294,8 +298,8 @@ background-color: rgba(158,158,158, 0.40);
   margin-bottom: -1em;
 }
 
-/*.align {
-  position: absolute;
-  left: 50;
-  transform: translateX(-50%);
-}*/
+.align {
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+}
