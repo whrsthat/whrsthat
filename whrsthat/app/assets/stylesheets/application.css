@@ -341,9 +341,9 @@ p {
 }
 
 .create_event {
-    position: relative;
-    display: inline-block;
+    position: relative !important;
+    display: inline-block !important;
     /* text-align: center; */
-    left: -3em;
+    left: -3em !important;
     /* margin: 0 auto; */
 }
