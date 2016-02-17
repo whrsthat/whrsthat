@@ -4,12 +4,14 @@ require 'gmaps4rails'
 
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery with: :null_session
 
   # GET /events
   # GET /events.json
   def index
-    @events = Event.where({ user_id: current_user.id })
+    @events = Event.where({ user_id: current_user.id }).order(created_at: :desc)
     @invitations = EventUser.where({ number: current_user.phone }).map { |invite| invite.event }
+    
   end
 
   # GET /events/1
@@ -23,37 +25,32 @@ class EventsController < ApplicationController
     @event_place_id = @event.place_id
 
     @invites.each { |invite|
-      @user = invite.user
-      if @user.longitude && @user.latitude
-        google_server_key = ENV['GOOGLE_SERVER_KEY']
-        google_uri = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{@user.latitude},#{@user.longitude}&key=#{google_server_key}")
-        result = Net::HTTP.get(google_uri)
-        google_user_location_data = JSON.parse(result)
-        binding.pry
-        @invite_place_id = google_user_location_data.flatten[1][0]["place_id"]
-        invite.update_attributes(:place_id => @invite_place_id)
-        invite_eta = URI("https://maps.googleapis.com/maps/api/directions/json?origin=place_id:#{@invite_place_id}&destination=place_id:#{@event_place_id}&mode=transit&transit_mode=subway&key=#{google_server_key}")
-        eta_result  = Net::HTTP.get(invite_eta)
-        eta_parsed = JSON.parse(eta_result)
-        arrival_time = eta_parsed.flatten[3][0]["legs"][0]["arrival_time"]["text"]
-        invite.update_attributes(:eta => arrival_time)
-      end
+      invite.user.eta(invite)
     }
 
+    @event.user.host_eta(@event)
     markers = [@event, @event.user].concat(@invites)
-     @hash = Gmaps4rails.build_markers(markers) do |obj, marker|
+    markers.reject! do |obj|
+      if obj.class.name === 'Event' || obj.class.name == 'User'
+        !obj.latitude || !obj.longitude 
+      elsif obj.class.name == 'EventUser'
+        !obj.user.latitude || !obj.user.longitude 
+      end
+    end
+
+    @hash = Gmaps4rails.build_markers(markers) do |obj, marker|
       if obj.class.name === 'Event'
         event = obj
         marker.lat event.latitude
         marker.lng event.longitude
         marker.picture({
+          anchor: [40, 80],
           url: "#{view_context.image_path('/assets/precious.png')}",
-          
-          width: "44",
-          height: "90"
+          width: 44,
+          height: 80
         })
         # marker.infowindow event.title
-        marker.title event.title
+        marker.infowindow event.title
 
         current_user.local_ip = request.remote_ip
         current_user.save()
@@ -67,35 +64,46 @@ class EventsController < ApplicationController
         marker.lat @user.latitude
         marker.lng @user.longitude
         marker.picture({
-          url: "#{view_context.image_path('/assets/precious.png')}",
-          width: "44",
-          height: "90"
+          url: "#{view_context.image_path('<%= user_photo %>')}",
+          width: 44,
+          height: 80
         })
 
-        marker.infowindow user_full_name
-
+        marker.infowindow render_to_string("events/marker_infowindow", :layout => false, locals: { user: @user, invite: invite })
       elsif 
         @user = obj
-        user_photo = @user.prof_img_url
+
+        if @user.prof_img_url == ""
+          user_photo = "/assets/magician.png"
+        else
+          user_photo = @user.prof_img_url
+        end
         # user_event_eta = @invite.eta
         user_full_name = @user.name
         marker.lat @user.latitude
         marker.lng @user.longitude
+        
         marker.picture({
-          url: "#{view_context.image_path('/assets/precious.png')}",
-          width: "44",
-          height: "90"
+          url: "#{user_photo}",
+          width: 44,
+          height: 80
         })
 
-        marker.infowindow user_full_name        
+        
+
+        marker.infowindow render_to_string("events/marker_infowindow", :layout => false, locals: { user: @user, invite: @event })     
       end
     end
-
   end
 
   # GET /events/new
   def new
+    if current_user == nil
+      @force_redirect = true
+      render 'users/login' 
+    else
     @event = Event.new
+    end
   end
 
   # GET /events/1/edit
@@ -106,9 +114,10 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     ev_params = event_params.clone
-
     ev_params[:time_at]  = Time.parse(ev_params[:time_at])
     ev_params[:user_id] = current_user.id
+    ev_params[:latitude] = ev_params[:latitude].to_f
+    ev_params[:longitude] = ev_params[:longitude].to_f
     @event = Event.new(ev_params, params[:event][:photo])
 
     respond_to do |format|
@@ -169,7 +178,11 @@ class EventsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event    
-      @event = Event.find(params[:id])
+      if current_user != nil
+        @event = Event.find(params[:id])
+      else
+        redirect_to('/login?force=true')
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

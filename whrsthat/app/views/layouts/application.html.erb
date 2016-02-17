@@ -22,28 +22,32 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
   <link rel="shortcut icon" type="image/x-icon" href="/mugatu_favicon.png">
 
 </head>
 
-<body data-no-turbolink”>
+<body data-no-turbolink="true">
 
 <% if @homepage %>
 <div class="layout-transparent mdl-layout mdl-js-layout">
   <header class="mdl-layout__header mdl-layout__header--transparent">
-    <!-- js menu // material.min.js -->
-    <div class="mdl-layout__header-row">
+    <div class="mdl-layout__header-row-home">
       <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
       <div class="mdl-layout-spacer"></div>
       <nav class="mdl-navigation">
         <a class="mdl-navigation__link" href="/">Home</a>
         <a class="mdl-navigation__link" href="/about">About</a>
         <a class="mdl-navigation__link" href="/contact">Contact</a>
+        <% if current_user == nil %>
         <a class="mdl-navigation__link" href="/login">Login</a>
+        <% else %>
+        <a class="mdl-navigation__link" href="/logout">Logout</a>
+        <% end %>
       </nav>
     </div>
   </header>
-  <div class="mdl-layout__drawer">
+<!--   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
     <nav class="mdl-navigation">
     <a class="mdl-navigation__link" href="/">Home</a>
@@ -51,12 +55,11 @@
     <a class="mdl-navigation__link" href="/contact">Contact</a>
     <a class="mdl-navigation__link" href="/login">Login</a>
     </nav>
-  </div>
+  </div> -->
 </div>
 <% else %>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
-    <!-- js menu // material.min.js -->
     <div class="mdl-layout__header-row">
     <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
     <div class="mdl-layout-spacer"></div>
@@ -66,15 +69,15 @@
         <a class="mdl-navigation__link" href="/contact">Contact</a>
         <!-- <a class="mdl-navigation__link" href="/login">Login</a> -->
         <% if current_user == nil %>
-        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
         <a class="mdl-navigation__link" href="/login">Login</a>
         <% else %>
         <a class="mdl-navigation__link" href="/logout">Logout</a>
+        <a class="mdl-navigation__link" href="/users/profile">Profile</a>
         <% end %>
       </nav>
     </div>
   </header>
-  <div class="mdl-layout__drawer">
+<!--   <div class="mdl-layout__drawer">
   <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
     <nav class="mdl-navigation">
     <a class="mdl-navigation__link" href="/">Home</a>
@@ -82,7 +85,7 @@
     <a class="mdl-navigation__link" href="/contact">Contact</a>
     <a class="mdl-navigation__link" href="">Sign Up Now!</a>
   </nav>
-</div>
+</div> -->
 
 <main class="mdl-layout__content">
   <div class="page-content">
@@ -100,11 +103,16 @@
 <% if @homepage %>
 <script>
 fullpage.initialize('#fullpage', {
-    anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage', 'lastPage'],
-    menu: '#menu',
-    css3:false
+  anchors: ['firstPage', 'secondPage'],
+  menu: '#menu',
+  css3:false
 });
 /* ++ anchors: ['3rdPage', '4thpage', 'lastPage'] */
+$(document).on('ready', function () {
+  $('.arrow').click(function(){
+    window.location.replace('/#section1');
+  });
+});
 </script>
 <% end %>
 </html>

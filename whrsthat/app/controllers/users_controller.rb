@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @events = Event.where(user_id: current_user.id).order('created_at DESC')
   end
 
   # GET /users/new
@@ -24,7 +25,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @user = current_user
   end
+
+
 
   def set_session(user)
     session[:user_name] = user.email
@@ -37,7 +41,6 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     tmp_obj = JSON.parse(JSON.generate(user_params))
-    tmp_obj['password'] = params['password']
     @user = User.new( tmp_obj )
     if @user.save
       set_session @user
@@ -54,43 +57,63 @@ class UsersController < ApplicationController
 # NoMethodError Users#login for user.each
 
   def google_create
-    code = params[:code]
-    our_url = ENV['EXTERNAL_URL']
 
-    form = {
-        :code => code,
-        :client_id => ENV['GOOGLE_OAUTH_CLIENT_ID'],
-        :client_secret => ENV['GOOGLE_OAUTH_CLIENT_SECRET'],
-        :grant_type => 'authorization_code',
-        :redirect_uri => "#{our_url}/auth/google_oauth2/callback"
-      }
+    # code = params[:code]
+    # our_url = ENV['EXTERNAL_URL']
 
-    uri = URI.parse("https://www.googleapis.com")
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    request = Net::HTTP::Post.new("/oauth2/v4/token")
-    request.set_form_data form
-    response = http.request(request)
+    # form = {
+    #     :code => code,
+    #     :client_id => ENV['GOOGLE_OAUTH_CLIENT_ID'],
+    #     :client_secret => ENV['GOOGLE_OAUTH_CLIENT_SECRET'],
+    #     :grant_type => 'authorization_code',
+    #     :redirect_uri => "#{our_url}/auth/google_oauth2/callback"
+    #   }
 
-    access_token = JSON.parse(response.body)["access_token"]
+    # uri = URI.parse("https://www.googleapis.com")
+    # http = Net::HTTP.new(uri.host, uri.port)
+    # http.use_ssl = true
+    # http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    # request = Net::HTTP::Post.new("/oauth2/v4/token")
+    # request.set_form_data form
+    # response = http.request(request)
 
-    google_user = JSON.parse(open("https://www.googleapis.com/plus/v1/people/me?access_token=#{access_token}").read)
+    # access_token = JSON.parse(response.body)["access_token"]
 
+    google_user = request.env['omniauth.auth'][:info]
+    
     user = User.create({
-      fname:         google_user["name"]["givenName"],
-      lname_initial: google_user["name"]["familyName"],
-      email:         google_user["emails"][0]["value"],
-      prof_img_url:  google_user["image"]["url"]
+      fname:         google_user["first_name"],
+      lname_initial: google_user["last_name"],
+      email:         google_user["email"],
+      password: SecureRandom.base64
     })
 
-    set_session user
-
+    
     if user.save
+      image = google_user["image"]
+      path = "public/user_photos/#{user.id}"
+      
+      open(path, 'wb') do |file|
+        file << open(image).read
+      end
+      open(image).write(path)
+      image = MiniMagick::Image.open(path)
+      image.resize "40x40"
+      image.write path
+      user.prof_img_url = "/user_photos/#{user.id}"
+      user.save 
+      
+
+      set_session user
       redirect_to('/events')
     else
-      redirect_to('/login')
-
+      user = User.find_by(:email => google_user["email"])
+      if user
+        set_session user
+        redirect_to('/events')
+      else
+        redirect_to('/login')
+      end
     end
 
   end
@@ -128,6 +151,7 @@ class UsersController < ApplicationController
       end
     else
       if current_user == nil
+        @force_redirect = params[:force].present?
         if request.referer
           session[:referer] = request.referer
         end
@@ -171,11 +195,11 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = current_user
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :password_digest, :prof_img_url)
+      params.require(:user).permit(:phone, :fname, :lname_initial, :email, :password, :prof_img_url, :bio)
     end
 end

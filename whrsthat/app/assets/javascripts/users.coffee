@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-	$('input[type="password"]').addClass('mdl-textfield__input')
+	$('#user_password').attr('type', 'password')
 
 	$('.create').click () ->
 		window.document.location = '/users/new'
@@ -15,3 +15,6 @@ $ ->
 			num = "+1#{num}"
 			$('#user_phone').val(num)
 	)
+
+	$('.google').click () ->
+		window.document.location = '/auth/google_oauth2'
