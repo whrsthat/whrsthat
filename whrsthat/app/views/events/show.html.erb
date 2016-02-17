@@ -2,7 +2,7 @@
 <script src="//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js" type="text/javascript"></script>
 <meta name="event-id" content="<%= @event.id %>"/>
 
-<div class="mdl-grid" style="background-color: #feeca9; max-height: 700px;">
+<div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col add-on">
     <div class="title">
       <h1 style="font-size: 3em"><%= @event.title %></h1>
@@ -22,15 +22,15 @@
     </div>
   </div>
 </div>
-<div class="mdl-grid middle">
+<div class="mdl-grid middle align">
   <!--<div class="mdl-cell mdl-cell--2-col"></div>-->
-  <div class="mdl-cell mdl-cell--6-col info-container">
+  <div class="mdl-cell mdl-cell--12-col info-container max-widths">
 
   <p><span><%= @event.date %> <%= @event.time.downcase %></span></p>
   
 <p><%= @event.event_address %></p>
-  </div>
-  <div class="mdl-cell mdl-cell--6-col map-container">
+<!--   </div>
+  <div class="mdl-cell mdl-cell--6-col map-container"> -->
 
   <div style='' class="map-container">
     <div id="map"></div>
