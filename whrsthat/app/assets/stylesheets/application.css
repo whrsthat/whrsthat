@@ -344,3 +344,7 @@ p {
 .clear {
   background-color: transparent;
 }
+
+.new_event input[name="commit"] {
+  right: 88% !important;
+}
