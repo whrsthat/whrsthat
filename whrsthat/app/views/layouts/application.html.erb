@@ -79,15 +79,20 @@
       </nav>
     </div>
   </header>
-<!--   <div class="mdl-layout__drawer">
+<div class="mdl-layout__drawer">
   <span class="mdl-layout-title"><img src="/whrsthat.png"></span>
     <nav class="mdl-navigation">
-    <a class="mdl-navigation__link" href="/">Home</a>
-    <a class="mdl-navigation__link" href="/about">About</a>
-    <a class="mdl-navigation__link" href="/contact">Contact</a>
-    <a class="mdl-navigation__link" href="">Sign Up Now!</a>
+        <a class="mdl-navigation__link" href="/">Home</a>
+        <a class="mdl-navigation__link" href="/about">About</a>
+        <a class="mdl-navigation__link" href="/contact">Contact</a>
+        <% if current_user == nil %>
+        <a class="mdl-navigation__link" href="/login">Login</a>
+        <% else %>
+        <a class="mdl-navigation__link" href="/logout">Logout</a>
+        <a class="mdl-navigation__link" href="/users/profile">Profile</a>
+        <% end %>
   </nav>
-</div> -->
+</div>
 
 <main class="mdl-layout__content">
   <div class="page-content">
