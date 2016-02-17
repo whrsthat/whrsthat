@@ -99,10 +99,7 @@ class Event < ActiveRecord::Base
 		# 		self.save()
 		# 	end
 		# end
-<<<<<<< HEAD
-=======
 
->>>>>>> ux_bamboo
 	end
 
 end
