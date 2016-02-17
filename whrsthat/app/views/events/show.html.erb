@@ -9,8 +9,9 @@
 <div class="mdl-grid">
 <%= csrf_meta_tag %>
 
-<div class="mdl-grid" style="background-color: #feeca9; max-height: 700px;">
+
   <%= render partial: 'uber', locals: { event: @event } %>
+<div class="mdl-grid" style="background-color: #feeca9; max-height: 700px;">
   <div class="mdl-cell mdl-cell--12-col add-on">
     <div class="title">
       <h1 style="font-size: 3em"><%= @event.title %></h1>
