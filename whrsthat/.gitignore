@@ -17,4 +17,3 @@ vendor/assets/components
 public/photos
 public/user_photos
 .byebug_history
-docker-compose.yml

@@ -1,0 +1,19 @@
+version: '2'
+services:
+  web:
+    build: .    
+    links: 
+    - postgres
+    ports:
+    - "3000:3000"
+  postgres:
+    build: ./postgres
+    volumes:
+    - postgres_db:/var/lib/postgresql/data
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_DB=whrsthat_production
+    - PGPASSWORD=postgres
+volumes:
+  postgres_db: {}

@@ -126,9 +126,6 @@ GEM
     omniauth-uber (1.0.1)
       omniauth (~> 1.2)
       omniauth-oauth2 (~> 1.1)
-    passenger (5.0.24)
-      rack
-      rake (>= 0.8.1)
     pg (0.18.4)
     pry (0.10.3)
       coderay (~> 1.1.0)
@@ -136,6 +133,7 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    puma (3.6.2)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -246,9 +244,9 @@ DEPENDENCIES
   mini_magick
   omniauth-google-oauth2 (~> 0.2.1)
   omniauth-uber
-  passenger
   pg (~> 0.15)
   pry-rails
+  puma
   rails (= 4.2.5.1)
   rails-helper
   rspec-rails
@@ -263,4 +261,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.10.6
+   1.13.7

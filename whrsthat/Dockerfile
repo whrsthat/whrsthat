@@ -1,4 +1,4 @@
-FROM ruby:2.2.0
+FROM ruby
 
 RUN apt-get update -qq && apt-get install -y build-essential curl
 
@@ -9,9 +9,9 @@ RUN apt-get install -y libpq-dev
 RUN apt-get install -y libxml2-dev libxslt1-dev
 
 # for capybara-webkit
-RUN apt-get install -y libqt4-webkit libqt4-dev xvfb
+RUN apt-get install -y libqt4-webkit libqt4-dev
 
-RUN curl -sL https://deb.nodesource.com/setup_5.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
 
 RUN apt-get install -y nodejs
 
@@ -31,4 +31,6 @@ ADD . $APP_HOME
 
 ENV RAILS_ENV production 
 
-CMD bundle exec passenger start --address 0.0.0.0 --port 80
+ENV DATABASE_URL postgres://postgres:postgres@postgres/whrsthat_production
+
+CMD bundle exec rackup -s Puma --host 0.0.0.0 --port 80

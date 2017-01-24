@@ -75,14 +75,5 @@ test:
 #
 # You can use this database configuration with:
 #
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
-#
-production: &default
-  adapter: postgresql
-  encoding: unicode
-  database: postgres
-  pool: 5
-  username: postgres
-  password:
-  host: db
+production:
+  url: <%= ENV['DATABASE_URL'] %>
