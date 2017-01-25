@@ -5,7 +5,10 @@ services:
     links: 
     - postgres
     ports:
-    - "3000:3000"
+    - "3000:80"
+    environment:
+    - SECRET_KEY_BASE=9275c33b-e7d1-4ba2-9a85-ed2a82ef767b
+    - SECRET_TOKEN=e2fa5e39-0624-4aa2-8eca-44412db0b5d3
   postgres:
     build: ./postgres
     volumes:
